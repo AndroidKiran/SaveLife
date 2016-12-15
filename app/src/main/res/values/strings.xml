@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">SaveLife</string>
+
+    <!--Onboarding-->
+    <string name="str_boarding_heading_type_one">Heading 1</string>
+    <string name="str_boarding_heading_type_two">Heading 2</string>
+    <string name="str_boarding_heading_type_three">Heading 3</string>
+
+    <string name="str_boarding_footer_type_one">Footer 1</string>
+    <string name="str_boarding_footer_type_two">Footer 2</string>
+    <string name="str_boarding_footer_type_three">Footer 3</string>
+
+
+    <!--Login-->
+    <string name="str_progress_login_title">Logging In</string>
+    <string name="str_progress_wait">Please wait</string>
+
+
+    <!--Complete profile-->
+    <string name="str_blood_group">Blood Group</string>
+    <string name="str_contact_num">Mobile number</string>
+    <string name="str_city">City</string>
+    <string name="str_ext">Ext</string>
+    <string name="str_complete_profile">Complete Profile</string>
+    <string name="err_blood_group">Please select blood group</string>
+    <string name="err_mob_num">Please provide valid mobile number</string>
+    <string name="err_city">Please provide city name</string>
+    <string name="str_complete_profile_msg">Please complete your profile</string>
+    <string name="str_update_profile">Updating profile</string>
+    <string name="str_country">Country</string>
+    <string name="err_country">Please select the country</string>
+
+    <!--Country-->
+    <string name="str_search">Search for country</string>
+
+    <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
+
+    <!--Home-->
+    <string name="str_requirement_tab">Need</string>
+    <string name="str_heros_tab">Top 100 Heros</string>
+    <string name="str_invite">Invite</string>
+    <string name="str_logout">Logout</string>
+
+    <!--Post request-->
+    <string name="str_address">Street address</string>
+    <string name="err_address">Please provide the valid address</string>
+    <string name="str_request">Request</string>
+    <string name="str_post_request">Posting the request</string>
+    <string name="str_request_heading">Please provide the information</string>
+
+    <!--Needs-->
+    <string name="str_blood_required_msg">%1$s blood required on urgent basis</string>
+
+    <string name="str_save_life">Save a life</string>
+    <string name="str_send_invite">Send invite</string>
+    <string name="str_check_out_app">Check out Save a Life!\n%s</string>
+
+    <!--App invite-->
+    <string name="dynamicLinkDomain">https://u8qcq.app.goo.gl/jTpt</string>
+    <string name="deepLinkBaseUrl">https://savealife.com</string>
+
+    <!--Profile-->
+    <string name="str_wat_blood_group">%1s blood group donor</string>
+    <string name="str_profile_info">Profile Information</string>
+    <string name="str_wat_address" formatted="false">%1s,%2s</string>
+    <string name="str_msg1">Saved</string>
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Welcome" />
+
+  <style name="Welcome.View">
+    <item name="android:background">@color/colorPrimary</item>
+  </style>
+
+  <style name="Welcome.Sender" />
+
+  <style name="Welcome.Sender.Layout">
+    <item name="android:gravity">center</item>
+  </style>
+
+  <style name="Welcome.Sender.Image">
+    <item name="android:minHeight">@dimen/dimen_86</item>
+    <item name="android:minWidth">@dimen/dimen_86</item>
+    <item name="android:scaleType">fitCenter</item>
+  </style>
+
+  <style name="Welcome.Sender.Message">
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/black_1</item>
+    <item name="android:textSize">@dimen/font_16</item>
+  </style>
+
+  <style name="Welcome.Message">
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">@dimen/font_16</item>
+  </style>
+
+  <style name="Welcome.ProceedButton">
+    <item name="android:background">@drawable/oval_shape_white</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/black_1</item>
+    <item name="android:textSize">@dimen/font_18</item>
+    <item name="android:paddingBottom">@dimen/dimen_14</item>
+    <item name="android:paddingTop">@dimen/dimen_14</item>
+    <item name="android:paddingRight">@dimen/dimen_90</item>
+    <item name="android:paddingLeft">@dimen/dimen_90</item>
+  </style>
+
+</resources>

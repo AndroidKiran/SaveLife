@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <com.donate.savelife.component.text.TextView
+            android:id="@+id/message_author_name"
+            style="@style/Chat.Message.Author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:fontTypeface="museosans500" />
+
+        <com.donate.savelife.component.text.TextView
+            android:id="@+id/message_time"
+            style="@style/Chat.Message.Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fontTypeface="museosans500" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        style="@style/Chat.Message.BodyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/message_author_image"
+            android:layout_width="@dimen/dimen_36"
+            android:layout_height="@dimen/dimen_36"
+            android:layout_alignParentRight="true" />
+
+        <com.donate.savelife.component.text.TextView
+            android:id="@+id/message_body"
+            style="@style/Chat.Message.Body.Self"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/message_author_image"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_toLeftOf="@id/message_author_image"
+            app:fontTypeface="museosans500" />
+
+    </RelativeLayout>
+
+</merge>

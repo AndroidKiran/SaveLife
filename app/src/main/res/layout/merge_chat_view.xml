@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/dimen_36"
+                android:layout_height="@dimen/dimen_36"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="@dimen/dimen_16"
+                app:border_color="@android:color/white"
+                app:border_width="@dimen/dimen_2" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/profile_image"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <com.donate.savelife.component.text.TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_16"
+                    app:fontTypeface="museosans700" />
+
+
+                <com.donate.savelife.component.text.TextView
+                    android:id="@+id/toolbar_sub_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12"
+                    app:fontTypeface="museosans500" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.donate.savelife.component.MultiStateView
+            android:id="@+id/multi_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            app:msv_emptyView="@layout/empty_view"
+            app:msv_errorView="@layout/error_view"
+            app:msv_loadingView="@layout/loading_view"
+            app:msv_viewState="loading">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/messages_recycler_view"
+                style="@style/Chat.RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </com.donate.savelife.component.MultiStateView>
+
+        <LinearLayout
+            style="@style/Chat.NewMessage.Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <com.donate.savelife.component.text.EditText
+                android:id="@+id/message_edit"
+                style="@style/Chat.NewMessage.Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="@dimen/dimen_1"
+                android:minLines="2"
+                android:maxLines="6"
+                android:scrollbars="vertical"
+                app:fontTypeface="museosans500" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/dimen_16"
+                app:srcCompat="@drawable/ic_send_black_24dp" />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</merge>
