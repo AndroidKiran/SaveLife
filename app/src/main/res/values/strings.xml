@@ -34,6 +34,7 @@
     <string name="str_search">Search for country</string>
 
     <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
+    <string name="ll">d</string>
 
     <!--Home-->
     <string name="str_requirement_tab">Need</string>
