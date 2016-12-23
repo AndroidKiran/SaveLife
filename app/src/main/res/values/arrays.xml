@@ -10,4 +10,11 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
+
+    <array name="tab_colors">
+        <item name="tab_1">#455C65</item>
+        <item name="tab_2">#00886A</item>
+        <item name="tab_3">#8B6B62</item>
+    </array>
+
 </resources>

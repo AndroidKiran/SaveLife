@@ -33,4 +33,6 @@
     <color name="text_grey_light">#59000000</color>
 
     <color name="background_grey">#33CCCCCC</color>
+
+    <color name="background">#eaeaea</color>
 </resources>

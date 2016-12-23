@@ -41,6 +41,7 @@
     <string name="str_heros_tab">Top 100 Heros</string>
     <string name="str_invite">Invite</string>
     <string name="str_logout">Logout</string>
+    <string name="str_preference_tab">Preference</string>
 
     <!--Post request-->
     <string name="str_address">Street address</string>

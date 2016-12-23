@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="home_top_margin">@dimen/dimen_40</dimen>
+    <dimen name="home_fab_btm_margin">@dimen/dimen_72</dimen>
+    <dimen name="home_fab_rght_margin">@dimen/dimen_16</dimen>
+
+
+</resources>

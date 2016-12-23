@@ -55,6 +55,11 @@ public class NeedsFragment extends Fragment {
                 Dependencies.INSTANCE.getPreference(),
                 Dependencies.INSTANCE.getGsonService()
         );
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState == null){
             presenter.initPresenter();
@@ -63,6 +68,11 @@ public class NeedsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.startPresenting();
+    }
 
     @Override
     public void onStop() {

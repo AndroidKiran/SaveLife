@@ -98,6 +98,8 @@ public class ChatPresenter {
     }
 
     public void startPresenting(){
+        chatDisplayer.attach(actionListener);
+        chatDisplayer.disableInteraction();
         subscriptions.add(
                 chatService.observeUserFor(need)
                 .subscribe(new Action1<DatabaseResult<User>>() {

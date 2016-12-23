@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "103728046925",
+    "firebase_url": "https://lifesaviour-75ac1.firebaseio.com",
+    "project_id": "lifesaviour-75ac1",
+    "storage_bucket": "lifesaviour-75ac1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103728046925:android:2c4d61f9a407416f",
+        "android_client_info": {
+          "package_name": "com.donate.savelife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103728046925-7jl8dmopuqn5op963aclcal9fjmq6om3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.donate.savelife",
+            "certificate_hash": "B825332F504EB36F4FDCC94B72AEF60D0B03D4F8"
+          }
+        },
+        {
+          "client_id": "103728046925-u43hbjgssd08kbtvoinqhc7mf1bkdvd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApaHG6l2pXOX4jT_GiDMOUNlFGrgFxBAE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103728046925-u43hbjgssd08kbtvoinqhc7mf1bkdvd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

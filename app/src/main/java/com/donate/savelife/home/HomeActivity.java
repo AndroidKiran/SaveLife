@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private NeedsFragment needsFragment;
     private HerosFragment herosFragment;
     private HomePresenter homePresenter;
+    private HerosFragment herosFragment1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,13 +63,19 @@ public class HomeActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             needsFragment = NeedsFragment.newInstance(null);
             herosFragment = HerosFragment.newInstance(null);
+            herosFragment1 = HerosFragment.newInstance(null);
+
         } else {
             needsFragment = (NeedsFragment) getSupportFragmentManager().getFragment(savedInstanceState, NeedsFragment.TAG);
             herosFragment = (HerosFragment) getSupportFragmentManager().getFragment(savedInstanceState, HerosFragment.TAG);
+            herosFragment1 = (HerosFragment) getSupportFragmentManager().getFragment(savedInstanceState, HerosFragment.TAG);
+
         }
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerAdapter.addFragment(needsFragment, getString(R.string.str_requirement_tab));
-        viewPagerAdapter.addFragment(herosFragment, getString(R.string.str_contacts_tab));
+        viewPagerAdapter.addFragment(herosFragment, getString(R.string.str_heros_tab));
+        viewPagerAdapter.addFragment(herosFragment1, "Hero tab 1");
+
         return viewPagerAdapter;
     }
 

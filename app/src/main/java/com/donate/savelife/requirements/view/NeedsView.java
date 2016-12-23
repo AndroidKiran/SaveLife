@@ -98,7 +98,7 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
                 } else {
                     lastNeedItem = lastNeed;
                     isloading = false;
-//                    paginate.setHasMoreDataToLoad(false);
+                    paginate.setHasMoreDataToLoad(false);
                 }
             }
         }

@@ -52,8 +52,9 @@ public class HomePresenter {
     }
 
     private final HomeDisplayer.HomeInteractionListener homeInteractionListener = new HomeDisplayer.HomeInteractionListener() {
+
         @Override
-        public void onFabBtnClicked(int tab) {
+        public void onFabBtnClicked() {
            navigator.toNeed();
         }
 

@@ -47,7 +47,6 @@ public class NeedsPresenter {
     }
 
     public void initPresenter() {
-        needsDisplayer.attach(needInteractionListener);
         compositeSubscription.add(
                 needService.observeNeedsWithUsers(user)
                         .subscribe(new Action1<DatabaseResult<Needs>>() {
@@ -62,6 +61,10 @@ public class NeedsPresenter {
                             }
                         })
         );
+    }
+
+    public void startPresenting(){
+        needsDisplayer.attach(needInteractionListener);
     }
 
 

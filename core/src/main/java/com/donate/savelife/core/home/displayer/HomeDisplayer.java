@@ -16,7 +16,7 @@ public interface HomeDisplayer {
     void detach(HomeInteractionListener homeInteractionListener);
 
     interface HomeInteractionListener {
-        void onFabBtnClicked(int tab);
+        void onFabBtnClicked();
 
         void onProfileClicked();
 
