@@ -3,6 +3,9 @@
     <dimen name="home_top_margin">@dimen/dimen_40</dimen>
     <dimen name="home_fab_btm_margin">@dimen/dimen_72</dimen>
     <dimen name="home_fab_rght_margin">@dimen/dimen_16</dimen>
-
+    <dimen name="profile_card_height">@dimen/dimen_58</dimen>
+    <dimen name="profile_backdrop_height">@dimen/dimen_256</dimen>
+    <dimen name="home_back_drop_height">@dimen/dimen_174</dimen>
+    <dimen name="home_circ_profile_pic_height">@dimen/dimen_86</dimen>
 
 </resources>

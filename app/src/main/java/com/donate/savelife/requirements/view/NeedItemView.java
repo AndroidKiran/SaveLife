@@ -55,10 +55,7 @@ public class NeedItemView extends RelativeLayout {
 
     public void display(Need need){
         bloodGroup.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(need.getAddress()+", "+need.getCity()+"\n");
-        stringBuilder.append(need.getCountryName(getContext()));
-        requirementAddress.setText(stringBuilder.toString());
+        requirementAddress.setText(String.format(getResources().getString(R.string.str_address_msg), need.getAddress(), need.getCity(),need.getCountryName(getContext())));
         Picasso.with(getContext()).load(need.getUser().getPhotoUrl()).into(userAvatar);
     }
 }

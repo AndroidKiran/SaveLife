@@ -34,5 +34,6 @@
 
     <color name="background_grey">#33CCCCCC</color>
 
-    <color name="background">#eaeaea</color>
+    <color name="window_background">#eaeaea</color>
+    <color name="white_semi_transperent">#30ffffff</color>
 </resources>

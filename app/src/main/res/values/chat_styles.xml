@@ -11,7 +11,7 @@
   <style name="Chat.NewMessage" />
 
   <style name="Chat.NewMessage.Layout">
-    <item name="android:background">@drawable/layer_shadow</item>
+    <item name="android:background">@color/white_neutral</item>
     <item name="android:elevation">@dimen/dimen_4</item>
     <item name="android:gravity">center_vertical</item>
   </style>

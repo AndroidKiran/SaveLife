@@ -12,7 +12,9 @@
         <RelativeLayout
             android:id="@+id/toolbar_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_green"
+            android:padding="@dimen/dimen_10">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -88,21 +90,44 @@
             style="@style/Chat.NewMessage.Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/dimen_48"
             android:layout_gravity="bottom"
+            android:clickable="false"
             android:orientation="horizontal">
 
-            <com.donate.savelife.component.text.EditText
-                android:id="@+id/message_edit"
-                style="@style/Chat.NewMessage.Text"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="textMultiLine"
-                android:lineSpacingExtra="@dimen/dimen_1"
-                android:minLines="2"
-                android:maxLines="6"
-                android:scrollbars="vertical"
-                app:fontTypeface="museosans500" />
+                app:hintEnabled="false"
+                app:hintAnimationEnabled="false"
+                app:theme="@style/AppTheme.TextInputLayout">
+
+                <com.donate.savelife.component.text.EditText
+                    android:id="@+id/message_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lineSpacingExtra="@dimen/dimen_1"
+                    android:maxLines="4"
+                    android:minLines="2"
+                    android:scrollbars="vertical"
+                    app:fontTypeface="museosans500" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<com.donate.savelife.component.text.EditText-->
+            <!--android:id="@+id/message_edit"-->
+            <!--style="@style/Chat.NewMessage.Text"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:inputType="textMultiLine"-->
+            <!--android:lineSpacingExtra="@dimen/dimen_1"-->
+            <!--android:maxLines="6"-->
+            <!--android:minLines="2"-->
+            <!--android:scrollbars="vertical"-->
+            <!--app:fontTypeface="museosans500" />-->
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/submit_button"

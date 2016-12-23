@@ -52,6 +52,7 @@
 
     <!--Needs-->
     <string name="str_blood_required_msg">%1$s blood required on urgent basis</string>
+    <string name="str_address_msg" formatted="false">%1s, %2s, %3s</string>
 
     <string name="str_save_life">Save a life</string>
     <string name="str_send_invite">Send invite</string>

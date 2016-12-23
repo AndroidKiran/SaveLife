@@ -3,6 +3,7 @@ package com.donate.savelife.home.view;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.donate.savelife.R;
 import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.ViewPagerAdapter;
@@ -33,7 +35,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
 
 
     private final int[] tabColors;
-    private ViewPager viewPager;
+    private AHBottomNavigationViewPager viewPager;
     private AppCompatActivity appCompatActivity;
     private ViewPagerAdapter viewPagerAdapter;
     private HomeInteractionListener homeInteractionListener;
@@ -67,11 +69,11 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         viewPager = Views.findById(this, R.id.vp_home);
         fabButton = Views.findById(this, R.id.fab_button);
         titleContainer = Views.findById(this, title_container);
-        bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        bottomNavigation = Views.findById(this, R.id.bottom_navigation);
         bottomNavigation.setBehaviorTranslationEnabled(true);
         bottomNavigation.setTranslucentNavigationEnabled(true);
         bottomNavigation.manageFloatingActionButtonBehavior(fabButton);
-        bottomNavigation.setAccentColor(getResources().getColor(R.color.material_login_background));
+        bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(),R.color.material_login_background, null));
     }
 
     @Override
@@ -87,7 +89,6 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         navigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
         viewPager.setAdapter(getViewPagerAdapter());
         viewPager.setOffscreenPageLimit(3);
-
     }
 
     @Override
