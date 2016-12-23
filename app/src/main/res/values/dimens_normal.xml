@@ -8,5 +8,6 @@
     <dimen name="profile_backdrop_height">@dimen/dimen_232</dimen>
     <dimen name="home_back_drop_height">@dimen/dimen_150</dimen>
     <dimen name="home_circ_profile_pic_height">@dimen/dimen_120</dimen>
+    <dimen name="complete_profile_back_drop_height">@dimen/dimen_232</dimen>
 
 </resources>

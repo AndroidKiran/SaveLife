@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.donate.savelife.R;
@@ -57,6 +58,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
     private void setToolbar() {
         toolbar = Views.findById(this, R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.inflateMenu(R.menu.menu_profile);
     }
 
     private void initControl(){
@@ -76,6 +78,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         this.profileInteractionListener = profileInteractionListener;
         fabButton.setOnClickListener(onClickListener);
         toolbar.setNavigationOnClickListener(onNavigationClickListener);
+        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
 
     @Override
@@ -83,6 +86,8 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         this.profileInteractionListener = profileInteractionListener;
         fabButton.setOnClickListener(null);
         toolbar.setNavigationOnClickListener(null);
+        toolbar.setOnMenuItemClickListener(null);
+
     }
 
     @Override
@@ -152,6 +157,18 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         @Override
         public void onClick(View view) {
             profileInteractionListener.onNavigateClick();
+        }
+    };
+
+    Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.action_edit:
+                    profileInteractionListener.onEditClick();
+                    return true;
+            }
+            return false;
         }
     };
 }

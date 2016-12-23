@@ -106,7 +106,7 @@ public class ProfilePresenter {
     ProfileDisplayer.OnProfileInteractionListener onProfileInteractionListener = new ProfileDisplayer.OnProfileInteractionListener() {
         @Override
         public void onEditClick() {
-
+            navigator.toCompleteProfile();
         }
 
         @Override

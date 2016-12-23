@@ -3,21 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/hero_avatar"
-        android:layout_width="@dimen/dimen_40"
-        android:layout_height="@dimen/dimen_40"
-        android:layout_marginRight="@dimen/dimen_16"
-        app:border_color="@color/white_neutral"
-        app:border_width="@dimen/dimen_2" />
-    ​
+    <include layout="@layout/hero_avatar"
+        android:id="@+id/hero"/>
 
     <LinearLayout
         android:id="@+id/hero_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/hero_avatar"
+        android:layout_toRightOf="@id/hero"
         android:orientation="vertical">
 
         <com.donate.savelife.component.text.TextView
@@ -34,7 +29,7 @@
             tools:text="Arnold Randy" />
 
         <com.donate.savelife.component.text.TextView
-            android:id="@+id/hero_address"
+            android:id="@+id/live_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"

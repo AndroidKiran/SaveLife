@@ -9,7 +9,7 @@
         android:layout_height="@dimen/dimen_40"
         android:layout_marginRight="@dimen/dimen_16"
         android:layout_centerVertical="true"
-        app:border_color="@color/material_login_background"
+        app:border_color="@color/material_login_login_error_color"
         app:border_width="@dimen/dimen_2" />
     ​
 

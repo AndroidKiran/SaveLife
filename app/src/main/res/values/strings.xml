@@ -37,8 +37,8 @@
     <string name="ll">d</string>
 
     <!--Home-->
-    <string name="str_requirement_tab">Need</string>
-    <string name="str_heros_tab">Top 100 Heros</string>
+    <string name="str_requirement_tab">Needs</string>
+    <string name="str_heros_tab">Heros</string>
     <string name="str_invite">Invite</string>
     <string name="str_logout">Logout</string>
     <string name="str_preference_tab">Preference</string>
@@ -67,5 +67,9 @@
     <string name="str_profile_info">Profile Information</string>
     <string name="str_wat_address" formatted="false">%1s,%2s</string>
     <string name="str_msg1">Saved</string>
+    <string name="str_edit">Edit</string>
+
+    <!--Heros-->
+    <string name="str_save_count"><![CDATA[Has saved <B>%1s</B> live till now]]></string>
 
 </resources>

@@ -36,4 +36,6 @@
 
     <color name="window_background">#eaeaea</color>
     <color name="white_semi_transperent">#30ffffff</color>
+    <color name="gold">#ebecb007</color>
+
 </resources>
