@@ -28,4 +28,6 @@ public interface Navigator {
     void toDialNumber(String dialPhoneNumber);
 
     void toMap(Uri geoLocation);
+
+    void toRateUs();
 }

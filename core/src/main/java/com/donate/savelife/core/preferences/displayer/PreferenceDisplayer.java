@@ -10,6 +10,12 @@ public interface PreferenceDisplayer {
 
     void detach(PreferenceInteractionListener preferenceInteractionListener);
 
+    void showAboutUsDialog();
+
+    void dismissAboutUsDialog();
+
+    void showTermsDialog();
+
     interface PreferenceInteractionListener {
 
         void onNotificationModifyClicked();
@@ -17,6 +23,10 @@ public interface PreferenceDisplayer {
         void onAboutClicked();
 
         void onShareClicked();
+
+        void onRateClicked();
+
+        void onTermsClicked();
 
     }
 }

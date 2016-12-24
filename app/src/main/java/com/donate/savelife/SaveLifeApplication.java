@@ -1,5 +1,7 @@
 package com.donate.savelife;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
 import com.donate.savelife.firebase.Dependencies;
@@ -11,6 +13,8 @@ import java.util.Locale;
  */
 public class SaveLifeApplication extends MultiDexApplication {
 
+    public static int APP_VERSION_CODE;
+    public static String APP_VERSION;
     private static SaveLifeApplication sInstance;
     private Locale current;
 
@@ -20,6 +24,15 @@ public class SaveLifeApplication extends MultiDexApplication {
         super.onCreate();
         sInstance = this;
         Dependencies.INSTANCE.init(this);
+
+        try {
+            final PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            APP_VERSION = info.versionName;
+            APP_VERSION_CODE = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            APP_VERSION = "Unknown";
+            APP_VERSION_CODE = 0;
+        }
     }
 
     public static synchronized SaveLifeApplication getInstance() {

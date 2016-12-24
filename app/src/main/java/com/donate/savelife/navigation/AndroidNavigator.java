@@ -2,6 +2,7 @@ package com.donate.savelife.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.donate.savelife.R;
@@ -98,6 +99,19 @@ public class AndroidNavigator implements Navigator {
         intent.setData(geoLocation);
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
             activity.startActivity(intent);
+        }
+    }
+
+    @Override
+    public void toRateUs() {
+        Intent intentMarket = new Intent(Intent.ACTION_VIEW);
+        PackageManager myAppPackage = activity.getPackageManager();
+        intentMarket
+                .setData(Uri
+                        .parse("https://play.google.com/store/apps/details?id=com.donate.savelife"));
+
+        if (intentMarket.resolveActivity(myAppPackage) != null) {
+            activity.startActivity(intentMarket);
         }
     }
 }

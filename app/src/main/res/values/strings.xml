@@ -70,7 +70,18 @@
     <string name="str_reminder_settings">Reminder setting</string>
     <string name="str_pop_notification">Pop notification</string>
     <string name="str_general_settings">General setting</string>
-    <string name="str_about_app">About us</string>
+    <string name="str_about_us">About us</string>
     <string name="str_invite">Invite friends and family</string>
 
+    <!--About Us-->
+    <string name="str_about_app">lsvfhjdhfjhjvhdf dhvljdhfjlvhldfv dflvldfhlvfd vdfkjvkdfvjdf fhvjlhdfjhvdf dvkdfvdfv ljdfvjhfdjh dfjvjdfhvjfhdvjfd</string>
+    <string name="str_rate_us">Rate us on Play Store</string>
+    <string name="str_terms_conditions">Terms and Conditions</string>
+    <string name="str_version">"Version "</string>
+    <string name="str_about">About Us</string>
+
+    <!--Terms & Condition-->
+    <string name="str_terms_content">sdhjshdjhsjhshdjdsh sdjlhjsdhjsd dsjlhjlsdhjds dsjlhljsdh \n sdsdhshllsdhj
+    dsbjdbsbds sjdbjsbdjb sdjbjdsbsd sdjjbdc jdbjbds sdjbcjsbdc dsjbcdjsbc dsbcjdb \n
+    dshhdshc dschvdsuhudsvhdvs sdvihdhvs vsdidsvh sdviohvdishvds svdhdvshdvs dvshsvdh</string>
 </resources>

@@ -1,12 +1,17 @@
 package com.donate.savelife.preferences.view;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.SaveLifeApplication;
+import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 import com.novoda.notils.caster.Views;
 
@@ -22,6 +27,9 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     private AppCompatTextView notificationStatus;
     private View aboutUs;
     private View invite;
+    private View rateUs;
+    private View termsCondition;
+    private AlertDialog aboutDialog;
 
     public PreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,6 +48,8 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         notificationStatus = Views.findById(this, R.id.notification_status);
         aboutUs = Views.findById(this, R.id.about_us);
         invite = Views.findById(this, R.id.invite);
+        rateUs = Views.findById(this, R.id.play_store_rate);
+        termsCondition = Views.findById(this, R.id.terms_conditions);
     }
 
     @Override
@@ -48,6 +58,9 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         notificationSetting.setOnClickListener(onClickListener);
         aboutUs.setOnClickListener(onClickListener);
         invite.setOnClickListener(onClickListener);
+        rateUs.setOnClickListener(onClickListener);
+        termsCondition.setOnClickListener(onClickListener);
+
     }
 
     @Override
@@ -56,6 +69,28 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         notificationSetting.setOnClickListener(null);
         aboutUs.setOnClickListener(null);
         invite.setOnClickListener(null);
+        rateUs.setOnClickListener(null);
+        termsCondition.setOnClickListener(null);
+    }
+
+    @Override
+    public void showAboutUsDialog() {
+        aboutDialog = DialogUtils.showDialog(getContext(), createAboutUsView());
+        aboutDialog.show();
+    }
+
+    @Override
+    public void dismissAboutUsDialog() {
+        if (aboutDialog != null && aboutDialog.isShowing()) {
+            aboutDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showTermsDialog() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_terms_conditions, null);
+        aboutDialog = DialogUtils.showDialog(getContext(), dialogView);
+        aboutDialog.show();
     }
 
     final OnClickListener onClickListener = new OnClickListener() {
@@ -74,7 +109,23 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
                 case R.id.invite:
                     preferenceInteractionListener.onShareClicked();
                     break;
+
+                case R.id.play_store_rate:
+                    preferenceInteractionListener.onRateClicked();
+                    break;
+
+                case R.id.terms_conditions:
+                    preferenceInteractionListener.onTermsClicked();
+                    break;
             }
         }
     };
+
+    private View createAboutUsView(){
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_about_us, null);
+        TextView versionTxt = (TextView) dialogView.findViewById(R.id.app_version);
+        String versionString = getResources().getString(R.string.str_version) + SaveLifeApplication.APP_VERSION;
+        versionTxt.setText(versionString);
+        return dialogView;
+    }
 }

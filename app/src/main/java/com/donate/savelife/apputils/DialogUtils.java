@@ -39,4 +39,12 @@ public class DialogUtils {
     }
 
 
+    public static AlertDialog showDialog(Context context, View dialogView){
+        AlertDialog alertDialogBuilder = new AlertDialog.Builder(context)
+                .setView(dialogView)
+                .create();
+        return alertDialogBuilder;
+    }
+
+
 }

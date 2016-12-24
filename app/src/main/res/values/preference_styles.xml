@@ -49,6 +49,7 @@
         <item name="android:paddingRight">@dimen/dimen_16</item>
         <item name="android:paddingTop">@dimen/dimen_10</item>
         <item name="android:paddingBottom">@dimen/dimen_10</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_2</item>
         <item name="android:background">@drawable/selector_list_item_white</item>
     </style>
 

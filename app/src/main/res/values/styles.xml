@@ -59,4 +59,13 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="ThemeDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@color/grey_charcoal</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@color/grey_charcoal</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@color/material_white</item>
+    </style>
+
 </resources>

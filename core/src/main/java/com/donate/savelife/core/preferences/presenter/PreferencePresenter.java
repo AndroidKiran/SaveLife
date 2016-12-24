@@ -43,6 +43,7 @@ public class PreferencePresenter {
 
     public void stopPresenting(){
         preferenceDisplayer.detach(null);
+        preferenceDisplayer.dismissAboutUsDialog();
     }
 
 
@@ -54,13 +55,23 @@ public class PreferencePresenter {
 
         @Override
         public void onAboutClicked() {
-
+            preferenceDisplayer.showAboutUsDialog();
         }
 
         @Override
         public void onShareClicked() {
             analytics.trackSendInvitesSelected(user.getId());
             navigator.toShareInvite(linkFactory.inviteLinkFrom(user).toString());
+        }
+
+        @Override
+        public void onRateClicked() {
+            navigator.toRateUs();
+        }
+
+        @Override
+        public void onTermsClicked() {
+            preferenceDisplayer.showTermsDialog();
         }
     };
 }
