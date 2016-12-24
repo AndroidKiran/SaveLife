@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Preference" />
+
+    <style name="Preference.HeaderTxt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_40</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/dimen_16</item>
+        <item name="android:paddingRight">@dimen/dimen_16</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:paddingBottom">@dimen/dimen_10</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="Preference.Actionable"/>
+
+    <style name="Preference.Actionable.Container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_54</item>
+        <item name="android:background">@drawable/selector_list_item_white</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">@dimen/dimen_16</item>
+        <item name="android:paddingRight">@dimen/dimen_16</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:paddingBottom">@dimen/dimen_10</item>
+    </style>
+
+    <style name="Preference.Actionable.HeaderTxt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/grey_charcoal</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="Preference.Actionable.HeaderTxt.withSelector">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_48</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/grey_charcoal</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:paddingLeft">@dimen/dimen_16</item>
+        <item name="android:paddingRight">@dimen/dimen_16</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:paddingBottom">@dimen/dimen_10</item>
+        <item name="android:background">@drawable/selector_list_item_white</item>
+    </style>
+
+    <style name="Preference.Actionable.SubTxt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/grey_cool</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+
+
+</resources>

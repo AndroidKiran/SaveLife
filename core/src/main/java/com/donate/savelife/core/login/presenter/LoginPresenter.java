@@ -2,7 +2,7 @@ package com.donate.savelife.core.login.presenter;
 
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.database.DatabaseResult;
@@ -25,7 +25,7 @@ public class LoginPresenter {
     private final LoginNavigator navigator;
     private final ErrorLogger errorLogger;
     private final Analytics analytics;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private final UserService userService;
 
@@ -37,7 +37,7 @@ public class LoginPresenter {
                           LoginNavigator navigator,
                           ErrorLogger errorLogger,
                           Analytics analytics,
-                          PreferenceService preferenceService,
+                          SharedPreferenceService preferenceService,
                           GsonService gsonService) {
         this.loginService = loginService;
         this.userService = userService;

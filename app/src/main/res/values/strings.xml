@@ -34,13 +34,10 @@
     <string name="str_search">Search for country</string>
 
     <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
-    <string name="ll">d</string>
 
     <!--Home-->
     <string name="str_requirement_tab">Needs</string>
     <string name="str_heros_tab">Heros</string>
-    <string name="str_invite">Invite</string>
-    <string name="str_logout">Logout</string>
     <string name="str_preference_tab">Preference</string>
 
     <!--Post request-->
@@ -69,7 +66,11 @@
     <string name="str_msg1">Saved</string>
     <string name="str_edit">Edit</string>
 
-    <!--Heros-->
-
+    <!--Perferences-->
+    <string name="str_reminder_settings">Reminder setting</string>
+    <string name="str_pop_notification">Pop notification</string>
+    <string name="str_general_settings">General setting</string>
+    <string name="str_about_app">About us</string>
+    <string name="str_invite">Invite friends and family</string>
 
 </resources>

@@ -3,13 +3,13 @@ package com.donate.savelife.apputils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 
 
 /**
  * Created by ravi on 12/08/16.
  */
-public class AppPreferencesImpl implements PreferenceService {
+public class AppPreferencesImpl implements SharedPreferenceService {
 
     private final static String PREFS_FILE = "app_prefs";
     private SharedPreferences prefs;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.donate.savelife.component.text.TextView
+        style="@style/Preference.HeaderTxt"
+        android:text="@string/str_reminder_settings"
+        app:fontTypeface="museosans700" />
+
+    <LinearLayout
+        android:id="@+id/notification_setting"
+        style="@style/Preference.Actionable.Container">
+
+        <com.donate.savelife.component.text.TextView
+            style="@style/Preference.Actionable.HeaderTxt"
+            android:text="@string/str_pop_notification"
+            app:fontTypeface="museosans500" />
+
+
+        <com.donate.savelife.component.text.TextView
+            android:id="@+id/notification_status"
+            style="@style/Preference.Actionable.SubTxt"
+            app:fontTypeface="museosans500" />
+
+    </LinearLayout>
+
+
+    <com.donate.savelife.component.text.TextView
+        style="@style/Preference.HeaderTxt"
+        android:text="@string/str_general_settings"
+        app:fontTypeface="museosans700" />
+
+
+    <com.donate.savelife.component.text.TextView
+        android:id="@+id/about_us"
+        style="@style/Preference.Actionable.HeaderTxt.withSelector"
+        android:text="@string/str_about_app"
+        app:fontTypeface="museosans500" />
+
+
+    <com.donate.savelife.component.text.TextView
+        android:id="@+id/invite"
+        style="@style/Preference.Actionable.HeaderTxt.withSelector"
+        android:text="@string/str_invite"
+        app:fontTypeface="museosans500" />
+
+
+</merge>

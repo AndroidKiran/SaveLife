@@ -3,7 +3,7 @@ package com.donate.savelife.core.main.presenter;
 import android.text.TextUtils;
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 
@@ -13,10 +13,10 @@ import com.donate.savelife.core.user.data.model.User;
 public class MainPresenter {
 
     private final Navigator navigator;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
 
-    public MainPresenter(Navigator navigator, PreferenceService preferenceService, GsonService gsonService){
+    public MainPresenter(Navigator navigator, SharedPreferenceService preferenceService, GsonService gsonService){
         this.navigator = navigator;
         this.preferenceService = preferenceService;
         this.gsonService = gsonService;

@@ -1,7 +1,7 @@
 package com.donate.savelife.core.requirement.presenter;
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.country.model.Country;
@@ -26,7 +26,7 @@ public class NeedPresenter {
     private final ErrorLogger errorLogger;
     private final Analytics analytics;
     private final NeedService needService;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -36,7 +36,7 @@ public class NeedPresenter {
                 NeedService needService,
                 ErrorLogger errorLogger,
                 Analytics analytics,
-                PreferenceService preferenceService,
+                SharedPreferenceService preferenceService,
                 GsonService gsonService
         ) {
             this.needDisplayer = needDisplayer;

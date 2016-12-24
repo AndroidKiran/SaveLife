@@ -25,7 +25,7 @@ import com.donate.savelife.core.user.service.PersistedHeroService;
 import com.donate.savelife.core.user.service.PersistedUserService;
 import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.country.database.FirebaseCountryDatabase;
 import com.donate.savelife.login.database.FirebaseAuthDatabase;
 import com.donate.savelife.requirements.database.FirebaseNeedDatabase;
@@ -118,7 +118,7 @@ public enum Dependencies {
         return config;
     }
 
-    public PreferenceService getPreference(){
+    public SharedPreferenceService getPreference(){
         return pref;
     }
 

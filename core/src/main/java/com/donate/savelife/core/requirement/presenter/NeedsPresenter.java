@@ -3,7 +3,7 @@ package com.donate.savelife.core.requirement.presenter;
 import android.os.Bundle;
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.utils.UtilBundles;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
@@ -36,7 +36,7 @@ public class NeedsPresenter {
 
     public NeedsPresenter(NeedsDisplayer needsDisplayer, NeedService needService,
                           ErrorLogger errorLogger, Analytics analytics,
-                          Navigator navigator, PreferenceService preferenceService,
+                          Navigator navigator, SharedPreferenceService preferenceService,
                           GsonService gsonService) {
         this.needsDisplayer = needsDisplayer;
         this.needService = needService;

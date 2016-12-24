@@ -9,7 +9,7 @@ import com.donate.savelife.core.user.displayer.ProfileDisplayer;
 import com.donate.savelife.core.user.service.HeroService;
 import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 
 import rx.functions.Action1;
 import rx.functions.Func2;
@@ -24,7 +24,7 @@ import static com.donate.savelife.core.user.presenter.ProfilePresenter.Pair.asPa
 public class ProfilePresenter {
 
     private final ProfileDisplayer profileDisplayer;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private final UserService userService;
     private final ErrorLogger errorLogger;
@@ -40,7 +40,7 @@ public class ProfilePresenter {
 
     public ProfilePresenter(
             ProfileDisplayer profileDisplayer,
-            PreferenceService preferenceService,
+            SharedPreferenceService preferenceService,
             Navigator navigator,
             GsonService gsonService,
             UserService userService,

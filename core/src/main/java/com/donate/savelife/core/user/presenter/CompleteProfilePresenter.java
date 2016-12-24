@@ -3,7 +3,7 @@ package com.donate.savelife.core.user.presenter;
 import android.text.TextUtils;
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.country.model.Country;
@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 public class CompleteProfilePresenter {
 
     private final CompleteProfileDisplayer completeProfileDisplayer;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private final UserService userService;
     private final ErrorLogger errorLogger;
@@ -35,7 +35,7 @@ public class CompleteProfilePresenter {
 
     public CompleteProfilePresenter(
             CompleteProfileDisplayer completeProfileDisplayer,
-            PreferenceService preferenceService,
+            SharedPreferenceService preferenceService,
             Navigator navigator,
             GsonService gsonService,
             UserService userService,

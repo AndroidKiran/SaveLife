@@ -2,7 +2,7 @@ package com.donate.savelife.core.home.presenter;
 
 
 import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.PreferenceService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
@@ -19,13 +19,13 @@ public class HomePresenter {
     private final Navigator navigator;
     private final Analytics analytics;
     private final ErrorLogger errorLogger;
-    private final PreferenceService preferenceService;
+    private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private final LinkFactory linkFactory;
     private final User user;
 
     public HomePresenter(HomeDisplayer homeDisplayer,
-                         PreferenceService preferenceService,
+                         SharedPreferenceService preferenceService,
                          GsonService gsonService,
                          Navigator navigator,
                          Analytics analytics,
