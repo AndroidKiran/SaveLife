@@ -99,9 +99,9 @@
                         app:ms_arrowSize="@dimen/dimen_16"
                         app:ms_baseColor="@android:color/darker_gray"
                         app:ms_enableFloatingLabel="true"
-                        app:ms_floatingLabelColor="@color/material_login_background"
+                        app:ms_floatingLabelColor="@color/material_green"
                         app:ms_floatingLabelText="@string/str_blood_group"
-                        app:ms_highlightColor="@color/material_login_background"
+                        app:ms_highlightColor="@color/material_green"
                         app:ms_hint="@string/str_blood_group"
                         app:ms_hintColor="@android:color/darker_gray"
                         app:ms_multiline="false"
@@ -227,7 +227,7 @@
                         android:gravity="center"
                         android:minHeight="@dimen/dimen_48"
                         android:text="@string/str_complete_profile"
-                        android:textColor="@color/material_login_login_color"
+                        android:textColor="@color/material_white"
                         android:textSize="@dimen/font_16" />
 
                 </LinearLayout>

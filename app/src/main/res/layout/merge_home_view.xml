@@ -119,7 +119,7 @@
         android:layout_gravity="bottom|end|right"
         android:layout_marginBottom="@dimen/home_fab_btm_margin"
         android:layout_marginRight="@dimen/home_fab_rght_margin"
-        app:backgroundTint="@color/material_login_background"
+        app:backgroundTint="@color/material_green"
         app:fabSize="normal"
         app:layout_behavior="@string/fab_behavior"
         app:srcCompat="@drawable/ic_send_black_24dp" />

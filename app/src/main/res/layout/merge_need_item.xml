@@ -3,14 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_avatar"
-        android:layout_width="@dimen/dimen_40"
-        android:layout_height="@dimen/dimen_40"
-        android:layout_marginRight="@dimen/dimen_16"
-        android:layout_centerVertical="true"
-        app:border_color="@color/material_login_login_error_color"
-        app:border_width="@dimen/dimen_2" />
+    <include
+        android:id="@+id/need_avatar"
+        layout="@layout/need_avatar" />
     ​
 
     <LinearLayout
@@ -18,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/user_avatar"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/need_avatar"
         android:orientation="vertical">
 
         <com.donate.savelife.component.text.TextView
@@ -29,9 +24,9 @@
             android:ellipsize="end"
             android:paddingBottom="@dimen/dimen_5"
             android:paddingTop="@dimen/dimen_5"
+            android:singleLine="true"
             android:textColor="@color/grey_charcoal"
             android:textSize="@dimen/font_16"
-            android:singleLine="true"
             app:fontTypeface="museosans500"
             tools:text="Arnold Randy" />
 
@@ -41,9 +36,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:paddingBottom="@dimen/dimen_5"
+            android:singleLine="true"
             android:textColor="@color/grey_cool"
             android:textSize="@dimen/font_14"
-            android:singleLine="true"
             app:fontTypeface="museosans500"
             tools:text="Shri Sai Paying Guest" />
 

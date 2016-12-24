@@ -2,16 +2,15 @@
 <resources>
     <color name="colorPrimary">#47a747</color>
     <color name="colorPrimaryDark">#307630</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFFFFF</color>
 
-    <color name="material_login_login_color">#FFFFFF</color>
-    <color name="material_login_register_color">#FF4081</color>
-    <color name="material_login_login_error_color">#ff5151</color>
+    <color name="material_white">@color/colorAccent</color>
+    <color name="material_pink">#da1515</color>
+    <color name="material_red">#ff5151</color>
     <color name="material_login_register_error_color">#ffcdce</color>
-    <color name="material_login_login_text_color">#000</color>
-    <color name="material_login_register_text_color">#000</color>
-    <color name="material_login_background">#47a747</color>
-    <color name="material_login_button">#307630</color>
+    <color name="material_black">#000</color>
+    <color name="material_green">@color/colorPrimary</color>
+    <color name="material_dark_green">@color/colorPrimaryDark</color>
 
 
     <color name="black_1">#1e2830</color>
@@ -36,6 +35,7 @@
 
     <color name="window_background">#eaeaea</color>
     <color name="white_semi_transperent">#30ffffff</color>
-    <color name="gold">#ebecb007</color>
+    <color name="material_gold">#ebecb007</color>
+    <color name="material_dark_gold">#977105</color>
 
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+                <!-- Customize your theme here. -->
+                <item name="colorPrimary">@color/material_green</item>
+                <item name="colorPrimaryDark">@color/material_dark_green</item>
+                <item name="colorAccent">@color/material_white</item>
+                <item name="titleTextColor">@color/material_white</item>
+                <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+                <item name="android:windowBackground">@color/window_background</item>
+                <item name="android:actionMenuTextColor">@color/white_neutral</item>
+                <item name="android:windowTranslucentNavigation">true</item>
+                <item name="android:fitsSystemWindows">true</item>
+        </style>
+</resources>

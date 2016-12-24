@@ -3,33 +3,35 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/material_login_background</item>
-        <item name="colorPrimaryDark">@color/material_login_button</item>
-        <item name="colorAccent">@color/material_login_login_color</item>
-        <item name="titleTextColor">@color/material_login_login_color</item>
+        <item name="colorPrimary">@color/material_green</item>
+        <item name="colorPrimaryDark">@color/material_dark_green</item>
+        <item name="colorAccent">@color/material_white</item>
+        <item name="titleTextColor">@color/material_white</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:actionMenuTextColor">@color/white_neutral</item>
+
     </style>
 
 
-    <style name="AppTheme.ActionBar"
-        parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColorPrimary">?android:attr/textColorPrimaryInverse</item>
-        <item name="android:textColorSecondary">?android:attr/textColorPrimaryInverse</item>
-        <item name="actionMenuTextColor">?android:attr/textColorPrimaryInverse</item>
+    <style name="AppTheme.Red" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/material_red</item>
+        <item name="colorPrimaryDark">@color/material_pink</item>
+        <item name="colorAccent">@color/material_white</item>
     </style>
 
-    <style name="AppTheme.ActionBar.Inverted"
-        parent="AppTheme.ActionBar">
-        <item name="android:background">@android:color/white</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:textColorSecondary">@color/colorAccent</item>
-        <item name="actionMenuTextColor">@color/colorPrimary</item>
+
+    <style name="AppTheme.Gold" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/material_gold</item>
+        <item name="colorPrimaryDark">@color/material_dark_gold</item>
+        <item name="colorAccent">@color/material_white</item>
     </style>
+
 
     <style name="AppTheme.SelectableItemTheme">
-        <item name="colorControlHighlight">@color/material_login_login_color</item>
+        <item name="colorControlHighlight">@color/material_white</item>
     </style>
     <style name="AppTheme.SelectableItemBackground">
         <item name="android:theme">@style/AppTheme.SelectableItemTheme</item>
@@ -37,23 +39,23 @@
     </style>
 
     <style name="AppTheme.TextAppearanceRegister">
-        <item name="android:textColor">@color/material_login_login_color</item>
-        <item name="colorControlNormal">@color/material_login_login_color</item>
-        <item name="android:textColorHint">@color/material_login_login_color</item>
-        <item name="colorControlActivated">@color/material_login_login_color</item>
-        <item name="colorControlHighlight">@color/material_login_login_color</item>
+        <item name="android:textColor">@color/material_white</item>
+        <item name="colorControlNormal">@color/material_white</item>
+        <item name="android:textColorHint">@color/material_white</item>
+        <item name="colorControlActivated">@color/material_white</item>
+        <item name="colorControlHighlight">@color/material_white</item>
     </style>
 
     <style name="AppTheme.TextAppearanceLogin">
-        <item name="android:textColor">@color/material_login_login_color</item>
-        <item name="colorControlNormal">@color/material_login_login_color</item>
-        <item name="android:textColorHint">@color/material_login_login_color</item>
-        <item name="colorControlActivated">@color/material_login_login_color</item>
-        <item name="colorControlHighlight">@color/material_login_login_color</item>
+        <item name="android:textColor">@color/material_white</item>
+        <item name="colorControlNormal">@color/material_white</item>
+        <item name="android:textColorHint">@color/material_white</item>
+        <item name="colorControlActivated">@color/material_white</item>
+        <item name="colorControlHighlight">@color/material_white</item>
     </style>
 
     <style name="AppTheme.TextAppearanceLoginError" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/material_login_login_color</item>
+        <item name="android:textColor">@color/material_white</item>
         <item name="android:textSize">12sp</item>
     </style>
 

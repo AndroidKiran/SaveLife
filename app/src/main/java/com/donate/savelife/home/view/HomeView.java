@@ -3,8 +3,6 @@ package com.donate.savelife.home.view;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
@@ -73,7 +71,8 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         bottomNavigation.setBehaviorTranslationEnabled(true);
         bottomNavigation.setTranslucentNavigationEnabled(true);
         bottomNavigation.manageFloatingActionButtonBehavior(fabButton);
-        bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(),R.color.material_login_background, null));
+        bottomNavigation.setColored(true);
+//        bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(),R.color.material_login_background, null));
     }
 
     @Override
@@ -94,7 +93,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
     @Override
     public void attach(HomeInteractionListener homeInteractionListener) {
         this.homeInteractionListener = homeInteractionListener;
-        viewPager.addOnPageChangeListener(onPageChangeListener);
+//        viewPager.addOnPageChangeListener(onPageChangeListener);
         fabButton.setOnClickListener(onClickListener);
         titleContainer.setOnClickListener(onClickListener);
         bottomNavigation.setOnTabSelectedListener(onTabSelectedListener);
@@ -102,7 +101,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
 
     @Override
     public void detach(HomeInteractionListener homeInteractionListener) {
-        viewPager.addOnPageChangeListener(null);
+//        viewPager.addOnPageChangeListener(null);
         fabButton.setOnClickListener(null);
         this.homeInteractionListener = null;
         titleContainer.setOnClickListener(null);
@@ -126,27 +125,10 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
     };
 
 
-    final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            bottomNavigation.setCurrentItem(position, true);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
     final AHBottomNavigation.OnTabSelectedListener onTabSelectedListener = new AHBottomNavigation.OnTabSelectedListener() {
         @Override
         public boolean onTabSelected(int position, boolean wasSelected) {
+            setTheme(position);
             viewPager.setCurrentItem(position, true);
             return true;
         }
@@ -187,4 +169,19 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
             homeInteractionListener.onAboutUsClicked();
         }
     };
+
+    private void setTheme(int position){
+        int theme = R.style.AppTheme_Red;
+        switch (position){
+            case 1:
+                theme = R.style.AppTheme_Gold;
+                break;
+
+            case 2:
+                theme = R.style.AppTheme;
+                break;
+
+        }
+        getAppCompatActivity().setTheme(theme);
+    }
 }

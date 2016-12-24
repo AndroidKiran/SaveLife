@@ -70,6 +70,6 @@
     <string name="str_edit">Edit</string>
 
     <!--Heros-->
-    <string name="str_save_count"><![CDATA[Has saved <B>%1s</B> live till now]]></string>
+
 
 </resources>

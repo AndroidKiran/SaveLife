@@ -57,7 +57,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         MessageBubbleDrawable bubbleDrawable;
         if (viewType == VIEW_TYPE_MESSAGE_THIS_USER) {
-            bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.material_login_background, MessageBubbleDrawable.Gravity.END);
+            bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.material_green, MessageBubbleDrawable.Gravity.END);
             messageView = (MessageView) inflater.inflate(R.layout.self_message_item_layout, parent, false);
         } else if (viewType == VIEW_TYPE_MESSAGE_OTHER_USERS) {
             bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.grey_cool, MessageBubbleDrawable.Gravity.START);

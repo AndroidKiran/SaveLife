@@ -58,8 +58,8 @@ public class HeroItemView extends RelativeLayout {
 
     public void display(User user){
         heroName.setText(user.getName());
-        String liveCountNum = getResources().getString(R.string.str_save_count, String.valueOf(user.getLifeCount()));
-        liveCount.setText(fromHtml(liveCountNum));
+        String liveCountStr = getResources().getQuantityString(R.plurals.heros_lives,user.getLifeCount(),user.getLifeCount());
+        liveCount.setText(fromHtml(liveCountStr));
         Picasso.with(getContext()).load(user.getPhotoUrl()).into(heroAvatar);
     }
 

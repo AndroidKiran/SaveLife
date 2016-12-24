@@ -12,9 +12,9 @@
     </string-array>
 
     <array name="tab_colors">
-        <item name="tab_1">#455C65</item>
-        <item name="tab_2">#00886A</item>
-        <item name="tab_3">#8B6B62</item>
+        <item name="tab_1">@color/material_red</item>
+        <item name="tab_2">@color/material_gold</item>
+        <item name="tab_3">@color/material_green</item>
     </array>
 
 </resources>

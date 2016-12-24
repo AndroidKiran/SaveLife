@@ -31,7 +31,7 @@ public class MaterialProgressDialog extends ProgressDialog {
         super.onCreate(savedInstanceState);
 
         Resources res = getContext().getResources();
-        mDefaultColor = res.getColor(R.color.material_login_background);
+        mDefaultColor = res.getColor(R.color.material_green);
 
         indeterminateDrawable = new MaterialProgressDrawable(getContext(), findViewById(android.R.id.progress));
         indeterminateDrawable.setBackgroundColor(CIRCLE_BG_LIGHT);

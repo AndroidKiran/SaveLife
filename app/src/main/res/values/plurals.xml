@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <plurals name="num_of_lives">
         <item quantity="one">Life</item>
         <item quantity="other">Lives</item>
     </plurals>
+
+    <plurals name="heros_lives">
+        <item quantity="one"><![CDATA[Has saved <B>%d</B> life till now]]></item>
+        <item quantity="other"><![CDATA[Has saved <B>%d</B> lives till now]]></item>
+    </plurals>
+
+
 </resources>

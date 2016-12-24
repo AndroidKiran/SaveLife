@@ -2,11 +2,11 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme.TextInputLayout">
-        <item name="android:textColor">@color/material_login_background</item>
+        <item name="android:textColor">@color/material_green</item>
         <item name="colorControlNormal">@android:color/darker_gray</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@color/material_login_background</item>
-        <item name="colorControlHighlight">@color/material_login_background</item>
+        <item name="colorControlActivated">@color/material_green</item>
+        <item name="colorControlHighlight">@color/material_green</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
@@ -14,12 +14,12 @@
 
 
 
-    <style name="AppTheme.EditText" parent="AppTheme.ActionBar">
+    <style name="AppTheme.EditText" parent="AppTheme">
         <item name="android:textColor">@color/black_1</item>
         <item name="colorControlNormal">@android:color/darker_gray</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@color/material_login_background</item>
-        <item name="colorControlHighlight">@color/material_login_button</item>
+        <item name="colorControlActivated">@color/material_green</item>
+        <item name="colorControlHighlight">@color/material_dark_green</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
@@ -40,7 +40,7 @@
 
 
     <style name="AppTheme.TabLayout.StandardTabs">
-        <item name="android:background">@color/material_login_background</item>
+        <item name="android:background">@color/material_green</item>
         <item name="tabIndicatorColor">@color/white_neutral</item>
         <item name="tabSelectedTextColor">@color/white_neutral</item>
         <item name="tabTextColor">@color/grey_pale_2</item>

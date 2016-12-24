@@ -217,7 +217,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     @Override
     public void enableInteraction() {
         submitButton.setEnabled(true);
-        submitButton.setColorFilter(getResources().getColor(R.color.material_login_background), PorterDuff.Mode.SRC_ATOP);
+        submitButton.setColorFilter(getResources().getColor(R.color.material_green), PorterDuff.Mode.SRC_ATOP);
     }
 
     @Override
