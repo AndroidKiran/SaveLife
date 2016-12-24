@@ -7,7 +7,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_256"
+        android:layout_height="@dimen/complete_profile_back_drop_height"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -60,13 +60,13 @@
                 android:id="@+id/flexible.example.cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/dimen_8"
                 app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:contentPaddingBottom="16dp"
-                app:contentPaddingLeft="16dp"
-                app:contentPaddingRight="16dp">
+                app:cardCornerRadius="@dimen/dimen_4"
+                app:cardElevation="@dimen/dimen_4"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="true"
+                app:contentPadding="@dimen/dimen_16">
 
                 <LinearLayout
                     android:layout_width="match_parent"

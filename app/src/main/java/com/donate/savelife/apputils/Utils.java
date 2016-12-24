@@ -1,6 +1,7 @@
 package com.donate.savelife.apputils;
 
 
+import android.content.Context;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,15 @@ public class Utils {
             p.setMargins(left, top, right, bottom);
             view.requestLayout();
         }
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
 }

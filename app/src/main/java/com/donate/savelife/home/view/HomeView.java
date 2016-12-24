@@ -1,8 +1,10 @@
 package com.donate.savelife.home.view;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +68,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         profileName = Views.findById(this, R.id.profile_name);
         viewPager = Views.findById(this, R.id.vp_home);
         fabButton = Views.findById(this, R.id.fab_button);
+        fabButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.material_red)));
         titleContainer = Views.findById(this, title_container);
         bottomNavigation = Views.findById(this, R.id.bottom_navigation);
         bottomNavigation.setBehaviorTranslationEnabled(true);
@@ -171,17 +174,17 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
     };
 
     private void setTheme(int position){
-        int theme = R.style.AppTheme_Red;
+        int color = R.color.material_red;
         switch (position){
             case 1:
-                theme = R.style.AppTheme_Gold;
+                color = R.color.material_gold;
                 break;
 
             case 2:
-                theme = R.style.AppTheme;
+                color = R.color.material_green;
                 break;
 
         }
-        getAppCompatActivity().setTheme(theme);
+        fabButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), color)));
     }
 }

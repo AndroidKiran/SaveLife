@@ -10,24 +10,13 @@
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:actionMenuTextColor">@color/white_neutral</item>
-
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="AppTheme.TranslucentNavigation" parent="AppTheme"/>
 
-    <style name="AppTheme.Red" parent="AppTheme">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/material_red</item>
-        <item name="colorPrimaryDark">@color/material_pink</item>
-        <item name="colorAccent">@color/material_white</item>
-    </style>
+    <style name="AppTheme.Translucent" parent="AppTheme"/>
 
-
-    <style name="AppTheme.Gold" parent="AppTheme">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/material_gold</item>
-        <item name="colorPrimaryDark">@color/material_dark_gold</item>
-        <item name="colorAccent">@color/material_white</item>
-    </style>
 
 
     <style name="AppTheme.SelectableItemTheme">

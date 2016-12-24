@@ -10,7 +10,17 @@
                 <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
                 <item name="android:windowBackground">@color/window_background</item>
                 <item name="android:actionMenuTextColor">@color/white_neutral</item>
+                <item name="android:windowContentOverlay">@null</item>
+        </style>
+
+        <style name="AppTheme.TranslucentNavigation" parent="AppTheme">
                 <item name="android:windowTranslucentNavigation">true</item>
-                <item name="android:fitsSystemWindows">true</item>
+                <item name="android:windowActionBarOverlay">true</item>
+        </style>
+
+        <style name="AppTheme.Translucent" parent="AppTheme">
+                <item name="android:windowActionBarOverlay">true</item>
+                <item name="windowActionBarOverlay">true</item>
+                <item name="android:windowTranslucentStatus">true</item>
         </style>
 </resources>

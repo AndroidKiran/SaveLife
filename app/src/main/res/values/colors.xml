@@ -5,7 +5,7 @@
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="material_white">@color/colorAccent</color>
-    <color name="material_pink">#da1515</color>
+    <color name="material_dark_red">#da1515</color>
     <color name="material_red">#ff5151</color>
     <color name="material_login_register_error_color">#ffcdce</color>
     <color name="material_black">#000</color>

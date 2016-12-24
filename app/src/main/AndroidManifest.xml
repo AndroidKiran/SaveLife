@@ -35,21 +35,21 @@
             android:name=".user.CompleteProfileActivity"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.Translucent"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".home.HomeActivity"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.TranslucentNavigation"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".requirements.NeedActivity"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.Translucent"
             android:windowSoftInputMode="adjustPan" />
 
 
@@ -60,7 +60,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".welcome.WelcomeActivity">
+        <activity android:name=".welcome.WelcomeActivity"
+            android:configChanges="keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Translucent"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -78,7 +82,7 @@
             android:name=".user.ProfileActivity"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.Translucent"
             android:windowSoftInputMode="adjustPan" />
 
         <meta-data
