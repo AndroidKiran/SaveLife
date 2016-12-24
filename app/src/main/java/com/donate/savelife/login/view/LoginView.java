@@ -1,7 +1,6 @@
 package com.donate.savelife.login.view;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
-import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.component.materialcomponent.MaterialProgressDialog;
 import com.donate.savelife.core.login.displayer.LoginDisplayer;
 import com.novoda.notils.caster.Views;
@@ -19,8 +17,6 @@ import com.novoda.notils.caster.Views;
 public class LoginView extends LinearLayout implements LoginDisplayer {
 
     private View loginButton;
-    private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
     private AppCompatActivity appCompatActivity;
     private MaterialProgressDialog materialProgressDialog;
 
@@ -34,7 +30,6 @@ public class LoginView extends LinearLayout implements LoginDisplayer {
         super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_login_view, this);
         loginButton = Views.findById(this, R.id.sign_in_button);
-        viewPager = Views.findById(this, R.id.vp_home);
     }
 
     @Override
@@ -48,12 +43,6 @@ public class LoginView extends LinearLayout implements LoginDisplayer {
         if (materialProgressDialog != null){
             materialProgressDialog.dismiss();
         }
-    }
-
-    @Override
-    public void setUpViewPager() {
-        viewPager.setAdapter(getViewPagerAdapter());
-        viewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -74,14 +63,6 @@ public class LoginView extends LinearLayout implements LoginDisplayer {
     @Override
     public void showAuthenticationError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show(); //TODO improve error display
-    }
-
-    public ViewPagerAdapter getViewPagerAdapter() {
-        return viewPagerAdapter;
-    }
-
-    public void setViewPagerAdapter(ViewPagerAdapter viewPagerAdapter) {
-        this.viewPagerAdapter = viewPagerAdapter;
     }
 
     public AppCompatActivity getAppCompatActivity() {

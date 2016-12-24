@@ -64,7 +64,7 @@ public class ChatPresenter {
         chatDisplayer.disableInteraction();
 
         subscriptions.add(
-                chatService.observeChats(need).zipWith(loginService.getAuthentication(), asPair())
+                Observable.combineLatest(chatService.observeChats(need),loginService.getAuthentication(), asPair())
                         .subscribe(new Action1<Pair>() {
                             @Override
                             public void call(Pair pair) {
@@ -164,7 +164,7 @@ public class ChatPresenter {
         @Override
         public void onLoadMore(Message message) {
             subscriptions.add(
-                    chatService.observeMoreChats(need, message).zipWith(loginService.getAuthentication(), asPair())
+                    Observable.combineLatest(chatService.observeMoreChats(need, message),loginService.getAuthentication(), asPair())
                             .subscribe(new Action1<Pair>() {
                                 @Override
                                 public void call(Pair pair) {
@@ -268,8 +268,8 @@ public class ChatPresenter {
             chatDisplayer.attach(actionListener);
             chatDisplayer.disableInteraction();
             subscriptions.add(
-                    Observable.just(chat)
-                            .map(toChats()).zipWith(loginService.getAuthentication(), asPair())
+                    Observable.combineLatest(Observable.just(chat)
+                            .map(toChats()),loginService.getAuthentication(), asPair())
                             .subscribe(new Action1<Pair>() {
                                 @Override
                                 public void call(Pair pair) {

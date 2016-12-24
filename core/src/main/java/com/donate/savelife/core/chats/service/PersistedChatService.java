@@ -29,14 +29,14 @@ public class PersistedChatService implements ChatService {
 
     @Override
     public Observable<DatabaseResult<Chat>> observeChats(Need need) {
-        return observeChat(need).zipWith(observeUserIdsFor(need), mergeChat())
+        return Observable.combineLatest(observeChat(need),observeUserIdsFor(need), mergeChat())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Chat>errorAsDatabaseResult());
     }
 
     @Override
     public Observable<DatabaseResult<Chat>> observeMoreChats(Need need, Message message) {
-        return observeMoreChat(need, message).zipWith(observeMoreUserIdsFor(need, message), mergeChat())
+        return Observable.combineLatest(observeMoreChat(need, message), observeMoreUserIdsFor(need, message), mergeChat())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Chat>errorAsDatabaseResult());
     }

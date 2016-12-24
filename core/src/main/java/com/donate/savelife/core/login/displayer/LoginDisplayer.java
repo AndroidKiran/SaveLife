@@ -6,15 +6,13 @@ public interface LoginDisplayer {
 
     void dismissProgress();
 
-    void setUpViewPager();
-
     void attach(LoginActionListener actionListener);
 
     void detach(LoginActionListener actionListener);
 
     void showAuthenticationError(String message);
 
-    public interface LoginActionListener {
+    interface LoginActionListener {
 
         void onGooglePlusLoginSelected();
 

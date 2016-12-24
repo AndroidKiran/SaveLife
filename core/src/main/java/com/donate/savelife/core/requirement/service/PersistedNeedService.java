@@ -29,7 +29,7 @@ public class PersistedNeedService implements NeedService {
 
     @Override
     public Observable<DatabaseResult<Needs>> observeNeedsWithUsers(User user) {
-        return observeNeeds(user).zipWith(observeUserIdsFor(user), mergeNeedsWithUser())
+        return Observable.combineLatest(observeNeeds(user), observeUserIdsFor(user), mergeNeedsWithUser())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
     }
@@ -51,7 +51,7 @@ public class PersistedNeedService implements NeedService {
 
     @Override
     public Observable<DatabaseResult<Needs>> observeMoreNeedsWithUsers(User user, Need need) {
-        return observeMoreNeeds(user, need).zipWith(observeMoreUserIdsFor(user, need), mergeNeedsWithUser())
+        return Observable.combineLatest(observeMoreNeeds(user, need), observeMoreUserIdsFor(user, need), mergeNeedsWithUser())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
     }

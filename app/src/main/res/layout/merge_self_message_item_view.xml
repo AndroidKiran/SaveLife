@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/message_author_image"
-            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_toLeftOf="@id/message_author_image"
             app:fontTypeface="museosans500" />
 

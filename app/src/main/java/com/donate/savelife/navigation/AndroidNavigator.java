@@ -10,6 +10,7 @@ import com.donate.savelife.chats.ChatActivity;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.home.HomeActivity;
+import com.donate.savelife.intro.IntroActivity;
 import com.donate.savelife.login.LoginActivity;
 import com.donate.savelife.requirements.NeedActivity;
 import com.donate.savelife.user.CompleteProfileActivity;
@@ -113,5 +114,11 @@ public class AndroidNavigator implements Navigator {
         if (intentMarket.resolveActivity(myAppPackage) != null) {
             activity.startActivity(intentMarket);
         }
+    }
+
+    @Override
+    public void toIntroSlider() {
+        Intent introIntent = new Intent(activity, IntroActivity.class);
+        activity.startActivity(introIntent);
     }
 }

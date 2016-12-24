@@ -30,4 +30,6 @@ public interface Navigator {
     void toMap(Uri geoLocation);
 
     void toRateUs();
+
+    void toIntroSlider();
 }

@@ -13,12 +13,12 @@ import com.donate.savelife.core.user.data.model.User;
 public class MainPresenter {
 
     private final Navigator navigator;
-    private final SharedPreferenceService preferenceService;
+    private final SharedPreferenceService sharedPreferenceService;
     private final GsonService gsonService;
 
     public MainPresenter(Navigator navigator, SharedPreferenceService preferenceService, GsonService gsonService){
         this.navigator = navigator;
-        this.preferenceService = preferenceService;
+        this.sharedPreferenceService = preferenceService;
         this.gsonService = gsonService;
     }
 
@@ -32,20 +32,26 @@ public class MainPresenter {
 
 
     private void manageFirstFlow(){
-        String userData = preferenceService.getLoginUserPreference();
-        if (!TextUtils.isEmpty(userData.trim())){
-            User user = gsonService.toUser(userData);
-            if (user != null && user.getCity() != null && !TextUtils.isEmpty(user.getCity())) {
-                navigator.toHome();
-            } else {
-                if (user == null){
-                    navigator.toLogin();
-                } else if (user.getCity() == null || TextUtils.isEmpty(user.getCity())) {
-                    navigator.toCompleteProfile();
-                }
-            }
+        boolean isFirstFlow = sharedPreferenceService.getFirstFlowValue();
+        if (isFirstFlow){
+            navigator.toIntroSlider();
         } else {
-            navigator.toLogin();
+            String userData = sharedPreferenceService.getLoginUserPreference();
+            if (!TextUtils.isEmpty(userData.trim())){
+                User user = gsonService.toUser(userData);
+                if (user != null && !TextUtils.isEmpty(user.getCity())) {
+                    navigator.toHome();
+                } else {
+                    if (user == null){
+                        navigator.toLogin();
+                    } else if (TextUtils.isEmpty(user.getCity())) {
+                        navigator.toCompleteProfile();
+                    }
+                }
+            } else {
+                navigator.toLogin();
+            }
         }
+
     }
 }

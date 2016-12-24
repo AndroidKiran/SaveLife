@@ -11,6 +11,7 @@ import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
+import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.subscriptions.CompositeSubscription;
@@ -67,7 +68,7 @@ public class ProfilePresenter {
 
     public void startPresenting() {
         profileDisplayer.attach(onProfileInteractionListener);
-        userService.observeUser(userID).zipWith(
+        Observable.combineLatest(userService.observeUser(userID),
                 heroService.observeHero(needID, userID),
                 asPair())
                 .subscribe(new Action1<Pair>() {

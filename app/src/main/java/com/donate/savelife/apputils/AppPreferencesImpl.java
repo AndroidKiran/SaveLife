@@ -39,7 +39,7 @@ public class AppPreferencesImpl implements SharedPreferenceService {
 
     @Override
     public boolean getFirstFlowValue() {
-        return prefs.getBoolean(FLAT_ONBOARDING_DONE, false);
+        return prefs.getBoolean(FLAT_ONBOARDING_DONE, true);
     }
 
     public SharedPreferences getPreference(){

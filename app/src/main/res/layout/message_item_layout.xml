@@ -2,9 +2,5 @@
 <com.donate.savelife.chats.view.MessageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/dimen_10"
-    android:paddingRight="@dimen/dimen_10"
-    android:paddingTop="@dimen/dimen_5"
-    android:paddingBottom="@dimen/dimen_5"
     android:background="@drawable/selector_list_item_transperent"
     android:layout="@layout/merge_message_item_view" />
