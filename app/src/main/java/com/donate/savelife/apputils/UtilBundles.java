@@ -8,4 +8,6 @@ public class UtilBundles {
     public static final String EXTRA_TEXT = "extra_text";
     public static final String EXTRA_BUNDLE = "extra_bundle";
     public static final String EXTRA_INT = "extra_int";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
+    public static final String PAGE = "page";
 }

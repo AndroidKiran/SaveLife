@@ -1,11 +1,11 @@
 package com.donate.savelife.login.view;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
@@ -14,7 +14,7 @@ import com.donate.savelife.core.login.displayer.LoginDisplayer;
 import com.novoda.notils.caster.Views;
 
 
-public class LoginView extends LinearLayout implements LoginDisplayer {
+public class LoginView extends FrameLayout implements LoginDisplayer {
 
     private View loginButton;
     private AppCompatActivity appCompatActivity;
@@ -22,12 +22,12 @@ public class LoginView extends LinearLayout implements LoginDisplayer {
 
     public LoginView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setOrientation(VERTICAL);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.material_red));
         View.inflate(getContext(), R.layout.merge_login_view, this);
         loginButton = Views.findById(this, R.id.sign_in_button);
     }
@@ -62,7 +62,7 @@ public class LoginView extends LinearLayout implements LoginDisplayer {
 
     @Override
     public void showAuthenticationError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show(); //TODO improve error display
+//        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show(); //TODO improve error display
     }
 
     public AppCompatActivity getAppCompatActivity() {

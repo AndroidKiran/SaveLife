@@ -60,7 +60,6 @@ public class NeedsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         if (savedInstanceState == null){
             presenter.initPresenter();
         } else {

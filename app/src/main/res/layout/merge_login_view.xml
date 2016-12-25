@@ -2,18 +2,42 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:buttonSize="standard" />
+
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:buttonSize="wide" />
-    </LinearLayout>
+            android:layout_marginBottom="@dimen/dimen_110"
+            android:layout_marginLeft="@dimen/dimen_24"
+            android:text="@string/str_title3"
+            android:textColor="@color/material_white"
+            android:textSize="26sp" />
+
+
+        <TextView
+            android:id="@+id/description3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dimen_72"
+            android:layout_marginLeft="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:maxEms="18"
+            android:text="@string/str_description3"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/font_18" />
+
+    </FrameLayout>
 
 </merge>

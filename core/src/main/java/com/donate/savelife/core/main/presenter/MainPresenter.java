@@ -16,42 +16,35 @@ public class MainPresenter {
     private final SharedPreferenceService sharedPreferenceService;
     private final GsonService gsonService;
 
-    public MainPresenter(Navigator navigator, SharedPreferenceService preferenceService, GsonService gsonService){
+    public MainPresenter(Navigator navigator, SharedPreferenceService preferenceService, GsonService gsonService) {
         this.navigator = navigator;
         this.sharedPreferenceService = preferenceService;
         this.gsonService = gsonService;
     }
 
-    public void startPresenting(){
+    public void startPresenting() {
         manageFirstFlow();
     }
 
-    public void stopPresenting(){
-
+    public void stopPresenting() {
     }
 
+    private void manageFirstFlow() {
 
-    private void manageFirstFlow(){
-        boolean isFirstFlow = sharedPreferenceService.getFirstFlowValue();
-        if (isFirstFlow){
-            navigator.toIntroSlider();
-        } else {
-            String userData = sharedPreferenceService.getLoginUserPreference();
-            if (!TextUtils.isEmpty(userData.trim())){
-                User user = gsonService.toUser(userData);
-                if (user != null && !TextUtils.isEmpty(user.getCity())) {
-                    navigator.toHome();
-                } else {
-                    if (user == null){
-                        navigator.toLogin();
-                    } else if (TextUtils.isEmpty(user.getCity())) {
-                        navigator.toCompleteProfile();
-                    }
-                }
+        String userData = sharedPreferenceService.getLoginUserPreference();
+        if (!TextUtils.isEmpty(userData.trim())) {
+            User user = gsonService.toUser(userData);
+            if (user != null && !TextUtils.isEmpty(user.getCity())) {
+                navigator.toHome();
             } else {
-                navigator.toLogin();
+                if (user == null) {
+                    navigator.toIntro();
+                } else if (TextUtils.isEmpty(user.getCity())) {
+                    navigator.toCompleteProfile();
+                }
             }
+        } else {
+            navigator.toIntro();
         }
-
     }
 }

@@ -11,12 +11,25 @@
         android:layout_height="match_parent" />
 
     <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/indicator"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom"
+        android:id="@+id/radius_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_gravity="bottom|center_horizontal"
         app:ci_drawable="@drawable/white_radius"
+        android:layout_margin="@dimen/dimen_16"
+        android:padding="@dimen/dimen_10"
         app:ci_drawable_unselected="@drawable/black_radius" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/skip"
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:scaleType="fitCenter"
+        android:layout_margin="@dimen/dimen_16"
+        android:padding="@dimen/dimen_10"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/selector_radius"
+        app:srcCompat="@drawable/ic_arrow_forward_24dp"/>
 
 </FrameLayout>
 

@@ -84,4 +84,14 @@
     <string name="str_terms_content">sdhjshdjhsjhshdjdsh sdjlhjsdhjsd dsjlhjlsdhjds dsjlhljsdh \n sdsdhshllsdhj
     dsbjdbsbds sjdbjsbdjb sdjbjdsbsd sdjjbdc jdbjbds sdjbcjsbdc dsjbcdjsbc dsbcjdb \n
     dshhdshc dschvdsuhudsvhdvs sdvihdhvs vsdidsvh sdviohvdishvds svdhdvshdvs dvshsvdh</string>
+
+
+    <!--Intro slider-->
+    <string name="str_title1">Be a Blood Donor</string>
+    <string name="str_description1">Extend hands, Let together craft a better world</string>
+    <string name="str_title2">No worries</string>
+    <string name="str_description2">Real life heros are out there, Let seek for help</string>
+    <string name="str_title3">Connect</string>
+    <string name="str_description3">Be a part of Noble cause, Sign in</string>
+    <string name="str_complete_on_boarding">Please complete the onboarding</string>
 </resources>

@@ -9,7 +9,7 @@ public interface Navigator {
 
     void toHome();
 
-    void toLogin();
+    void toIntro();
 
     void toParent();
 
@@ -30,6 +30,4 @@ public interface Navigator {
     void toMap(Uri geoLocation);
 
     void toRateUs();
-
-    void toIntroSlider();
 }

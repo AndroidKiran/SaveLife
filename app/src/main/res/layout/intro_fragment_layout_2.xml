@@ -9,39 +9,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="Title 2"
-            android:textColor="@android:color/white"
-            android:textSize="28sp" />
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/tv"
+            android:id="@+id/icon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_opacity_red_24dp" />
 
+
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dimen_110"
+            android:layout_marginLeft="@dimen/dimen_24"
+            android:text="@string/str_title2"
+            android:textColor="@color/material_white"
+            android:textSize="26sp" />
+
+
+        <TextView
+            android:id="@+id/description2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dimen_54"
+            android:layout_marginLeft="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_10"
             android:maxEms="18"
-            android:text="descption 2"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:text="@string/str_description2"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/font_18" />
+
 
     </FrameLayout>
 

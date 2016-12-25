@@ -73,7 +73,7 @@ public class ChatPresenter {
                                     displayChat(pair);
                                 } else {
                                     errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
-                                    navigator.toLogin();
+                                    navigator.toIntro();
                                 }
                             }
                         })
@@ -173,7 +173,7 @@ public class ChatPresenter {
                                         displayMoreChat(pair);
                                     } else {
                                         errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
-                                        navigator.toLogin();
+                                        navigator.toIntro();
                                     }
                                 }
                             })
@@ -278,7 +278,7 @@ public class ChatPresenter {
                                         displayChat(pair);
                                     } else {
                                         errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
-                                        navigator.toLogin();
+                                        navigator.toIntro();
                                     }
                                 }
                             })

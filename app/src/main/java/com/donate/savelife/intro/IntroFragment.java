@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 
 import com.donate.savelife.R;
 
+import static com.donate.savelife.apputils.UtilBundles.BACKGROUND_COLOR;
+import static com.donate.savelife.apputils.UtilBundles.PAGE;
+
 /**
  * Created by ravi on 24/12/16.
  */
 
 public class IntroFragment extends Fragment {
-
-    private static final String BACKGROUND_COLOR = "backgroundColor";
-    private static final String PAGE = "page";
 
     private int mBackgroundColor, mPage;
 
