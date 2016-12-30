@@ -80,9 +80,9 @@ public class NeedPresenter {
                         public void call(DatabaseResult<Need> needDatabaseResult) {
                             needDisplayer.dismissProgress();
                             if (needDatabaseResult.isSuccess()){
-                                navigator.toParent();
+                                navigator.onSetResults(Navigator.SEEK_NEED_SUCCESS);
                             } else {
-
+                                navigator.onSetResults(Navigator.SEEK_NEED_FAILED);
                             }
                         }
                     })

@@ -34,7 +34,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
         this.context = context;
         this.countries = new Countries(new ArrayList<Country>());
         this.countriesFilterList = countries;
-        setHasStableIds(true);
+//        setHasStableIds(true);
     }
 
     public void setData(Countries countries) {

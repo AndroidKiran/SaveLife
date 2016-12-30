@@ -11,11 +11,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
+import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.displayer.HerosDisplayer;
-import com.novoda.notils.caster.Views;
 
 /**
  * Created by ravi on 22/11/16.
@@ -27,6 +28,7 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
     private RecyclerView recyclerView;
     private MultiStateView multiView;
     private HeroInteractionListener heroInteractionListener;
+    private TextView emptyView;
 
     public HerosView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +45,8 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
 
     void initControls(){
         multiView = Views.findById(this, R.id.multi_view);
+        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
+
     }
 
 
@@ -92,6 +96,7 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
 
     @Override
     public void displayEmpty() {
+        emptyView.setText(getContext().getString(R.string.str_heros_empty_state));
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 

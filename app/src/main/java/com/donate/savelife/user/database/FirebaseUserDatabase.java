@@ -16,6 +16,7 @@ import rx.functions.Func1;
 
 public class FirebaseUserDatabase implements UserDatabase {
 
+
     private final DatabaseReference usersDB;
     private final FirebaseObservableListeners firebaseObservableListeners;
 
@@ -30,8 +31,14 @@ public class FirebaseUserDatabase implements UserDatabase {
     }
 
     @Override
-    public Observable<User> readUserFrom(String userId) {
-        return firebaseObservableListeners.listenToSingleValueEvents(usersDB.child(userId), asUser());
+    public Observable<User> readUserFrom(String type, String userId) {
+        switch (type){
+            case SINGLE_VALUE_EVENT_TYPE:
+                return firebaseObservableListeners.listenToSingleValueEvents(usersDB.child(userId), asUser());
+            default:
+                return firebaseObservableListeners.listenToValueEvents(usersDB.child(userId), asUser());
+
+        }
     }
 
     @Override
@@ -46,7 +53,7 @@ public class FirebaseUserDatabase implements UserDatabase {
 
     @Override
     public Observable<User> updateTheLifeCount(User user) {
-        return firebaseObservableListeners.setValue(user.getLifeCount() + 1, usersDB.child(user.getId()).child("lifeCount"), user);
+        return firebaseObservableListeners.setValue(user.getLifeCount() + 1, usersDB.child(user.getId()).child(User.LIFE_COUNT), user);
     }
 
     @Override
@@ -61,8 +68,10 @@ public class FirebaseUserDatabase implements UserDatabase {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 List<User> users = new ArrayList<>();
                 for (DataSnapshot child : children) {
-                    User message = child.getValue(User.class);
-                    users.add(message);
+                    User user = child.getValue(User.class);
+                    if (user.getLifeCount() > 0){
+                        users.add(user);
+                    }
                 }
                 return new Users(users);
             }
@@ -73,12 +82,8 @@ public class FirebaseUserDatabase implements UserDatabase {
         return new Func1<DataSnapshot, User>() {
             @Override
             public User call(DataSnapshot dataSnapshot) {
-                User user = new User();
                 User userFromDataSnapshot = dataSnapshot.getValue(User.class);
-                if (userFromDataSnapshot != null){
-                    user = userFromDataSnapshot;
-                }
-                return user;
+                return userFromDataSnapshot;
             }
         };
     }

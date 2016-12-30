@@ -81,7 +81,7 @@ public class PersistedChatService implements ChatService {
 
     @Override
     public Observable<DatabaseResult<User>> observeUserFor(Need need) {
-        return userDatabase.readUserFrom(need.getUserID())
+        return userDatabase.readUserFrom(UserDatabase.SINGLE_VALUE_EVENT_TYPE, need.getUserID())
                 .map(aUsersDatabaseResult());
     }
 
@@ -125,7 +125,7 @@ public class PersistedChatService implements ChatService {
         return new Func1<String, Observable<User>>() {
             @Override
             public Observable<User> call(final String userId) {
-                return userDatabase.readUserFrom(userId);
+                return userDatabase.readUserFrom(UserDatabase.SINGLE_VALUE_EVENT_TYPE, userId);
             }
         };
     }

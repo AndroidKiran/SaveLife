@@ -8,10 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.MessageBubbleDrawable;
 import com.donate.savelife.core.chats.model.Message;
-import com.novoda.notils.caster.Views;
-import com.novoda.notils.exception.DeveloperError;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -55,7 +54,7 @@ public class MessageView extends LinearLayout {
 
     @Override
     public void setOrientation(int orientation) {
-        throw new DeveloperError("This view only supports vertical orientation");
+//        throw new DeveloperError("This view only supports vertical orientation");
     }
 
     @Override

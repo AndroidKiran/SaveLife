@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.materialcomponent.MaterialProgressDialog;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.country.model.Country;
@@ -24,11 +25,9 @@ import com.donate.savelife.core.requirement.displayer.NeedDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.country.CountriesDialog;
-import com.novoda.notils.caster.Views;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-import static com.donate.savelife.R.id.city;
 
 /**
  * Created by ravi on 19/11/16.
@@ -86,7 +85,7 @@ public class NeedView extends CoordinatorLayout implements NeedDisplayer {
 
     void initControls() {
 
-        cityTextInputLayout = Views.findById(this, city);
+        cityTextInputLayout = Views.findById(this, R.id.city);
         cityEditText = cityTextInputLayout.getEditText();
         errCity = Views.findById(this, R.id.err_city);
 

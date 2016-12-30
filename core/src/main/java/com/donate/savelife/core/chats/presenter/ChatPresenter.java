@@ -60,9 +60,6 @@ public class ChatPresenter {
     }
 
     public void initPresenter() {
-        chatDisplayer.attach(actionListener);
-        chatDisplayer.disableInteraction();
-
         subscriptions.add(
                 Observable.combineLatest(chatService.observeChats(need),loginService.getAuthentication(), asPair())
                         .subscribe(new Action1<Pair>() {
@@ -114,6 +111,8 @@ public class ChatPresenter {
                     }
                 })
         );
+
+        initPresenter();
     }
 
 
@@ -214,8 +213,10 @@ public class ChatPresenter {
 
         @Override
         public void onChatClicked(Message message) {
-            message.setNeedId(need.getId());
-            navigator.toProfile(message.getNeedId(), message.getUserId());
+            if (!user.getId().equals(message.getUserId())){
+                message.setNeedId(need.getId());
+                navigator.toProfile(message.getNeedId(), message.getUserId());
+            }
         }
     };
 

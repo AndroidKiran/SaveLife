@@ -18,6 +18,7 @@ import android.widget.EditText;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
 import com.donate.savelife.apputils.Utils;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.materialcomponent.MaterialProgressDialog;
 import com.donate.savelife.component.text.TextView;
@@ -25,7 +26,6 @@ import com.donate.savelife.core.country.model.Country;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.country.CountriesDialog;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 import fr.ganfra.materialspinner.MaterialSpinner;

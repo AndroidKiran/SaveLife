@@ -9,7 +9,7 @@ import com.donate.savelife.core.user.data.model.User;
 public class Message implements Parcelable{
 
     private String id;
-    private String userId;
+    private String userID;
     private User author;
     private String body;
     private long timestamp;
@@ -26,7 +26,7 @@ public class Message implements Parcelable{
     }
 
     public Message(String userId, String body) {
-        this.userId = userId;
+        this.userID = userId;
         this.body = body;
         this.timestamp = System.currentTimeMillis(); //TODO move timestamp db side ?
     }
@@ -34,7 +34,7 @@ public class Message implements Parcelable{
 
     protected Message(Parcel in) {
         id = in.readString();
-        userId = in.readString();
+        userID = in.readString();
         author = in.readParcelable(User.class.getClassLoader());
         body = in.readString();
         timestamp = in.readLong();
@@ -62,7 +62,7 @@ public class Message implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
-        parcel.writeString(userId);
+        parcel.writeString(userID);
         parcel.writeParcelable(author, i);
         parcel.writeString(body);
         parcel.writeLong(timestamp);
@@ -78,7 +78,7 @@ public class Message implements Parcelable{
 
         if (timestamp != message.timestamp) return false;
         if (id != null ? !id.equals(message.id) : message.id != null) return false;
-        if (userId != null ? !userId.equals(message.userId) : message.userId != null) return false;
+        if (userID != null ? !userID.equals(message.userID) : message.userID != null) return false;
         if (author != null ? !author.equals(message.author) : message.author != null) return false;
         return body != null ? body.equals(message.body) : message.body == null;
 
@@ -87,7 +87,7 @@ public class Message implements Parcelable{
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (userID != null ? userID.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
         result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
@@ -98,7 +98,7 @@ public class Message implements Parcelable{
     public String toString() {
         return "Message{" +
                 "id='" + id + '\'' +
-                ", userId='" + userId + '\'' +
+                ", userId='" + userID + '\'' +
                 ", author=" + author +
                 ", body='" + body + '\'' +
                 ", timestamp=" + timestamp +
@@ -114,11 +114,11 @@ public class Message implements Parcelable{
     }
 
     public String getUserId() {
-        return userId;
+        return userID;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userID = userId;
     }
 
     public User getAuthor() {

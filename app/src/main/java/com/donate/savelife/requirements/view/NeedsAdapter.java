@@ -22,14 +22,14 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
 
     public NeedsAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
-        setHasStableIds(true);
         needs = new Needs(new UniqueList<Need>());
+        setHasStableIds(true);
     }
 
     public void setData(Needs needs){
         if (needs.size() > 0){
             this.needs = needs;
-            notifyItemRangeInserted(getItemCount(), needs.size());
+            notifyDataSetChanged();
             needInteractionListener.onContentLoaded();
         } else {
             needInteractionListener.onEmpty();
@@ -71,8 +71,6 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
     public Need getLastItem(){
         return this.needs.getNeed(getItemCount() - 1);
     }
-
-
 
 
     public void attach(NeedsDisplayer.NeedInteractionListener needInteractionListener) {

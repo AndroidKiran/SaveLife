@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import com.donate.savelife.R;
 import com.donate.savelife.SaveLifeApplication;
 import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
-import com.novoda.notils.caster.Views;
 
 
 /**

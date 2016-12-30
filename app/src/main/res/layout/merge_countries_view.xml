@@ -8,8 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_collapseMode="parallax"
-        android:layout_marginTop="@dimen/dimen_10"
-        app:theme="@style/AppTheme.TextInputLayout">
+        app:hintEnabled="true"
+        android:background="?colorPrimary"
+        android:paddingTop="@dimen/dimen_10"
+        app:hintAnimationEnabled="true"
+        app:theme="@style/AppTheme.TextInputLayout.White">
 
 
         <com.donate.savelife.component.text.ClearableEditText

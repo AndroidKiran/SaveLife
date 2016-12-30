@@ -146,7 +146,7 @@ public class PersistedNeedService implements NeedService {
         return new Func1<String, Observable<User>>() {
             @Override
             public Observable<User> call(final String userId) {
-                return userDatabase.readUserFrom(userId);
+                return userDatabase.readUserFrom(UserDatabase.SINGLE_VALUE_EVENT_TYPE, userId);
             }
         };
     }

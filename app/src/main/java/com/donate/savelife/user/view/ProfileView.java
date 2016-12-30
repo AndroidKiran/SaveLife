@@ -11,11 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
+import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.ProfileDisplayer;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -39,6 +40,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
     private TextView msg2;
     private TextView saveCountText;
     private View honorCardView;
+    private MultiStateView multiView;
 
 
     public ProfileView(Context context, AttributeSet attrs) {
@@ -71,6 +73,8 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         msg2 = Views.findById(this, R.id.msg2);
         saveCountText = Views.findById(this, R.id.save_count);
         honorCardView = Views.findById(this, R.id.honor_cardview);
+        multiView = Views.findById(this, R.id.multi_view);
+
     }
 
     @Override
@@ -130,6 +134,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         if (!TextUtils.isEmpty(city)){
             addressText.setText(String.format(getResources().getString(R.string.str_wat_address), city, new Locale("", countryCode).getDisplayCountry()));
         }
+        displayContent();
     }
 
     @Override
@@ -139,6 +144,26 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         } else {
             fabButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void displayLoading() {
+        multiView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+    }
+
+    @Override
+    public void displayContent() {
+        multiView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
+    }
+
+    @Override
+    public void displayError() {
+        multiView.setViewState(MultiStateView.VIEW_STATE_ERROR);
+    }
+
+    @Override
+    public void displayEmpty() {
+        multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 
 

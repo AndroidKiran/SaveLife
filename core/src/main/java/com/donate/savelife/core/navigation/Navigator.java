@@ -7,6 +7,10 @@ import com.donate.savelife.core.requirement.model.Need;
 
 public interface Navigator {
 
+    public static final int SEEK_NEED = 011;
+    public static final int SEEK_NEED_SUCCESS = 111;
+    public static final int SEEK_NEED_FAILED = 112;
+
     void toHome();
 
     void toIntro();
@@ -30,4 +34,6 @@ public interface Navigator {
     void toMap(Uri geoLocation);
 
     void toRateUs();
+
+    void onSetResults(int resultCode);
 }

@@ -94,7 +94,7 @@ public class PersistedHeroService implements HeroService {
         return new Func1<DatabaseResult<String>, Observable<DatabaseResult<User>>>() {
             @Override
             public Observable<DatabaseResult<User>> call(DatabaseResult<String> stringDatabaseResult) {
-                return userDatabase.readUserFrom(stringDatabaseResult.getData())
+                return userDatabase.readUserFrom(UserDatabase.SINGLE_VALUE_EVENT_TYPE, stringDatabaseResult.getData())
                         .map(asUserDatabaseResult());
             }
         };

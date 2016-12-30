@@ -50,8 +50,6 @@ dependencies {
     compile "com.google.firebase:firebase-crash:${play_service_lib_version}"
     compile "com.google.firebase:firebase-invites:${play_service_lib_version}"
 
-
-    compile 'com.novoda:notils:2.2.16'
     compile 'com.google.code.gson:gson:2.2.4'
 
     compile('com.github.ganfra:material-spinner:1.1.1') {
@@ -63,6 +61,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.aurelhubert:ahbottomnavigation:2.0.2'
     compile 'me.relex:circleindicator:1.2.2@aar'
+
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

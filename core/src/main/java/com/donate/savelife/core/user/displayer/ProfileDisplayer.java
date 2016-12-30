@@ -16,6 +16,15 @@ public interface ProfileDisplayer {
 
     void displayHero(User user, String uid);
 
+    void displayLoading();
+
+    void displayContent();
+
+    void displayError();
+
+    void displayEmpty();
+
+
     interface OnProfileInteractionListener {
 
         void onEditClick();

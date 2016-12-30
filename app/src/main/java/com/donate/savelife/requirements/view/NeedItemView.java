@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.core.requirement.model.Need;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;

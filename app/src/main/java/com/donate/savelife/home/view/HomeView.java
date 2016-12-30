@@ -16,12 +16,12 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.user.data.model.User;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;

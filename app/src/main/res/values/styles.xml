@@ -12,6 +12,17 @@
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
     </style>
 
+    <style name="AppTheme.TextInputLayout.White">
+        <item name="android:textColor">@color/material_white</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/material_white</item>
+        <item name="colorControlHighlight">@color/material_white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_16</item>
+        <item name="android:layout_marginRight">@dimen/dimen_16</item>
+    </style>
+
 
 
     <style name="AppTheme.EditText" parent="AppTheme">

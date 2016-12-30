@@ -101,10 +101,9 @@ public final class RecyclerPaginate extends Paginate {
             // Call load more only if loading is not currently in progress and if there is more items to load
             if (!callbacks.isLoading() && !callbacks.hasLoadedAllItems()) {
                 callbacks.onLoadMore(direction);
+            }else {
+                setHasMoreDataToLoad(false);
             }
-//            else {
-//                setHasMoreDataToLoad(false);
-//            }
         }
     }
 

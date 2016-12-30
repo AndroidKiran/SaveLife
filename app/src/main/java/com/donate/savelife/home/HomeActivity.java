@@ -1,7 +1,9 @@
 package com.donate.savelife.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.donate.savelife.BuildConfig;
@@ -87,11 +89,18 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
         homePresenter.stopPresenting();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

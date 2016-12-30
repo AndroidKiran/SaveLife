@@ -32,7 +32,6 @@
 
     <!--Country-->
     <string name="str_search">Search for country</string>
-
     <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
 
     <!--Home-->
@@ -50,7 +49,7 @@
     <!--Needs-->
     <string name="str_blood_required_msg">%1$s blood required on urgent basis</string>
     <string name="str_address_msg" formatted="false">%1s, %2s, %3s</string>
-
+    <string name="str_needs_empty_state">Currently don\'t have any needs..!</string>
     <string name="str_save_life">Save a life</string>
     <string name="str_send_invite">Send invite</string>
     <string name="str_check_out_app">Check out Save a Life!\n%s</string>
@@ -94,4 +93,12 @@
     <string name="str_title3">Connect</string>
     <string name="str_description3">Be a part of Noble cause, Sign in</string>
     <string name="str_complete_on_boarding">Please complete the onboarding</string>
+
+    <!--Chat-->
+    <string name="str_chat_empty_state">Say something..!</string>
+
+    <!--Heros-->
+    <string name="str_heros_empty_state">Couldnt find any Heros</string>
+
+
 </resources>

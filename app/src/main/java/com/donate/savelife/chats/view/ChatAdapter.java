@@ -11,7 +11,6 @@ import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.model.Chat;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.user.data.model.User;
-import com.novoda.notils.exception.DeveloperError;
 
 class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
@@ -34,6 +33,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
         if (chat.size() > 0){
             this.chat = chat;
             this.user = user;
+//            notifyItemRangeInserted(getItemCount(), chat.size());
             notifyDataSetChanged();
             chatActionListener.onContentLoaded();
         } else {
@@ -44,7 +44,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     public void updateMoreChat(Chat chat, User user){
         this.chat.addAll(chat.getMessages());
         this.user = user;
-        notifyItemRangeInserted(getItemCount(), this.chat.size());
+        notifyItemRangeInserted(getItemCount(), chat.size());
     }
 
     public Message getLastItem(){
@@ -55,15 +55,13 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MessageBubbleDrawable bubbleDrawable;
+        MessageBubbleDrawable bubbleDrawable = null;
         if (viewType == VIEW_TYPE_MESSAGE_THIS_USER) {
             bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.material_green, MessageBubbleDrawable.Gravity.END);
             messageView = (MessageView) inflater.inflate(R.layout.self_message_item_layout, parent, false);
         } else if (viewType == VIEW_TYPE_MESSAGE_OTHER_USERS) {
             bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.grey_cool, MessageBubbleDrawable.Gravity.START);
             messageView = (MessageView) inflater.inflate(R.layout.message_item_layout, parent, false);
-        } else {
-            throw new DeveloperError("There is an unknown view type, you should inflate a view for it.");
         }
         messageView.setTextBackground(bubbleDrawable);
         return new MessageViewHolder(messageView);

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/dimen_16">
+    android:orientation="vertical">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -18,16 +17,20 @@
             <com.donate.savelife.component.text.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_10"
+                android:minHeight="@dimen/dimen_48"
+                android:background="?colorPrimary"
                 android:text="@string/str_terms_conditions"
-                android:textColor="@color/grey_charcoal"
-                android:textSize="@dimen/font_16"
+                android:gravity="center_vertical"
+                android:textColor="@color/material_white"
+                android:textSize="@dimen/font_18"
+                android:paddingLeft="@dimen/dimen_16"
+                android:paddingRight="@dimen/dimen_16"
                 app:fontTypeface="museosans700" />
 
             <com.donate.savelife.component.text.TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_16"
                 android:textColor="@color/grey_cool"
                 android:text="@string/str_terms_content"
                 android:textSize="@dimen/font_14"

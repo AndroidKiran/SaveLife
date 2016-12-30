@@ -20,6 +20,7 @@ import com.donate.savelife.welcome.WelcomeActivity;
 public class AndroidNavigator implements Navigator {
 
     private final Activity activity;
+
     public static  final int FIRST_FLOW_REQUEST_CODE = 001;
     public static  final int FIRST_FLOW_RESPONSE_CODE = 002;
 
@@ -59,8 +60,7 @@ public class AndroidNavigator implements Navigator {
 
     @Override
     public void toNeed() {
-        Intent intent = new Intent(activity, NeedActivity.class);
-        activity.startActivity(intent);
+        activity.startActivityForResult(NeedActivity.createIntentFor(activity), SEEK_NEED);
     }
 
     @Override
@@ -113,5 +113,11 @@ public class AndroidNavigator implements Navigator {
         if (intentMarket.resolveActivity(myAppPackage) != null) {
             activity.startActivity(intentMarket);
         }
+    }
+
+    @Override
+    public void onSetResults(int resultCode) {
+        activity.setResult(resultCode);
+        activity.finish();
     }
 }

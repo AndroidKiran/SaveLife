@@ -56,7 +56,7 @@ public class FirebaseLoginService implements LoginService {
                     @Override
                     public void call(final Authentication authentication) {
                         if (authentication.isSuccess()) {
-                            userDatabase.readUserFrom(authentication.getUser().getId())
+                            userDatabase.readUserFrom(UserDatabase.VALUE_EVENT_TYPE, authentication.getUser().getId())
                                     .map(toUserDatabaseResult())
                                     .subscribe(new Action1<DatabaseResult<User>>() {
                                         @Override
@@ -66,11 +66,11 @@ public class FirebaseLoginService implements LoginService {
                                             } else {
 
                                             }
+                                            authRelay.call(authentication);
                                         }
                                     });
 
                         }
-                        authRelay.call(authentication);
                     }
                 });
     }
@@ -83,5 +83,4 @@ public class FirebaseLoginService implements LoginService {
             }
         };
     }
-
 }

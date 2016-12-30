@@ -13,12 +13,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.ClearableEditText;
 import com.donate.savelife.core.country.displayer.CountriesDisplayer;
 import com.donate.savelife.core.country.model.Countries;
-import com.novoda.notils.caster.Views;
 
 /**
  * Created by ravi on 01/10/16.

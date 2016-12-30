@@ -1,5 +1,7 @@
 package com.donate.savelife.requirements;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,12 @@ import com.donate.savelife.requirements.view.NeedView;
 public class NeedActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private NeedPresenter presenter;
+
+    public static Intent createIntentFor(Context context) {
+        Intent intent = new Intent(context, NeedActivity.class);
+        return intent;
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,7 +1,5 @@
 package com.donate.savelife.user.database;
 
-import android.text.TextUtils;
-
 import com.donate.savelife.core.UniqueList;
 import com.donate.savelife.core.user.data.model.Heros;
 import com.donate.savelife.core.user.database.HeroDatabase;
@@ -59,39 +57,12 @@ public class FirebaseHeroDatabase implements HeroDatabase {
         };
     }
 
-    private Func1<DataSnapshot, String> toHero() {
-        return new Func1<DataSnapshot, String>() {
-            @Override
-            public String call(DataSnapshot dataSnapshot) {
-                String heroID = "";
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot child : children) {
-                    heroID = child.getValue(String.class);
-                }
-                return heroID;
-            }
-        };
-    }
-
-//    private <T> Func1<DataSnapshot, T> as(final Class<T> tClass) {
-//        return new Func1<DataSnapshot, T>() {
-//            @Override
-//            public T call(DataSnapshot dataSnapshot) {
-//                return dataSnapshot.getValue(tClass);
-//            }
-//        };
-//    }
-
     private Func1<DataSnapshot, String> asHero(){
         return new Func1<DataSnapshot, String>() {
             @Override
             public String call(DataSnapshot dataSnapshot) {
-                String userID = "";
                 String uid = dataSnapshot.getValue(String.class);
-                if (!TextUtils.isEmpty(uid)){
-                    userID = uid;
-                }
-                return userID;
+                return uid;
             }
         };
     }

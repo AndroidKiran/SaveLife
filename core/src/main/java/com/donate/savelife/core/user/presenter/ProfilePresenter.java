@@ -80,6 +80,7 @@ public class ProfilePresenter {
                             displayNeed(pair);
                         } else {
                             errorLogger.reportError(pair.user.getFailure(), "Failed to fetch the user");
+                            profileDisplayer.displayError();
                         }
                     }
                 });

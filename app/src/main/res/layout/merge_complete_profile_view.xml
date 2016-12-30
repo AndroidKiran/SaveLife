@@ -103,7 +103,9 @@
                         app:ms_hint="@string/str_blood_group"
                         app:ms_hintColor="@android:color/darker_gray"
                         app:ms_multiline="false"
-                        app:ms_thickness="@dimen/dimen_0.5" />
+                        app:ms_thickness="@dimen/dimen_0.5"
+                        app:theme="@style/ThemeOverlay.AppCompat.Light"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
                     <com.donate.savelife.component.text.TextView
                         android:id="@+id/err_blood_group"

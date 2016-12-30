@@ -42,11 +42,11 @@ public class ChatActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getErrorLogger()
         );
 
-        if (savedInstanceState == null){
-            presenter.initPresenter();
-        } else {
-            presenter.onRestoreInstanceState(savedInstanceState);
-        }
+//        if (savedInstanceState == null){
+//            presenter.initPresenter();
+//        } else {
+//            presenter.onRestoreInstanceState(savedInstanceState);
+//        }
     }
 
     @Override

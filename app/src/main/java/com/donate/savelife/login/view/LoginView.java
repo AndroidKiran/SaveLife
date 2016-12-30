@@ -9,9 +9,9 @@ import android.widget.FrameLayout;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.materialcomponent.MaterialProgressDialog;
 import com.donate.savelife.core.login.displayer.LoginDisplayer;
-import com.novoda.notils.caster.Views;
 
 
 public class LoginView extends FrameLayout implements LoginDisplayer {

@@ -11,13 +11,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.paginate.Paginate;
+import com.donate.savelife.component.text.TextView;
+import com.donate.savelife.core.chats.database.ChatDatabase;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.model.Needs;
-import com.novoda.notils.caster.Views;
 
 /**
  * Created by ravi on 22/11/16.
@@ -32,12 +34,11 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     private Paginate paginate;
     private boolean isloading;
     private MultiStateView multiView;
+    private TextView emptyView;
 
     public NeedsView(Context context, AttributeSet attrs) {
         super(context, attrs);
         needsAdapter = new NeedsAdapter(LayoutInflater.from(context));
-        lastNeedItem = new Need();
-        lastNeedItem.setId("");
     }
 
     @Override
@@ -51,6 +52,7 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     void initControls(){
         multiView = Views.findById(this, R.id.multi_view);
+        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
     }
 
 
@@ -89,17 +91,13 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     Paginate.Callbacks callbacks = new Paginate.Callbacks() {
         @Override
         public void onLoadMore(int direction) {
-            if (needsAdapter.getItemCount() != 0 && !isloading) {
+            if (needsAdapter.getItemCount() != 0 && !isloading ) {
                 Need lastNeed = needsAdapter.getLastItem();
-                if (!lastNeedItem.getId().equals(lastNeed.getId()) && direction == Paginate.SCROLL_UP) {
-                    lastNeedItem = lastNeed;
+                if (direction == Paginate.SCROLL_UP && needsAdapter.getItemCount() >= ChatDatabase.DEFAULT_LIMIT) {
                     needInteractionListener.onLoadMore(lastNeed);
                     isloading = true;
-                } else {
-                    lastNeedItem = lastNeed;
-                    isloading = false;
-                    paginate.setHasMoreDataToLoad(false);
                 }
+                lastNeedItem = lastNeed;
             }
         }
 
@@ -110,15 +108,22 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
         @Override
         public boolean hasLoadedAllItems() {
-            if (needsAdapter.getItemCount() != 0){
-                return lastNeedItem.getId().equals(needsAdapter.getLastItem().getId());
+            if (needsAdapter.getItemCount() < ChatDatabase.DEFAULT_LIMIT){
+                return true;
             }
+
+            if(lastNeedItem.getId().equals(needsAdapter.getLastItem().getId())){
+                return true;
+            }
+
             return false;
         }
     };
 
     @Override
     public void display(Needs needs) {
+        lastNeedItem = new Need();
+        lastNeedItem.setId("");
         needsAdapter.setData(needs);
         isloading = false;
     }
@@ -146,6 +151,7 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     @Override
     public void displayEmpty() {
+        emptyView.setText(getContext().getString(R.string.str_needs_empty_state));
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 

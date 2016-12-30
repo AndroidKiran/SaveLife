@@ -1,5 +1,6 @@
 package com.donate.savelife.requirements;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,9 @@ import com.donate.savelife.core.requirement.presenter.NeedsPresenter;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
 
+import static com.donate.savelife.navigation.AndroidNavigator.SEEK_NEED;
+import static com.donate.savelife.navigation.AndroidNavigator.SEEK_NEED_SUCCESS;
+
 /**
  * Created by ravi on 20/11/16.
  */
@@ -20,6 +24,7 @@ import com.donate.savelife.navigation.AndroidNavigator;
 public class NeedsFragment extends Fragment {
 
     public static final String TAG = "Requirements";
+
     private NeedsPresenter presenter;
 
     public static NeedsFragment newInstance(Bundle bundle) {
@@ -77,6 +82,14 @@ public class NeedsFragment extends Fragment {
     public void onStop() {
         presenter.stopPresenting();
         super.onStop();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SEEK_NEED && resultCode == SEEK_NEED_SUCCESS){
+            presenter.initPresenter();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

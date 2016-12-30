@@ -106,7 +106,6 @@ public class NeedsPresenter {
         @Override
         public void onError() {
             needsDisplayer.displayError();
-
         }
 
         @Override

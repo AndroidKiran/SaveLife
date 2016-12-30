@@ -17,8 +17,6 @@ import rx.functions.Func1;
 
 public class FirebaseChatDatabase implements ChatDatabase {
 
-    private static final int DEFAULT_LIMIT = 10;
-
     private final DatabaseReference messagesDB;
     private final FirebaseObservableListeners firebaseObservableListeners;
 

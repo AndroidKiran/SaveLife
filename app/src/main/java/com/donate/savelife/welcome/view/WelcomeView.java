@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BubblyDrawable;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.welcome.displayer.WelcomeDisplayer;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 public class WelcomeView extends LinearLayout implements WelcomeDisplayer {

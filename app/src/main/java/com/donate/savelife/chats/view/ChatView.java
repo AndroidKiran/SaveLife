@@ -18,16 +18,17 @@ import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.paginate.Paginate;
 import com.donate.savelife.component.text.EditText;
 import com.donate.savelife.component.text.TextView;
+import com.donate.savelife.core.chats.database.ChatDatabase;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.model.Chat;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
-import com.novoda.notils.caster.Views;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,13 +52,12 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     private View toolbarContent;
     private AlertDialog needDialog;
     private MultiStateView multiView;
+    private TextView emptyView;
 
     public ChatView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(VERTICAL);
         chatAdapter = new ChatAdapter(LayoutInflater.from(context));
-        lastItemMessage = new Message();
-        lastItemMessage.setId("");
     }
 
     @Override
@@ -84,15 +84,18 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         profileImage = Views.findById(this, R.id.profile_image);
         toolbarContent = Views.findById(this, R.id.toolbar_content);
         multiView = Views.findById(this, R.id.multi_view);
+        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
     }
 
     private void initRecyclerView() {
         recyclerView.addItemDecoration(new ChatItemDecoration());
         linearLayoutManager = new LinearLayoutManager(getContext());
+//        linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(chatAdapter);
+        chatAdapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
     private void setPagination() {
@@ -100,7 +103,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
             paginateInteraction.unbind();
         }
         paginateInteraction = Paginate.with(recyclerView, callbacks)
-                .setLoadingTriggerThreshold(3)
+                .setLoadingTriggerThreshold(5)
                 .addLoadingListItem(true)
                 .build();
     }
@@ -117,8 +120,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
     @Override
     public void scrollChat() {
-        int lastMessagePosition = chatAdapter.getItemCount() == 0 ? 0 : chatAdapter.getItemCount() - 1;
-        recyclerView.smoothScrollToPosition(lastMessagePosition);
+        recyclerView.scrollToPosition(0);
     }
 
     @Override
@@ -151,6 +153,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
     @Override
     public void displayEmpty() {
+        emptyView.setText(getContext().getString(R.string.str_chat_empty_state));
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 
@@ -203,6 +206,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
     @Override
     public void display(Chat chat, User user) {
+        lastItemMessage = new Message();
+        lastItemMessage.setId("");
         chatAdapter.update(chat, user);
         isloading = false;
     }
@@ -289,15 +294,11 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         public void onLoadMore(int direction) {
             if (chatAdapter.getItemCount() != 0 && !isloading ) {
                 Message messageLast = chatAdapter.getLastItem();
-                if (!lastItemMessage.getId().equals(messageLast.getId()) && direction == Paginate.SCROLL_DOWN) {
-                    lastItemMessage = messageLast;
-                    actionListener.onLoadMore(chatAdapter.getLastItem());
+                if (direction == Paginate.SCROLL_DOWN && chatAdapter.getItemCount() >= ChatDatabase.DEFAULT_LIMIT) {
+                    actionListener.onLoadMore(messageLast);
                     isloading = true;
-                } else {
-                    lastItemMessage = messageLast;
-                    isloading = false;
-                    paginateInteraction.setHasMoreDataToLoad(false);
                 }
+                lastItemMessage = messageLast;
             }
         }
 
@@ -308,9 +309,14 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
         @Override
         public boolean hasLoadedAllItems() {
-            if (chatAdapter.getItemCount() != 0){
-                return lastItemMessage.getId().equals(chatAdapter.getLastItem().getId());
+            if (chatAdapter.getItemCount() < ChatDatabase.DEFAULT_LIMIT){
+                return true;
             }
+
+            if(lastItemMessage.getId().equals(chatAdapter.getLastItem().getId())){
+                return true;
+            }
+
             return false;
         }
     };
@@ -343,6 +349,18 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         });
         return dialogView;
     }
+
+    RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+//            int friendlyMessageCount = chatAdapter.getItemCount();
+//            int firstVisiblePosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+//            if (firstVisiblePosition == (positionStart - 1) && positionStart >= (friendlyMessageCount - 1)){
+//                recyclerView.scrollToPosition(0);
+//            }
+        }
+    };
 
 
 }
