@@ -24,6 +24,7 @@ public class FirebaseHeroDatabase implements HeroDatabase {
 
     public FirebaseHeroDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         heroDB = firebaseDatabase.getReference("heros");
+        heroDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 

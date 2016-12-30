@@ -63,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
                 needID,
                 Dependencies.INSTANCE.getHeroService()
         );
-        presenter.initPresenter();
     }
 
     @Override

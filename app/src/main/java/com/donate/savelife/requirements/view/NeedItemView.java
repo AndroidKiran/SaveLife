@@ -7,10 +7,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.core.requirement.model.Need;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,9 +54,9 @@ public class NeedItemView extends RelativeLayout {
         this.userAvatar = Views.findById(this, R.id.user_avatar);
     }
 
-    public void display(Need need){
+    public void display(final Need need){
         bloodGroup.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
         requirementAddress.setText(String.format(getResources().getString(R.string.str_address_msg), need.getAddress(), need.getCity(),need.getCountryName(getContext())));
-        Picasso.with(getContext()).load(need.getUser().getPhotoUrl()).into(userAvatar);
+        Glide.with(getContext()).load(need.getUser().getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.8f).into(userAvatar);
     }
 }

@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
 import com.donate.savelife.apputils.Views;
@@ -29,7 +31,6 @@ import com.donate.savelife.core.chats.model.Chat;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -108,14 +109,14 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
                 .build();
     }
 
-    public void setTitleLayout(Need need, User user) {
+    public void setTitleLayout(Need need, final User user) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(need.getAddress() + ", " + need.getCity() + "\n");
         stringBuilder.append(need.getCountryName(getContext()));
 
         toolbarTitle.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
         toolbarSubTitle.setText(stringBuilder.toString());
-        Picasso.with(getContext()).load(user.getPhotoUrl()).into(profileImage);
+        Glide.with(getContext()).load(user.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(profileImage);
     }
 
     @Override
@@ -325,7 +326,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_need, null);
         FloatingActionButton callFabBtn = (FloatingActionButton) dialogView.findViewById(R.id.fab_button1);
         FloatingActionButton addressFabBtn = (FloatingActionButton) dialogView.findViewById(R.id.fab_button2);
-        CircleImageView profileImage = (CircleImageView) dialogView.findViewById(R.id.profile_image);
+        final CircleImageView profileImage = (CircleImageView) dialogView.findViewById(R.id.profile_image);
         TextView needMsg = (TextView) dialogView.findViewById(R.id.need_msg);
         final TextView addressTxt = (TextView) dialogView.findViewById(R.id.address_msg);
         StringBuilder stringBuilder = new StringBuilder();
@@ -333,7 +334,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         stringBuilder.append(need.getCountryName(getContext()));
         needMsg.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
         addressTxt.setText(stringBuilder.toString());
-        Picasso.with(getContext()).load(user.getPhotoUrl()).into(profileImage);
+        Glide.with(getContext()).load(user.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.8f)
+                .crossFade().into(profileImage);
         callFabBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -23,6 +23,7 @@ public class FirebaseNeedDatabase implements NeedDatabase {
 
     public FirebaseNeedDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         needDB = firebaseDatabase.getReference("needs");
+        needDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 

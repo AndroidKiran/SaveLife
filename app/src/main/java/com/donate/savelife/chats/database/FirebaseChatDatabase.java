@@ -22,6 +22,7 @@ public class FirebaseChatDatabase implements ChatDatabase {
 
     public FirebaseChatDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         messagesDB = firebaseDatabase.getReference("messages");
+        messagesDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 

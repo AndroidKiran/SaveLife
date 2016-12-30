@@ -58,11 +58,10 @@ public enum Dependencies {
         if (needsInitialisation()) {
             Context appContext = context.getApplicationContext();
 
-            FirebaseApp firebaseApp = FirebaseApp.initializeApp(appContext, FirebaseOptions.fromResource(appContext), "TenantMaker");
+            FirebaseApp firebaseApp = FirebaseApp.initializeApp(appContext, FirebaseOptions.fromResource(appContext), "SaveLife");
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance(firebaseApp);
 
             firebaseDatabase = FirebaseDatabase.getInstance(firebaseApp);
-
             firebaseDatabase.setPersistenceEnabled(true);
 
             FirebaseObservableListeners firebaseObservableListeners = new FirebaseObservableListeners();

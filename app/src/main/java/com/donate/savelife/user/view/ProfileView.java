@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
@@ -17,7 +19,6 @@ import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.ProfileDisplayer;
-import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -106,11 +107,13 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
             honorCardView.setVisibility(VISIBLE);
         }
 
-        String url = user.getPhotoUrl();
+        final String url = user.getPhotoUrl();
         if (!TextUtils.isEmpty(url)){
-            Picasso.with(getContext())
+            Glide.with(getContext())
                     .load(url)
-                    .transform(new BlurTransformation(getContext(), 1, 1))
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .bitmapTransform(new BlurTransformation(getContext(), 1, 1))
                     .into(profileBackDrop);
         }
 

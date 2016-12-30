@@ -10,10 +10,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.core.user.data.model.User;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,11 +57,12 @@ public class HeroItemView extends RelativeLayout {
         this.heroAvatar = Views.findById(this, R.id.hero_avatar);
     }
 
-    public void display(User user){
+    public void display(final User user){
         heroName.setText(user.getName());
         String liveCountStr = getResources().getQuantityString(R.plurals.heros_lives,user.getLifeCount(),user.getLifeCount());
         liveCount.setText(fromHtml(liveCountStr));
-        Picasso.with(getContext()).load(user.getPhotoUrl()).into(heroAvatar);
+        Glide.with(getContext()).load(user.getPhotoUrl()).thumbnail(0.8f)
+                .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(heroAvatar);
     }
 
     public static Spanned fromHtml(String source) {

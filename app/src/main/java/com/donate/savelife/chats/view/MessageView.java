@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.MessageBubbleDrawable;
 import com.donate.savelife.core.chats.model.Message;
-import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -67,9 +68,10 @@ public class MessageView extends LinearLayout {
         this.name = Views.findById(this, R.id.message_author_name);
     }
 
-    public void display(Message message) {
-        Context context = getContext();
-        Picasso.with(context).load(message.getAuthor().getPhotoUrl()).into(picture);
+    public void display(final Message message) {
+        final Context context = getContext();
+        Glide.with(context).load(message.getAuthor().getPhotoUrl()).thumbnail(0.8f)
+                .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
         body.setText(message.getBody());
         time.setText(formattedTimeFrom(message.getTimestamp()));
         name.setText(message.getAuthor().getName());

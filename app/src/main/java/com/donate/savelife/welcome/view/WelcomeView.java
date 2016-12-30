@@ -8,12 +8,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BubblyDrawable;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.welcome.displayer.WelcomeDisplayer;
-import com.squareup.picasso.Picasso;
 
 public class WelcomeView extends LinearLayout implements WelcomeDisplayer {
 
@@ -54,9 +55,9 @@ public class WelcomeView extends LinearLayout implements WelcomeDisplayer {
     }
 
     @Override
-    public void display(User sender) {
-        Context context = getContext();
-        Picasso.with(context).load(sender.getPhotoUrl()).into(userAvatar);
+    public void display(final User sender) {
+        final Context context = getContext();
+        Glide.with(context).load(sender.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(userAvatar);
         welcomeMessage.setText(sender.getName() + "\ninvited you to Bonfire");
     }
 }

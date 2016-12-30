@@ -11,12 +11,8 @@ import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
-import rx.Observable;
 import rx.functions.Action1;
-import rx.functions.Func2;
 import rx.subscriptions.CompositeSubscription;
-
-import static com.donate.savelife.core.user.presenter.ProfilePresenter.Pair.asPair;
 
 /**
  * Created by ravi on 19/11/16.
@@ -63,36 +59,37 @@ public class ProfilePresenter {
         this.heroService = heroService;
     }
 
-    public void initPresenter() {
-    }
-
     public void startPresenting() {
         profileDisplayer.attach(onProfileInteractionListener);
-        Observable.combineLatest(userService.observeUser(userID),
-                heroService.observeHero(needID, userID),
-                asPair())
-                .subscribe(new Action1<Pair>() {
+        subscriptions.add(
+                userService.observeUser(userID)
+                .subscribe(new Action1<DatabaseResult<User>>() {
                     @Override
-                    public void call(Pair pair) {
-                        if (pair.user.isSuccess()) {
-                            user = pair.user.getData();
-                            profileDisplayer.display(user);
-                            displayNeed(pair);
+                    public void call(DatabaseResult<User> userDatabaseResult) {
+                        if (userDatabaseResult.isSuccess()){
+                            profileDisplayer.display(userDatabaseResult.getData());
                         } else {
-                            errorLogger.reportError(pair.user.getFailure(), "Failed to fetch the user");
+                            errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the user");
                             profileDisplayer.displayError();
                         }
                     }
-                });
-    }
+                })
+        );
 
-    private void displayNeed(Pair pair) {
-        if (pair.hero.isSuccess()) {
-            profileDisplayer.displayHero(pair.hero.getData(), userID);
-        } else {
-            profileDisplayer.displayHero(new User(), userID);
-            errorLogger.reportError(pair.hero.getFailure(), "Failed to fetch the hero");
-        }
+        subscriptions.add(
+                heroService.observeHero(needID, userID)
+                .subscribe(new Action1<DatabaseResult<User>>() {
+                    @Override
+                    public void call(DatabaseResult<User> userDatabaseResult) {
+                        if (userDatabaseResult.isSuccess()) {
+                            profileDisplayer.displayHero(userDatabaseResult.getData(), userID);
+                        } else {
+                            profileDisplayer.displayHero(new User(), userID);
+                            errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the hero");
+                        }
+                    }
+                })
+        );
     }
 
     public void stopPresenting() {
@@ -132,24 +129,4 @@ public class ProfilePresenter {
             navigator.toParent();
         }
     };
-
-
-    static class Pair {
-        private final DatabaseResult<User> user;
-        private final DatabaseResult<User> hero;
-
-        private Pair(DatabaseResult<User> user, DatabaseResult<User> hero) {
-            this.user = user;
-            this.hero = hero;
-        }
-
-        static Func2<DatabaseResult<User>, DatabaseResult<User>, Pair> asPair() {
-            return new Func2<DatabaseResult<User>, DatabaseResult<User>, Pair>() {
-                @Override
-                public Pair call(DatabaseResult<User> userDatabaseResult, DatabaseResult<User> heroUserDatabaseResult) {
-                    return new Pair(userDatabaseResult, heroUserDatabaseResult);
-                }
-            };
-        }
-    }
 }

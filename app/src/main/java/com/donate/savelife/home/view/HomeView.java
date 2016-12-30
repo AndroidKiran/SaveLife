@@ -15,6 +15,8 @@ import android.view.View;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
@@ -22,7 +24,6 @@ import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.user.data.model.User;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,13 +76,15 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         bottomNavigation.setTranslucentNavigationEnabled(true);
         bottomNavigation.manageFloatingActionButtonBehavior(fabButton);
         bottomNavigation.setColored(true);
-//        bottomNavigation.setAccentColor(ResourcesCompat.getColor(getResources(),R.color.material_login_background, null));
     }
 
     @Override
-    public void setProfile(User user) {
-        Picasso.with(getAppCompatActivity()).load(user.getPhotoUrl()).into(profileImage);
-        Picasso.with(getAppCompatActivity()).load(user.getPhotoUrl()).transform(new BlurTransformation(getContext(), 3, 1)).into(profileBackdrop);
+    public void setProfile(final User user) {
+        Glide.with(getAppCompatActivity()).load(user.getPhotoUrl()).thumbnail(0.8f)
+                .crossFade().fitCenter().
+        diskCacheStrategy(DiskCacheStrategy.ALL).into(profileImage);
+        Glide.with(getAppCompatActivity()).load(user.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).bitmapTransform(new BlurTransformation(getContext(), 2, 2))
+                .into(profileBackdrop);
         profileName.setText(user.getName());
     }
 
@@ -96,7 +99,6 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
     @Override
     public void attach(HomeInteractionListener homeInteractionListener) {
         this.homeInteractionListener = homeInteractionListener;
-//        viewPager.addOnPageChangeListener(onPageChangeListener);
         fabButton.setOnClickListener(onClickListener);
         titleContainer.setOnClickListener(onClickListener);
         bottomNavigation.setOnTabSelectedListener(onTabSelectedListener);
@@ -104,7 +106,6 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
 
     @Override
     public void detach(HomeInteractionListener homeInteractionListener) {
-//        viewPager.addOnPageChangeListener(null);
         fabButton.setOnClickListener(null);
         this.homeInteractionListener = null;
         titleContainer.setOnClickListener(null);

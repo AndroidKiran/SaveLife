@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
 import com.donate.savelife.apputils.Utils;
@@ -26,7 +28,6 @@ import com.donate.savelife.core.country.model.Country;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.country.CountriesDialog;
-import com.squareup.picasso.Picasso;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -181,12 +182,15 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     @Override
     public void display(User user) {
         this.user = user;
-        String url = user.getPhotoUrl();
+        final String url = user.getPhotoUrl();
         if (!TextUtils.isEmpty(url)){
-            Picasso.with(getContext())
+            Glide.with(getContext())
                     .load(url)
-                    .transform(new BlurTransformation(getContext(), 1, 1))
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .bitmapTransform(new BlurTransformation(getContext(), 1, 1))
                     .into(profilePic);
+
         }
 
         String name = user.getName();
