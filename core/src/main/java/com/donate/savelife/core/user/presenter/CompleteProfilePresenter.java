@@ -85,13 +85,18 @@ public class CompleteProfilePresenter {
         @Override
         public void onComplete(User user) {
             completeProfileDisplayer.showProgress();
-            subscriptions.add( userService.updateUser(user)
+            subscriptions.add(userService.updateUser(user)
                     .subscribe(new Action1<DatabaseResult<User>>() {
                         @Override
                         public void call(DatabaseResult<User> userDatabaseResult) {
                             completeProfileDisplayer.dismissProgress();
                             if (userDatabaseResult.isSuccess()){
-                                preferenceService.setLoginUserPreference(gsonService.toString(userDatabaseResult.getData()));
+                                User user = userDatabaseResult.getData();
+                                User userPreference = gsonService.toUser(preferenceService.getLoginUserPreference());
+                                if (userPreference == null || TextUtils.isEmpty(userPreference.getCity())){
+                                    preferenceService.setNotificationCity(user.getCity());
+                                    preferenceService.setLoginUserPreference(gsonService.toString(user));
+                                }
                                 navigator.toParent();
                             } else {
                                 errorLogger.reportError(userDatabaseResult.getFailure(), "Complete profile failed");

@@ -1,5 +1,7 @@
 package com.donate.savelife.core.user.presenter;
 
+import android.text.TextUtils;
+
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.database.DatabaseResult;
@@ -30,10 +32,9 @@ public class ProfilePresenter {
     private final String needID;
     private final String userID;
     private final HeroService heroService;
+    private final User owner;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
-    private User user;
-
 
     public ProfilePresenter(
             ProfileDisplayer profileDisplayer,
@@ -57,17 +58,21 @@ public class ProfilePresenter {
         this.needID = needID;
         this.userID = userID;
         this.heroService = heroService;
+        this.owner = gsonService.toUser(preferenceService.getLoginUserPreference());
     }
 
     public void startPresenting() {
         profileDisplayer.attach(onProfileInteractionListener);
+        profileDisplayer.toggleMenu(TextUtils.isEmpty(needID));
+
         subscriptions.add(
                 userService.observeUser(userID)
                 .subscribe(new Action1<DatabaseResult<User>>() {
                     @Override
                     public void call(DatabaseResult<User> userDatabaseResult) {
                         if (userDatabaseResult.isSuccess()){
-                            profileDisplayer.display(userDatabaseResult.getData());
+                            User user = userDatabaseResult.getData();
+                            profileDisplayer.display(user);
                         } else {
                             errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the user");
                             profileDisplayer.displayError();
@@ -78,14 +83,13 @@ public class ProfilePresenter {
 
         subscriptions.add(
                 heroService.observeHero(needID, userID)
-                .subscribe(new Action1<DatabaseResult<User>>() {
+                .subscribe(new Action1<DatabaseResult<Boolean>>() {
                     @Override
-                    public void call(DatabaseResult<User> userDatabaseResult) {
-                        if (userDatabaseResult.isSuccess()) {
-                            profileDisplayer.displayHero(userDatabaseResult.getData(), userID);
+                    public void call(DatabaseResult<Boolean> booleanDatabaseResult) {
+                        if (booleanDatabaseResult.isSuccess()){
+                            profileDisplayer.displayHero(booleanDatabaseResult.getData(), isAppOwner());
                         } else {
-                            profileDisplayer.displayHero(new User(), userID);
-                            errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the hero");
+
                         }
                     }
                 })
@@ -129,4 +133,8 @@ public class ProfilePresenter {
             navigator.toParent();
         }
     };
+
+    private boolean isAppOwner(){
+        return owner.getId().equals(userID);
+    }
 }

@@ -13,4 +13,8 @@ public interface SharedPreferenceService {
 
     boolean getFirstFlowValue();
 
+    void setNotificationCity(String city);
+
+    String getNotificationCity();
+
 }

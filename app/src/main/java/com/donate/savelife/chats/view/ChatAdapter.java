@@ -33,7 +33,6 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
         if (chat.size() > 0){
             this.chat = chat;
             this.user = user;
-//            notifyItemRangeInserted(getItemCount(), chat.size());
             notifyDataSetChanged();
             chatActionListener.onContentLoaded();
         } else {

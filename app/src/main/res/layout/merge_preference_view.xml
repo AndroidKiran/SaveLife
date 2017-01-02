@@ -33,7 +33,7 @@
 
 
                 <com.donate.savelife.component.text.TextView
-                    android:id="@+id/notification_status"
+                    android:id="@+id/notification_city"
                     style="@style/Preference.Actionable.SubTxt"
                     app:fontTypeface="museosans500" />
 

@@ -12,7 +12,7 @@ public interface HeroDatabase {
 
     Observable<Heros> observeHeros(String needID);
 
-    Observable<String> observeHeroFrom(String needID, String userID);
+    Observable<Boolean> observeHeroFrom(String needID, String userID);
 
     Observable<String> saveHero(String needId, String userID);
 }

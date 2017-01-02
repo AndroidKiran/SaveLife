@@ -62,13 +62,6 @@ dependencies {
     compile 'com.aurelhubert:ahbottomnavigation:2.0.2'
     compile 'me.relex:circleindicator:1.2.2@aar'
 
-
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-    //    compile project(':CoreStructure')
     compile project(':core')
 }
 apply plugin: 'com.google.gms.google-services'

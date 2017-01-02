@@ -14,7 +14,7 @@ public interface HeroService {
 
     Observable<DatabaseResult<Heros>> observerHeros(String needID);
 
-    Observable<DatabaseResult<User>> observeHero(String needID, String userID);
+    Observable<DatabaseResult<Boolean>> observeHero(String needID, String userID);
 
     Observable<DatabaseResult<User>> saveHero(String needId, String userID);
 

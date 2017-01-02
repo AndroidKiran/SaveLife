@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.donate.savelife.BuildConfig;
 import com.donate.savelife.R;
 import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
@@ -15,7 +14,6 @@ import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.home.view.HomeView;
-import com.donate.savelife.link.FirebaseDynamicLinkFactory;
 import com.donate.savelife.navigation.AndroidNavigator;
 import com.donate.savelife.preferences.PreferenceFragment;
 import com.donate.savelife.requirements.NeedsFragment;
@@ -39,12 +37,6 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferenceService preferenceService = Dependencies.INSTANCE.getPreference();
         GsonService gsonService = Dependencies.INSTANCE.getGsonService();
 
-        FirebaseDynamicLinkFactory firebaseDynamicLinkFactory = new FirebaseDynamicLinkFactory(
-                getResources().getString(R.string.dynamicLinkDomain),
-                getResources().getString(R.string.deepLinkBaseUrl),
-                BuildConfig.APPLICATION_ID
-        );
-
         HomeDisplayer homeDisplayer = (HomeDisplayer) findViewById(R.id.home);
         HomeView homeView = ((HomeView) homeDisplayer);
         homeView.setAppCompatActivity(this);
@@ -55,8 +47,7 @@ public class HomeActivity extends AppCompatActivity {
                 gsonService,
                 new AndroidNavigator(this),
                 Dependencies.INSTANCE.getAnalytics(),
-                Dependencies.INSTANCE.getErrorLogger(),
-                firebaseDynamicLinkFactory
+                Dependencies.INSTANCE.getErrorLogger()
         );
 
     }
@@ -86,13 +77,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         homePresenter.startPresenting();
-
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
         homePresenter.stopPresenting();
+        super.onStop();
     }
 
     @Override

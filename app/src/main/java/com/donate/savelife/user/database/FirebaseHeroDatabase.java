@@ -21,8 +21,10 @@ public class FirebaseHeroDatabase implements HeroDatabase {
 
     private final DatabaseReference heroDB;
     private final FirebaseObservableListeners firebaseObservableListeners;
+    private final FirebaseDatabase firebaseDatabase;
 
     public FirebaseHeroDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
+        this.firebaseDatabase = firebaseDatabase;
         heroDB = firebaseDatabase.getReference("heros");
         heroDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
@@ -34,8 +36,8 @@ public class FirebaseHeroDatabase implements HeroDatabase {
     }
 
     @Override
-    public Observable<String> observeHeroFrom(String needID, String userID) {
-        return firebaseObservableListeners.listenToValueEvents(heroDB.child(needID).child(userID), asHero());
+    public Observable<Boolean> observeHeroFrom(String needID, String userID) {
+        return firebaseObservableListeners.listenToValueEvents(heroDB, asHero(needID, userID));
     }
 
     @Override
@@ -58,15 +60,21 @@ public class FirebaseHeroDatabase implements HeroDatabase {
         };
     }
 
-    private Func1<DataSnapshot, String> asHero(){
-        return new Func1<DataSnapshot, String>() {
+    private Func1<DataSnapshot, Boolean> asHero(final String needID, final String userID) {
+        return new Func1<DataSnapshot, Boolean>() {
             @Override
-            public String call(DataSnapshot dataSnapshot) {
-                String uid = dataSnapshot.getValue(String.class);
-                return uid;
+            public Boolean call(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    DataSnapshot needSnapshot = dataSnapshot.child(needID);
+                    if (needSnapshot.exists()) {
+                        DataSnapshot userSnapshot = needSnapshot.child(userID);
+                        if (userSnapshot.exists()) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
         };
     }
-
-
 }

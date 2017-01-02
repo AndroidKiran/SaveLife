@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:elevation="@dimen/dimen_6"
+    android:foregroundGravity="center">
+
+    <com.donate.savelife.component.text.TextView
+        android:id="@+id/save_count"
+        android:layout_width="@dimen/dimen_70"
+        android:layout_height="@dimen/dimen_70"
+        android:layout_gravity="center"
+        android:background="@drawable/green_radius"
+        android:gravity="center"
+        android:textColor="@color/white_neutral"
+        android:textSize="@dimen/font_30"
+        app:fontTypeface="museosans700"
+        tools:text="62" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:elevation="8dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="-15dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_24dp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_24dp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dimen_1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_24dp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_24dp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="-15dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_24dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -158,14 +158,14 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     @Override
     public void attach(OnCompleteListener onCompleteListener) {
         this.onCompleteListener = onCompleteListener;
-        mobileNumEditText.addTextChangedListener(textWatcher);
-        cityEditText.addTextChangedListener(textWatcher);
         btnComplete.setOnClickListener(onClickListener);
         mobileExtNumEditText.setOnClickListener(onClickListener);
         mobileNumEditText.requestFocus();
         mobileExtNumEditText.setOnFocusChangeListener(onFocusChangeListener);
         mobileExtNumEditText.setKeyListener(null);
         toolbar.setNavigationOnClickListener(onNavigationClicklistener);
+        cityEditText.addTextChangedListener(textWatcher);
+        mobileNumEditText.addTextChangedListener(textWatcher);
     }
 
     @Override

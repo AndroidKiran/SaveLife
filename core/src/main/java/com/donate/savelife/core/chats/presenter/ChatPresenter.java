@@ -38,8 +38,8 @@ public class ChatPresenter {
     private final ErrorLogger errorLogger;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
-    private User user;
-    private User needPostedByUser;
+    private User appOwner;
+    private User postOwner;
 
     public ChatPresenter(
             LoginService loginService,
@@ -66,7 +66,7 @@ public class ChatPresenter {
                             @Override
                             public void call(Pair pair) {
                                 if (pair.auth.isSuccess()) {
-                                    user = pair.auth.getUser();
+                                    appOwner = pair.auth.getUser();
                                     displayChat(pair);
                                 } else {
                                     errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
@@ -79,7 +79,7 @@ public class ChatPresenter {
 
     private void displayChat(ChatPresenter.Pair pair) {
         if (pair.chatResult.isSuccess()) {
-            chatDisplayer.display(pair.chatResult.getData(), user);
+            chatDisplayer.display(pair.chatResult.getData(), appOwner);
         } else {
             errorLogger.reportError(pair.chatResult.getFailure(), "Failed to fetch chat");
             chatDisplayer.displayError();
@@ -88,7 +88,7 @@ public class ChatPresenter {
 
     private void displayMoreChat(ChatPresenter.Pair pair) {
         if (pair.chatResult.isSuccess()) {
-            chatDisplayer.displayMore(pair.chatResult.getData(), user);
+            chatDisplayer.displayMore(pair.chatResult.getData(), appOwner);
         } else {
             errorLogger.reportError(pair.chatResult.getFailure(), "Failed to fetch more chat");
         }
@@ -103,8 +103,8 @@ public class ChatPresenter {
                     @Override
                     public void call(DatabaseResult<User> userDatabaseResult) {
                         if (userDatabaseResult.isSuccess()){
-                            needPostedByUser = userDatabaseResult.getData();
-                            chatDisplayer.setTitleLayout(need, needPostedByUser);
+                            postOwner = userDatabaseResult.getData();
+                            chatDisplayer.setTitleLayout(need, postOwner);
                         } else {
                             errorLogger.reportError(userDatabaseResult.getFailure(), "Unable to fetch user");
                         }
@@ -123,7 +123,7 @@ public class ChatPresenter {
     }
 
     private boolean userIsAuthenticated() {
-        return user != null;
+        return appOwner != null;
     }
 
     private final ChatDisplayer.ChatActionListener actionListener = new ChatDisplayer.ChatActionListener() {
@@ -143,9 +143,9 @@ public class ChatPresenter {
 
         @Override
         public void onSubmitMessage(String message) {
-            analytics.trackMessageLength(message.length(), user.getId(), need.getId());
+            analytics.trackMessageLength(message.length(), appOwner.getId(), need.getId());
             subscriptions.add(
-                    chatService.sendMessage(need, new Message(user.getId(), message))
+                    chatService.sendMessage(need, new Message(appOwner.getId(), message))
                             .subscribe(new Action1<DatabaseResult<Message>>() {
                                 @Override
                                 public void call(DatabaseResult<Message> messageDatabaseResult) {
@@ -168,7 +168,7 @@ public class ChatPresenter {
                                 @Override
                                 public void call(Pair pair) {
                                     if (pair.auth.isSuccess()) {
-                                        user = pair.auth.getUser();
+                                        appOwner = pair.auth.getUser();
                                         displayMoreChat(pair);
                                     } else {
                                         errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
@@ -181,8 +181,8 @@ public class ChatPresenter {
 
         @Override
         public void onToolbarClick() {
-            if (needPostedByUser != null && need != null)
-                chatDisplayer.showNeedDialog(need, needPostedByUser);
+            if (postOwner != null && need != null)
+                chatDisplayer.showNeedDialog(need, postOwner);
         }
 
         @Override
@@ -213,7 +213,7 @@ public class ChatPresenter {
 
         @Override
         public void onChatClicked(Message message) {
-            if (!user.getId().equals(message.getUserId())){
+            if (appOwner.getId().equals(need.getUserID())){
                 message.setNeedId(need.getId());
                 navigator.toProfile(message.getNeedId(), message.getUserId());
             }
@@ -255,39 +255,5 @@ public class ChatPresenter {
                 return new DatabaseResult<Chat>(chat);
             }
         };
-    }
-
-    public void onRestoreInstanceState(Bundle outState) {
-        Message message = (Message) outState.getParcelable(UtilBundles.SAVED_LAST_ITEM);
-        Chat chat = (Chat) outState.getParcelable(UtilBundles.SAVED_LIST);
-
-        if (null != message){
-            chatDisplayer.setLastMessage((Message) outState.getParcelable(UtilBundles.SAVED_LAST_ITEM));
-        }
-
-        if (null != chat){
-            chatDisplayer.attach(actionListener);
-            chatDisplayer.disableInteraction();
-            subscriptions.add(
-                    Observable.combineLatest(Observable.just(chat)
-                            .map(toChats()),loginService.getAuthentication(), asPair())
-                            .subscribe(new Action1<Pair>() {
-                                @Override
-                                public void call(Pair pair) {
-                                    if (pair.auth.isSuccess()) {
-                                        user = pair.auth.getUser();
-                                        displayChat(pair);
-                                    } else {
-                                        errorLogger.reportError(pair.auth.getFailure(), "Not logged in when opening chat");
-                                        navigator.toIntro();
-                                    }
-                                }
-                            })
-            );
-        } else {
-            initPresenter();
-        }
-
-
     }
 }

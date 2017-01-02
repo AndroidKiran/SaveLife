@@ -19,9 +19,5 @@ public interface HomeDisplayer {
         void onFabBtnClicked();
 
         void onProfileClicked();
-
-        void onAboutUsClicked();
-
-        void onInviteUsersClicked();
     }
 }

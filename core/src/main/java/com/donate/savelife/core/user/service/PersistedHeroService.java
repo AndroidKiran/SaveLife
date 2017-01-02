@@ -1,7 +1,6 @@
 package com.donate.savelife.core.user.service;
 
 import com.donate.savelife.core.database.DatabaseResult;
-import com.donate.savelife.core.requirement.database.NeedDatabase;
 import com.donate.savelife.core.user.data.model.Heros;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.database.HeroDatabase;
@@ -18,12 +17,10 @@ public class PersistedHeroService implements HeroService {
 
     private final HeroDatabase heroDatabase;
     private final UserDatabase userDatabase;
-    private final NeedDatabase needDatabase;
 
-    public PersistedHeroService(HeroDatabase heroDatabase, UserDatabase userDatabase, NeedDatabase needDatabase) {
+    public PersistedHeroService(HeroDatabase heroDatabase, UserDatabase userDatabase) {
         this.heroDatabase = heroDatabase;
         this.userDatabase = userDatabase;
-        this.needDatabase = needDatabase;
     }
 
     @Override
@@ -34,12 +31,10 @@ public class PersistedHeroService implements HeroService {
     }
 
     @Override
-    public Observable<DatabaseResult<User>> observeHero(String needID, String userID) {
+    public Observable<DatabaseResult<Boolean>> observeHero(String needID, String userID) {
         return heroDatabase.observeHeroFrom(needID, userID)
-                .map(asHeroDatabaseResult())
-                .filter(isHeroAddedSuccessfully())
-                .flatMap(getUser())
-                .onErrorReturn(DatabaseResult.<User>errorAsDatabaseResult());
+                .map(asDatabaseResultExists())
+                .onErrorReturn(DatabaseResult.<Boolean>errorAsDatabaseResult());
     }
 
     @Override
@@ -67,6 +62,16 @@ public class PersistedHeroService implements HeroService {
             @Override
             public DatabaseResult<String> call(String userID) {
                 return new DatabaseResult<String>(userID);
+            }
+        };
+    }
+
+
+    private Func1<Boolean, DatabaseResult<Boolean>> asDatabaseResultExists() {
+        return new Func1<Boolean, DatabaseResult<Boolean>>() {
+            @Override
+            public DatabaseResult<Boolean> call(Boolean exists) {
+                return new DatabaseResult<Boolean>(exists);
             }
         };
     }

@@ -103,8 +103,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:hintEnabled="false"
-                app:hintAnimationEnabled="false"
                 app:theme="@style/AppTheme.TextInputLayout">
 
                 <com.donate.savelife.component.text.EditText
@@ -114,7 +112,7 @@
                     android:inputType="textMultiLine"
                     android:lineSpacingExtra="@dimen/dimen_1"
                     android:maxLines="4"
-                    android:minLines="2"
+                    android:minLines="1"
                     android:scrollbars="vertical"
                     app:fontTypeface="museosans500" />
             </android.support.design.widget.TextInputLayout>

@@ -55,7 +55,9 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            fragment.onActivityResult(requestCode, resultCode, data);
+            if (fragment.isAdded()){
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 

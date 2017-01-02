@@ -3,7 +3,9 @@ package com.donate.savelife;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
+import android.support.v7.app.AppCompatDelegate;
 
+import com.donate.savelife.apputils.ConnectivityReceiver;
 import com.donate.savelife.firebase.Dependencies;
 
 import java.util.Locale;
@@ -24,6 +26,7 @@ public class SaveLifeApplication extends MultiDexApplication {
         super.onCreate();
         sInstance = this;
         Dependencies.INSTANCE.init(this);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         try {
             final PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -44,5 +47,9 @@ public class SaveLifeApplication extends MultiDexApplication {
             current = Locale.US;
         }
         return current;
+    }
+
+    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener;
     }
 }

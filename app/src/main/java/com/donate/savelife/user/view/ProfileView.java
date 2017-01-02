@@ -62,6 +62,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         toolbar = Views.findById(this, R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.inflateMenu(R.menu.menu_profile);
+        toggleMenu(false);
     }
 
     private void initControl(){
@@ -141,11 +142,11 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
     }
 
     @Override
-    public void displayHero(User user, String uid) {
-        if (TextUtils.isEmpty(user.getId()) || uid.equals(user.getId())){
-            fabButton.setVisibility(View.GONE);
-        } else {
+    public void displayHero(boolean alreadyHonored, boolean isOwner) {
+        if (!alreadyHonored && !isOwner){
             fabButton.setVisibility(View.VISIBLE);
+        } else {
+            fabButton.setVisibility(View.GONE);
         }
     }
 
@@ -167,6 +168,12 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
     @Override
     public void displayEmpty() {
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
+    }
+
+    @Override
+    public void toggleMenu(boolean toggle) {
+        MenuItem menuItem = toolbar.getMenu().findItem(R.id.action_edit);
+        menuItem.setVisible(toggle);
     }
 
 

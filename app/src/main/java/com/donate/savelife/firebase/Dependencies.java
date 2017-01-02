@@ -92,7 +92,7 @@ public enum Dependencies {
 
             chatService = new PersistedChatService(chatDatabase, userDatabase);
 
-            heroService = new PersistedHeroService(heroDatabase, userDatabase, needDatabase);
+            heroService = new PersistedHeroService(heroDatabase, userDatabase);
 
             config = FirebaseConfig.newInstance().init(errorLogger);
             pref = new AppPreferencesImpl(appContext);

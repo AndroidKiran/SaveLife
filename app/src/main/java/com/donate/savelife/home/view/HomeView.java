@@ -2,14 +2,15 @@ package com.donate.savelife.home.view;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -18,6 +19,8 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
+import com.donate.savelife.SaveLifeApplication;
+import com.donate.savelife.apputils.ConnectivityReceiver;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.ViewPagerAdapter;
@@ -32,7 +35,7 @@ import static com.donate.savelife.R.id.title_container;
 /**
  * Created by ravi on 09/09/16.
  */
-public class HomeView extends CoordinatorLayout implements HomeDisplayer {
+public class HomeView extends CoordinatorLayout implements HomeDisplayer, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private final int[] tabColors;
@@ -102,14 +105,17 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         fabButton.setOnClickListener(onClickListener);
         titleContainer.setOnClickListener(onClickListener);
         bottomNavigation.setOnTabSelectedListener(onTabSelectedListener);
+        SaveLifeApplication.getInstance().setConnectivityListener(this);
+        checkConnection();
     }
 
     @Override
     public void detach(HomeInteractionListener homeInteractionListener) {
-        fabButton.setOnClickListener(null);
         this.homeInteractionListener = null;
+        fabButton.setOnClickListener(null);
         titleContainer.setOnClickListener(null);
         bottomNavigation.setOnTabSelectedListener(null);
+        SaveLifeApplication.getInstance().setConnectivityListener(null);
     }
 
 
@@ -155,25 +161,6 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
         this.viewPagerAdapter = viewPagerAdapter;
     }
 
-    Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.invite:
-                    homeInteractionListener.onInviteUsersClicked();
-                    return true;
-            }
-            return false;
-        }
-    };
-
-    OnClickListener onNavigationClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            homeInteractionListener.onAboutUsClicked();
-        }
-    };
-
     private void setTheme(int position){
         int color = R.color.material_red;
         switch (position){
@@ -187,5 +174,29 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer {
 
         }
         fabButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), color)));
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack();
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected){
+            showSnack();
+        }
+    }
+
+    private void showSnack() {
+            String message = "Sorry! Not connected to internet";
+            int color = Color.WHITE;
+            Snackbar snackbar = Snackbar
+                    .make(bottomNavigation, message, Snackbar.LENGTH_LONG);
+
+            View sbView = snackbar.getView();
+            AppCompatTextView textView = (AppCompatTextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
     }
 }

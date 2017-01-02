@@ -30,6 +30,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     private View rateUs;
     private View termsCondition;
     private AlertDialog aboutDialog;
+    private View notificationCity;
 
     public PreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -45,11 +46,12 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
 
     private void initControls() {
         notificationSetting = Views.findById(this, R.id.notification_setting);
-        notificationStatus = Views.findById(this, R.id.notification_status);
+        notificationStatus = Views.findById(this, R.id.notification_city);
         aboutUs = Views.findById(this, R.id.about_us);
         invite = Views.findById(this, R.id.invite);
         rateUs = Views.findById(this, R.id.play_store_rate);
         termsCondition = Views.findById(this, R.id.terms_conditions);
+        notificationCity = Views.findById(this, R.id.notification_city);
     }
 
     @Override
@@ -60,7 +62,6 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         invite.setOnClickListener(onClickListener);
         rateUs.setOnClickListener(onClickListener);
         termsCondition.setOnClickListener(onClickListener);
-
     }
 
     @Override

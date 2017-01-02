@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         mainPresenter = new MainPresenter(new AndroidNavigator(this),
                 Dependencies.INSTANCE.getPreference(),
                 Dependencies.INSTANCE.getGsonService());
+
     }
 
     @Override

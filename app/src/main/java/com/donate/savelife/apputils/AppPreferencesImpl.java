@@ -16,6 +16,7 @@ public class AppPreferencesImpl implements SharedPreferenceService {
 
     private final static String USER_DATA = "user_data";
     private final static String FLAT_ONBOARDING_DONE = "flat_onboarding";
+    private final static String NOTIFICATION_CITY = "notification_city";
 
 
     public AppPreferencesImpl(Context context) {
@@ -42,7 +43,13 @@ public class AppPreferencesImpl implements SharedPreferenceService {
         return prefs.getBoolean(FLAT_ONBOARDING_DONE, true);
     }
 
-    public SharedPreferences getPreference(){
-        return prefs;
+    @Override
+    public void setNotificationCity(String city) {
+        prefs.edit().putString(NOTIFICATION_CITY, city).apply();
+    }
+
+    @Override
+    public String getNotificationCity() {
+        return prefs.getString(NOTIFICATION_CITY, "");
     }
 }

@@ -14,7 +14,7 @@ public interface ProfileDisplayer {
 
     void display(User user);
 
-    void displayHero(User user, String uid);
+    void displayHero(boolean alreadyHonored, boolean isOwner);
 
     void displayLoading();
 
@@ -24,6 +24,7 @@ public interface ProfileDisplayer {
 
     void displayEmpty();
 
+    void toggleMenu(boolean toggle);
 
     interface OnProfileInteractionListener {
 
