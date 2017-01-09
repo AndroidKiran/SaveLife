@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="No country found"
         android:textColor="@color/cardview_dark_background"
         android:textSize="@dimen/font_16"
         app:fontTypeface="museosans700" />

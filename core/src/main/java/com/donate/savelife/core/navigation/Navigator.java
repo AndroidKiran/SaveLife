@@ -1,8 +1,10 @@
 package com.donate.savelife.core.navigation;
 
 
+import android.app.Activity;
 import android.net.Uri;
 
+import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.requirement.model.Need;
 
 public interface Navigator {
@@ -27,7 +29,7 @@ public interface Navigator {
 
     void toShareInvite(String sharingLink);
 
-    void toProfile(String needID, String userID);
+    void toProfile(Message message);
 
     void toDialNumber(String dialPhoneNumber);
 
@@ -36,4 +38,6 @@ public interface Navigator {
     void toRateUs();
 
     void onSetResults(int resultCode);
+
+    Activity getActivity();
 }

@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -53,7 +54,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     private View toolbarContent;
     private AlertDialog needDialog;
     private MultiStateView multiView;
-    private TextView emptyView;
+    private TextView emptyViewTxt;
+    private AppCompatImageView emptyViewIcon;
 
     public ChatView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -85,18 +87,18 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         profileImage = Views.findById(this, R.id.profile_image);
         toolbarContent = Views.findById(this, R.id.toolbar_content);
         multiView = Views.findById(this, R.id.multi_view);
-        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
+        emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
+        emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
+
     }
 
     private void initRecyclerView() {
         recyclerView.addItemDecoration(new ChatItemDecoration());
         linearLayoutManager = new LinearLayoutManager(getContext());
-//        linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(chatAdapter);
-        chatAdapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
     private void setPagination() {
@@ -154,7 +156,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
     @Override
     public void displayEmpty() {
-        emptyView.setText(getContext().getString(R.string.str_chat_empty_state));
+        emptyViewTxt.setText(getContext().getString(R.string.str_chat_empty_state));
+        emptyViewIcon.setImageResource(R.drawable.ic_stars_24dp);
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 
@@ -351,18 +354,5 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         });
         return dialogView;
     }
-
-    RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
-//            int friendlyMessageCount = chatAdapter.getItemCount();
-//            int firstVisiblePosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-//            if (firstVisiblePosition == (positionStart - 1) && positionStart >= (friendlyMessageCount - 1)){
-//                recyclerView.scrollToPosition(0);
-//            }
-        }
-    };
-
 
 }

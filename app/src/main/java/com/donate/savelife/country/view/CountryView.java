@@ -53,7 +53,6 @@ public class CountryView extends RelativeLayout {
     }
 
     public void display(Country country){
-//        System.out.println(country.getIsoCode()+":"+country.getDialingCode());
         flag.setImageResource(getFlagDrawable(country));
         name.setText(getCountryName(country));
     }

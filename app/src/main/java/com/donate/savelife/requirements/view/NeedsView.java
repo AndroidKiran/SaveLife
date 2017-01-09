@@ -3,6 +3,7 @@ package com.donate.savelife.requirements.view;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -34,7 +35,8 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     private Paginate paginate;
     private boolean isloading;
     private MultiStateView multiView;
-    private TextView emptyView;
+    private TextView emptyViewTxt;
+    private AppCompatImageView emptyViewIcon;
 
     public NeedsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -52,7 +54,8 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     void initControls(){
         multiView = Views.findById(this, R.id.multi_view);
-        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
+        emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
+        emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
     }
 
 
@@ -151,7 +154,8 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     @Override
     public void displayEmpty() {
-        emptyView.setText(getContext().getString(R.string.str_needs_empty_state));
+        emptyViewIcon.setImageResource(R.drawable.ic_add_circle_24dp);
+        emptyViewTxt.setText(getContext().getString(R.string.str_needs_empty_state));
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 

@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import com.donate.savelife.R;
 import com.donate.savelife.chats.ChatActivity;
+import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.home.HomeActivity;
@@ -80,8 +81,8 @@ public class AndroidNavigator implements Navigator {
     }
 
     @Override
-    public void toProfile(String needID, String userID) {
-        activity.startActivity(ProfileActivity.createIntentFor(activity, needID, userID));
+    public void toProfile(Message message) {
+        activity.startActivity(ProfileActivity.createIntentFor(activity, message));
     }
 
     @Override
@@ -120,4 +121,11 @@ public class AndroidNavigator implements Navigator {
         activity.setResult(resultCode);
         activity.finish();
     }
+
+    @Override
+    public Activity getActivity() {
+        return activity;
+    }
+
+
 }

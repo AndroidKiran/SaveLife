@@ -118,6 +118,12 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         SaveLifeApplication.getInstance().setConnectivityListener(null);
     }
 
+    @Override
+    public void onTabSelected(int position) {
+        setTheme(position);
+        viewPager.setCurrentItem(position, true);
+    }
+
 
     final OnClickListener onClickListener = new OnClickListener() {
         @Override
@@ -138,11 +144,12 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
     final AHBottomNavigation.OnTabSelectedListener onTabSelectedListener = new AHBottomNavigation.OnTabSelectedListener() {
         @Override
         public boolean onTabSelected(int position, boolean wasSelected) {
-            setTheme(position);
-            viewPager.setCurrentItem(position, true);
+            homeInteractionListener.onTabSelected(position);
             return true;
         }
     };
+
+
 
 
     public AppCompatActivity getAppCompatActivity() {

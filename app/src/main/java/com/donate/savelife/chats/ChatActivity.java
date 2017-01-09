@@ -6,22 +6,26 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.donate.savelife.R;
+import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.presenter.ChatPresenter;
 import com.donate.savelife.core.requirement.model.Need;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
+
+import static com.donate.savelife.core.utils.AppConstant.NEED_EXTRA;
 
 
 public class ChatActivity extends AppCompatActivity {
 
-    private static final String NEED_EXTRA = "need";
     private ChatPresenter presenter;
+    private Analytics analytics;
 
     public static Intent createIntentFor(Context context, Need need) {
         Intent intent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(NEED_EXTRA, need);
+        bundle.putParcelable(AppConstant.NEED_EXTRA, need);
         intent.putExtras(bundle);
         return intent;
     }
@@ -30,6 +34,12 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        analytics = Dependencies.INSTANCE.getAnalytics();
+
+        if (savedInstanceState == null){
+            analytics.trackScreen(this, AppConstant.CHAT_SCREEN, null);
+        }
+
         ChatDisplayer chatDisplayer = (ChatDisplayer) findViewById(R.id.chat_view);
         Need need = (Need) getIntent().getExtras().getParcelable(NEED_EXTRA);
         presenter = new ChatPresenter(
@@ -37,16 +47,10 @@ public class ChatActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getChatService(),
                 chatDisplayer,
                 need,
-                Dependencies.INSTANCE.getAnalytics(),
+                analytics,
                 new AndroidNavigator(this),
                 Dependencies.INSTANCE.getErrorLogger()
         );
-
-//        if (savedInstanceState == null){
-//            presenter.initPresenter();
-//        } else {
-//            presenter.onRestoreInstanceState(savedInstanceState);
-//        }
     }
 
     @Override

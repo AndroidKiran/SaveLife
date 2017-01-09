@@ -8,13 +8,4 @@ public interface SharedPreferenceService {
     void setLoginUserPreference(String loginUser);
 
     String getLoginUserPreference();
-
-    void setFirstFlowPreference(boolean firstFlowCompleted);
-
-    boolean getFirstFlowValue();
-
-    void setNotificationCity(String city);
-
-    String getNotificationCity();
-
 }

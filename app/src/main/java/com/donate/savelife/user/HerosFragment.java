@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.UtilBundles;
 import com.donate.savelife.core.user.displayer.HerosDisplayer;
 import com.donate.savelife.core.user.presenter.HeroPresenter;
 import com.donate.savelife.firebase.Dependencies;
@@ -19,7 +20,7 @@ import com.donate.savelife.navigation.AndroidNavigator;
 
 public class HerosFragment extends Fragment {
 
-    public static final String TAG = "heros";
+    public static final String TAG = UtilBundles.HEROS_SCREEN;
     private HeroPresenter presenter;
 
     public static HerosFragment newInstance(Bundle bundle) {

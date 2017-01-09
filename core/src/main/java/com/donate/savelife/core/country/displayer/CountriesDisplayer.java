@@ -32,6 +32,8 @@ public interface CountriesDisplayer {
 
         void onError();
 
+        void onEmpty();
+
     }
 
 }

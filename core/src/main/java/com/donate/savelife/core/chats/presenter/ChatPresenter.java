@@ -16,7 +16,7 @@ import com.donate.savelife.core.login.service.LoginService;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
-import com.donate.savelife.core.utils.UtilBundles;
+import com.donate.savelife.core.utils.AppConstant;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -143,7 +143,6 @@ public class ChatPresenter {
 
         @Override
         public void onSubmitMessage(String message) {
-            analytics.trackMessageLength(message.length(), appOwner.getId(), need.getId());
             subscriptions.add(
                     chatService.sendMessage(need, new Message(appOwner.getId(), message))
                             .subscribe(new Action1<DatabaseResult<Message>>() {
@@ -158,6 +157,12 @@ public class ChatPresenter {
                             })
 
             );
+
+            Bundle messageSentBundle = new Bundle();
+            messageSentBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+            messageSentBundle.putInt(Analytics.PARAM_MESSAGE_LENGTH, message.length());
+            messageSentBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.SEND_MESSAGE_BUTTON);
+            analytics.trackButtonClick(messageSentBundle);
         }
 
         @Override
@@ -183,17 +188,34 @@ public class ChatPresenter {
         public void onToolbarClick() {
             if (postOwner != null && need != null)
                 chatDisplayer.showNeedDialog(need, postOwner);
+
+            Bundle toolbarBarBundle = new Bundle();
+            toolbarBarBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+            toolbarBarBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TOOLBAR);
+            analytics.trackButtonClick(toolbarBarBundle);
         }
 
         @Override
         public void onCallClick(String mobileNum) {
             navigator.toDialNumber(mobileNum);
+
+            Bundle callBundle = new Bundle();
+            callBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+            callBundle.putString(Analytics.PARAM_MOBILE_NUM, mobileNum);
+            callBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.CALL_BUTTON);
+            analytics.trackButtonClick(callBundle);
         }
 
         @Override
         public void onAddressClick(String address) {
             Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
             navigator.toMap(gmmIntentUri);
+
+            Bundle addressBundle = new Bundle();
+            addressBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+            addressBundle.putString(Analytics.PARAM_ADDRESS, address);
+            addressBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.ADDRESS_BUTTON);
+            analytics.trackButtonClick(addressBundle);
         }
 
         @Override
@@ -215,7 +237,13 @@ public class ChatPresenter {
         public void onChatClicked(Message message) {
             if (appOwner.getId().equals(need.getUserID())){
                 message.setNeedId(need.getId());
-                navigator.toProfile(message.getNeedId(), message.getUserId());
+                navigator.toProfile(message);
+
+                Bundle listItemBundle = new Bundle();
+                listItemBundle.putString(Analytics.PARAM_MESSAGE_ID, message.getId());
+                listItemBundle.putString(Analytics.PARAM_LIST_NAME, AppConstant.CHAT_LIST);
+                analytics.trackListItemClick(listItemBundle);
+
             }
         }
     };
@@ -243,9 +271,9 @@ public class ChatPresenter {
 
 
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(UtilBundles.SAVED_LIST, chatDisplayer.getChat());
-        outState.putParcelable(UtilBundles.SAVED_USER, chatDisplayer.getUser());
-        outState.putParcelable(UtilBundles.SAVED_LAST_ITEM, chatDisplayer.getLastMessage());
+        outState.putParcelable(AppConstant.SAVED_LIST, chatDisplayer.getChat());
+        outState.putParcelable(AppConstant.SAVED_USER, chatDisplayer.getUser());
+        outState.putParcelable(AppConstant.SAVED_LAST_ITEM, chatDisplayer.getLastMessage());
     }
 
     private Func1<Chat, DatabaseResult<Chat>> toChats() {

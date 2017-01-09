@@ -30,7 +30,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     private View rateUs;
     private View termsCondition;
     private AlertDialog aboutDialog;
-    private View notificationCity;
+    private TextView notificationCity;
 
     public PreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -92,6 +92,11 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_terms_conditions, null);
         aboutDialog = DialogUtils.showDialog(getContext(), dialogView);
         aboutDialog.show();
+    }
+
+    @Override
+    public void showNotificationCity(String city) {
+        notificationCity.setText(city);
     }
 
     final OnClickListener onClickListener = new OnClickListener() {

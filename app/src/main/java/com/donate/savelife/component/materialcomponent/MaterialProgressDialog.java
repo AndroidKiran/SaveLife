@@ -2,8 +2,8 @@ package com.donate.savelife.component.materialcomponent;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 
 import com.donate.savelife.R;
 
@@ -14,24 +14,21 @@ import com.donate.savelife.R;
 public class MaterialProgressDialog extends ProgressDialog {
     // Default background for the progress spinner
     private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    private Context context;
     private MaterialProgressDrawable indeterminateDrawable;
     private int mDefaultColor;
     private int mColor;
 
     public MaterialProgressDialog(Context context) {
         super(context);
-    }
-
-    public MaterialProgressDialog(Context context, int defStyle) {
-        super(context, defStyle);
+        this.context = context;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Resources res = getContext().getResources();
-        mDefaultColor = res.getColor(R.color.material_green);
+        mDefaultColor = ContextCompat.getColor(context, R.color.material_green);
 
         indeterminateDrawable = new MaterialProgressDrawable(getContext(), findViewById(android.R.id.progress));
         indeterminateDrawable.setBackgroundColor(CIRCLE_BG_LIGHT);

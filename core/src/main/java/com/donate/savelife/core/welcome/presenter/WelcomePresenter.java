@@ -34,7 +34,6 @@ public class WelcomePresenter {
 
     public void startPresenting() {
         welcomeDisplayer.attach(interactionListener);
-        analytics.trackInvitationOpened(senderId);
         subscriptions.add(
                 userService.observeUser(senderId)
                         .subscribe(new Action1<DatabaseResult<User>>() {
@@ -49,6 +48,8 @@ public class WelcomePresenter {
                         })
 
         );
+
+        analytics.trackInvitationOpened(senderId);
     }
 
     public void stopPresenting() {
@@ -60,8 +61,9 @@ public class WelcomePresenter {
     private final WelcomeDisplayer.InteractionListener interactionListener = new WelcomeDisplayer.InteractionListener() {
         @Override
         public void onGetStartedClicked() {
-            analytics.trackInvitationAccepted(senderId);
             navigator.toMain();
+
+            analytics.trackInvitationAccepted(senderId);
         }
     };
 }

@@ -16,6 +16,8 @@ public interface PreferenceDisplayer {
 
     void showTermsDialog();
 
+    void showNotificationCity(String city);
+
     interface PreferenceInteractionListener {
 
         void onNotificationModifyClicked();

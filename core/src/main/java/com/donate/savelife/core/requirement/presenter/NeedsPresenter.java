@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
-import com.donate.savelife.core.utils.UtilBundles;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.database.DatabaseResult;
@@ -77,8 +77,12 @@ public class NeedsPresenter {
     NeedsDisplayer.NeedInteractionListener needInteractionListener = new NeedsDisplayer.NeedInteractionListener() {
         @Override
         public void onNeedSelected(Need need) {
-            analytics.trackSelectNeed(need.getUserID(), need.getAddress());
             navigator.toChat(need);
+            Bundle listItemBundle = new Bundle();
+            listItemBundle.putString(Analytics.PARAM_NEED_ID, need.getId());
+            listItemBundle.putString(Analytics.PARAM_LIST_NAME, AppConstant.NEED_LIST);
+            analytics.trackListItemClick(listItemBundle);
+
         }
 
         @Override
@@ -116,8 +120,8 @@ public class NeedsPresenter {
 
 
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(UtilBundles.SAVED_LIST, needsDisplayer.getNeeds());
-        outState.putParcelable(UtilBundles.SAVED_LAST_ITEM, needsDisplayer.getlastNeedItem());
+        outState.putParcelable(AppConstant.SAVED_LIST, needsDisplayer.getNeeds());
+        outState.putParcelable(AppConstant.SAVED_LAST_ITEM, needsDisplayer.getlastNeedItem());
     }
 
     private Func1<Needs, DatabaseResult<Needs>> asDatabaseResult() {
@@ -130,8 +134,8 @@ public class NeedsPresenter {
     }
 
     public void onRestoreInstanceState(Bundle outState) {
-        Need need = (Need) outState.getParcelable(UtilBundles.SAVED_LAST_ITEM);
-        Needs needs = (Needs) outState.getParcelable(UtilBundles.SAVED_LIST);
+        Need need = (Need) outState.getParcelable(AppConstant.SAVED_LAST_ITEM);
+        Needs needs = (Needs) outState.getParcelable(AppConstant.SAVED_LIST);
         if (null != need) {
             needsDisplayer.setLastNeedItem(need);
         }

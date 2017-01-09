@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.donate.savelife.R;
+import com.donate.savelife.core.analytics.Analytics;
+import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.AppConstant;
+import com.donate.savelife.core.utils.GsonService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
+import com.donate.savelife.firebase.Dependencies;
+import com.donate.savelife.login.LoginFragment;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -22,11 +29,18 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
     private ViewPager viewPager;
     private CircleIndicator indicator;
     private View skip;
+    private Analytics analytics;
+    private GsonService gsonService;
+    private SharedPreferenceService sharedPreference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.indicator_view_pager_layout);
+        analytics = Dependencies.INSTANCE.getAnalytics();
+        gsonService = Dependencies.INSTANCE.getGsonService();
+        sharedPreference = Dependencies.INSTANCE.getPreference();
         initControls();
         initPager();
     }
@@ -39,6 +53,12 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
             @Override
             public void onClick(View view) {
                 viewPager.setCurrentItem(2, true);
+                User user = gsonService.toUser(sharedPreference.getLoginUserPreference());
+                Bundle skipToLoginBundle = new Bundle();
+                skipToLoginBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+                skipToLoginBundle.putInt(Analytics.PARAM_INTRO_SCREEN, viewPager.getCurrentItem());
+                skipToLoginBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.SKIP_INTRO_BUTTON);
+                analytics.trackButtonClick(skipToLoginBundle);
             }
         });
         
@@ -69,6 +89,19 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
     @Override
     public void onPageSelected(int position) {
         skip.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
+        switch (position){
+            case 0:
+                analytics.trackScreen(this, "Intro screen 1", null);
+                break;
+
+            case 1:
+                analytics.trackScreen(this, "Intro screen 2", null);
+                break;
+
+            case 2:
+                analytics.trackScreen(this, LoginFragment.TAG, null);
+                break;
+        }
     }
 
     @Override

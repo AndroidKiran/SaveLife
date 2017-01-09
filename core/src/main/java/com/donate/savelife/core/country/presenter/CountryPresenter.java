@@ -80,5 +80,10 @@ public class CountryPresenter {
         public void onError() {
             countryDisplayer.displayError();
         }
+
+        @Override
+        public void onEmpty() {
+            countryDisplayer.displayEmpty();
+        }
     };
 }

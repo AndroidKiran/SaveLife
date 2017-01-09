@@ -34,7 +34,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
         this.context = context;
         this.countries = new Countries(new ArrayList<Country>());
         this.countriesFilterList = countries;
-//        setHasStableIds(true);
     }
 
     public void setData(Countries countries) {
@@ -46,7 +45,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
             notifyDataSetChanged();
             countryInteractionListener.onContentLoaded();
         } else {
-            countryInteractionListener.onError();
+            countryInteractionListener.onEmpty();
         }
 
     }
@@ -57,7 +56,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
             notifyDataSetChanged();
             countryInteractionListener.onContentLoaded();
         } else {
-            countryInteractionListener.onError();
+            countryInteractionListener.onEmpty();
         }
     }
 

@@ -31,6 +31,7 @@ public class LoginFragment extends Fragment {
     private AppCompatActivity activity;
     private int backgroundColor;
     private int page;
+    public static final String TAG = "Login Screen";
 
     public static LoginFragment newInstance(int backgroundColor, int page) {
         LoginFragment frag = new LoginFragment();

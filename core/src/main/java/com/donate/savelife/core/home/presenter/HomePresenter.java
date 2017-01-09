@@ -1,13 +1,17 @@
 package com.donate.savelife.core.home.presenter;
 
 
+import android.os.Bundle;
+
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
+import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
+import com.donate.savelife.core.utils.AppConstant;
 
 /**
  * Created by ravi on 09/09/16.
@@ -37,6 +41,7 @@ public class HomePresenter {
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         homeDisplayer.setUpViewPager();
         homeDisplayer.setProfile(user);
+        analytics.setUserIdProperty(user.getId());
     }
 
     public void startPresenting(){
@@ -51,12 +56,41 @@ public class HomePresenter {
 
         @Override
         public void onFabBtnClicked() {
-           navigator.toNeed();
+            navigator.toNeed();
+            Bundle toPostNeedBundle = new Bundle();
+            toPostNeedBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            toPostNeedBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_POST_NEED_BUTTON);
+            analytics.trackButtonClick(toPostNeedBundle);
         }
 
         @Override
         public void onProfileClicked() {
-            navigator.toProfile("", user.getId());
+            Message message = new Message();
+            message.setNeedId("");
+            message.setUserId(user.getId());
+            navigator.toProfile(message);
+            Bundle toProfileBundle = new Bundle();
+            toProfileBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            toProfileBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_PROFILE_BUTTON);
+            analytics.trackButtonClick(toProfileBundle);
+        }
+
+        @Override
+        public void onTabSelected(int postion) {
+            homeDisplayer.onTabSelected(postion);
+            switch (postion){
+                case 0:
+                    analytics.trackScreen(navigator.getActivity(), AppConstant.NEEDS_SCREEN, null);
+                    break;
+
+                case 1:
+                    analytics.trackScreen(navigator.getActivity(), AppConstant.HEROS_SCREEN, null);
+                    break;
+
+                case 2:
+                    analytics.trackScreen(navigator.getActivity(), AppConstant.PREFERENCES_SCREEN, null);
+                    break;
+            }
         }
     };
 }

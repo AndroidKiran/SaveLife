@@ -1,9 +1,8 @@
 package com.donate.savelife.core.user.presenter;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.country.model.Country;
@@ -12,6 +11,9 @@ import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.core.user.service.UserService;
+import com.donate.savelife.core.utils.AppConstant;
+import com.donate.savelife.core.utils.GsonService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -78,7 +80,6 @@ public class CompleteProfilePresenter {
 
     public void onFragmentInteractionListener(Country country){
         completeProfileDisplayer.displayCountry(country);
-        analytics.trackSelectCountry(country.toString());
     }
 
     CompleteProfileDisplayer.OnCompleteListener onCompleteListener = new CompleteProfileDisplayer.OnCompleteListener() {
@@ -92,17 +93,18 @@ public class CompleteProfilePresenter {
                             completeProfileDisplayer.dismissProgress();
                             if (userDatabaseResult.isSuccess()){
                                 User user = userDatabaseResult.getData();
-                                User userPreference = gsonService.toUser(preferenceService.getLoginUserPreference());
-                                if (userPreference == null || TextUtils.isEmpty(userPreference.getCity())){
-                                    preferenceService.setNotificationCity(user.getCity());
-                                    preferenceService.setLoginUserPreference(gsonService.toString(user));
-                                }
+                                preferenceService.setLoginUserPreference(gsonService.toString(user));
                                 navigator.toParent();
                             } else {
                                 errorLogger.reportError(userDatabaseResult.getFailure(), "Complete profile failed");
                             }
                         }
                     }));
+
+            Bundle onCompleteBundle = new Bundle();
+            onCompleteBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            onCompleteBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.COMPLETE_PROFILE_BUTTON);
+            analytics.trackButtonClick(onCompleteBundle);
 
         }
 

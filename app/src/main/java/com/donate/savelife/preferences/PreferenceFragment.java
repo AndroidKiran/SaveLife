@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.donate.savelife.BuildConfig;
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.UtilBundles;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 import com.donate.savelife.core.preferences.presenter.PreferencePresenter;
 import com.donate.savelife.firebase.Dependencies;
@@ -21,7 +22,7 @@ import com.donate.savelife.navigation.AndroidNavigator;
 
 public class PreferenceFragment extends Fragment {
 
-    public static final String TAG = "Preferences";
+    public static final String TAG = UtilBundles.PREFERENCES_SCREEN;
     private FirebaseDynamicLinkFactory firebaseDynamicLinkFactory;
     private PreferencePresenter presenter;
 

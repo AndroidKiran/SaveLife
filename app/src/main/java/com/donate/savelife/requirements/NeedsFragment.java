@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.donate.savelife.R;
+import com.donate.savelife.apputils.UtilBundles;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.presenter.NeedsPresenter;
 import com.donate.savelife.firebase.Dependencies;
@@ -23,7 +24,7 @@ import static com.donate.savelife.navigation.AndroidNavigator.SEEK_NEED_SUCCESS;
 
 public class NeedsFragment extends Fragment {
 
-    public static final String TAG = "Requirements";
+    public static final String TAG = UtilBundles.NEEDS_SCREEN;
 
     private NeedsPresenter presenter;
 

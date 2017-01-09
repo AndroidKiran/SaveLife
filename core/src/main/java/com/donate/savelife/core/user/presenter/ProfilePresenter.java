@@ -1,15 +1,18 @@
 package com.donate.savelife.core.user.presenter;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
+import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.ProfileDisplayer;
 import com.donate.savelife.core.user.service.HeroService;
 import com.donate.savelife.core.user.service.UserService;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
@@ -29,10 +32,9 @@ public class ProfilePresenter {
     private final ErrorLogger errorLogger;
     private final Analytics analytics;
     private final Navigator navigator;
-    private final String needID;
-    private final String userID;
     private final HeroService heroService;
     private final User owner;
+    private final Message message;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -44,8 +46,7 @@ public class ProfilePresenter {
             UserService userService,
             ErrorLogger errorLogger,
             Analytics analytics,
-            String userID,
-            String needID,
+            Message message,
             HeroService heroService
     ) {
         this.profileDisplayer = profileDisplayer;
@@ -55,18 +56,17 @@ public class ProfilePresenter {
         this.errorLogger = errorLogger;
         this.analytics = analytics;
         this.navigator = navigator;
-        this.needID = needID;
-        this.userID = userID;
+        this.message = message;
         this.heroService = heroService;
         this.owner = gsonService.toUser(preferenceService.getLoginUserPreference());
     }
 
     public void startPresenting() {
         profileDisplayer.attach(onProfileInteractionListener);
-        profileDisplayer.toggleMenu(TextUtils.isEmpty(needID));
+        profileDisplayer.toggleMenu(TextUtils.isEmpty(message.getNeedId()));
 
         subscriptions.add(
-                userService.observeUser(userID)
+                userService.observeUser(message.getUserId())
                 .subscribe(new Action1<DatabaseResult<User>>() {
                     @Override
                     public void call(DatabaseResult<User> userDatabaseResult) {
@@ -74,22 +74,22 @@ public class ProfilePresenter {
                             User user = userDatabaseResult.getData();
                             profileDisplayer.display(user);
                         } else {
-                            errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the user");
                             profileDisplayer.displayError();
+                            errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to fetch the user");
                         }
                     }
                 })
         );
 
         subscriptions.add(
-                heroService.observeHero(needID, userID)
+                heroService.observeHero(message)
                 .subscribe(new Action1<DatabaseResult<Boolean>>() {
                     @Override
                     public void call(DatabaseResult<Boolean> booleanDatabaseResult) {
                         if (booleanDatabaseResult.isSuccess()){
                             profileDisplayer.displayHero(booleanDatabaseResult.getData(), isAppOwner());
                         } else {
-
+                            errorLogger.reportError(booleanDatabaseResult.getFailure(), "Failed to get honor value");
                         }
                     }
                 })
@@ -108,12 +108,16 @@ public class ProfilePresenter {
         @Override
         public void onEditClick() {
             navigator.toCompleteProfile();
+            Bundle toEditProfileBundle = new Bundle();
+            toEditProfileBundle.putString(Analytics.PARAM_OWNER_ID, owner.getId());
+            toEditProfileBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_EDIT_PROFILE_BUTTON);
+            analytics.trackButtonClick(toEditProfileBundle);
         }
 
         @Override
         public void onHonorClick() {
             subscriptions.add(
-                    heroService.saveHero(needID, userID)
+                    heroService.honorHero(message)
                             .subscribe(new Action1<DatabaseResult<User>>() {
                                 @Override
                                 public void call(DatabaseResult<User> userDatabaseResult) {
@@ -126,6 +130,12 @@ public class ProfilePresenter {
                             })
 
             );
+
+            Bundle onHonorBunlde = new Bundle();
+            onHonorBunlde.putString(Analytics.PARAM_OWNER_ID, owner.getId());
+            onHonorBunlde.putString(Analytics.PARAM_HERO_ID, message.getUserId());
+            onHonorBunlde.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.HONOR_BUTTON);
+            analytics.trackButtonClick(onHonorBunlde);
         }
 
         @Override
@@ -135,6 +145,6 @@ public class ProfilePresenter {
     };
 
     private boolean isAppOwner(){
-        return owner.getId().equals(userID);
+        return owner.getId().equals(message.getUserId());
     }
 }

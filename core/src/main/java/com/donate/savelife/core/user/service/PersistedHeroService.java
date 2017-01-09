@@ -1,5 +1,6 @@
 package com.donate.savelife.core.user.service;
 
+import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.user.data.model.Heros;
 import com.donate.savelife.core.user.data.model.User;
@@ -31,15 +32,15 @@ public class PersistedHeroService implements HeroService {
     }
 
     @Override
-    public Observable<DatabaseResult<Boolean>> observeHero(String needID, String userID) {
-        return heroDatabase.observeHeroFrom(needID, userID)
+    public Observable<DatabaseResult<Boolean>> observeHero(Message  message) {
+        return heroDatabase.observeHeroFrom(message.getNeedId(), message.getUserId())
                 .map(asDatabaseResultExists())
                 .onErrorReturn(DatabaseResult.<Boolean>errorAsDatabaseResult());
     }
 
     @Override
-    public Observable<DatabaseResult<User>> saveHero(String needId, String userID) {
-        return heroDatabase.saveHero(needId, userID)
+    public Observable<DatabaseResult<User>> honorHero(Message message) {
+        return heroDatabase.saveHero(message.getNeedId(), message.getUserId())
                 .map(asHeroDatabaseResult())
                 .filter(isHeroAddedSuccessfully())
                 .flatMap(getUser())

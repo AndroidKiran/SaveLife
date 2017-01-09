@@ -8,11 +8,13 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.donate.savelife.R;
+import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.country.OnFragmentInteractionListener;
 import com.donate.savelife.core.country.model.Country;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.core.user.presenter.CompleteProfilePresenter;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
@@ -27,16 +29,23 @@ public class CompleteProfileActivity extends AppCompatActivity implements OnFrag
 
     private CompleteProfilePresenter presenter;
     private User user;
+    private Analytics analytics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_profile);
+        analytics = Dependencies.INSTANCE.getAnalytics();
+
+        if (savedInstanceState == null)
+            analytics.trackScreen(this, AppConstant.EDIT_PROFILE_SCREEN, null);
+
         CompleteProfileDisplayer completeProfileDisplayer = (CompleteProfileDisplayer) findViewById(R.id.complete_profile_view);
         ((CompleteProfileView)completeProfileDisplayer).setActivity(this);
         GsonService gsonService =  Dependencies.INSTANCE.getGsonService();
         SharedPreferenceService sharedPreferenceService = Dependencies.INSTANCE.getPreference();
         user = gsonService.toUser(sharedPreferenceService.getLoginUserPreference());
+
         presenter = new CompleteProfilePresenter(
                 completeProfileDisplayer,
                 sharedPreferenceService,
@@ -44,7 +53,7 @@ public class CompleteProfileActivity extends AppCompatActivity implements OnFrag
                 gsonService,
                 Dependencies.INSTANCE.getUserService(),
                 Dependencies.INSTANCE.getErrorLogger(),
-                Dependencies.INSTANCE.getAnalytics()
+                analytics
         );
         presenter.initPresenter();
     }

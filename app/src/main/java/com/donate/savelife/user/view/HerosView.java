@@ -3,6 +3,7 @@ package com.donate.savelife.user.view;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -28,7 +29,8 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
     private RecyclerView recyclerView;
     private MultiStateView multiView;
     private HeroInteractionListener heroInteractionListener;
-    private TextView emptyView;
+    private TextView emptyViewTxt;
+    private AppCompatImageView emptyViewIcon;
 
     public HerosView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -45,8 +47,8 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
 
     void initControls(){
         multiView = Views.findById(this, R.id.multi_view);
-        emptyView = (TextView) multiView.findViewById(R.id.empty_view);
-
+        emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
+        emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
     }
 
 
@@ -96,7 +98,8 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
 
     @Override
     public void displayEmpty() {
-        emptyView.setText(getContext().getString(R.string.str_heros_empty_state));
+        emptyViewTxt.setText(getContext().getString(R.string.str_heros_empty_state));
+        emptyViewIcon.setImageResource(R.drawable.ic_stars_24dp);
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 

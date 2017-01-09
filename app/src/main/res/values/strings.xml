@@ -33,6 +33,7 @@
     <!--Country-->
     <string name="str_search">Search for country</string>
     <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
+    <string name="str_empty_country">No country found</string>
 
     <!--Home-->
     <string name="str_requirement_tab">Needs</string>

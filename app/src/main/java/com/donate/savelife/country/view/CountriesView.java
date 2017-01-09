@@ -3,6 +3,7 @@ package com.donate.savelife.country.view;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.ClearableEditText;
+import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.country.displayer.CountriesDisplayer;
 import com.donate.savelife.core.country.model.Countries;
 
@@ -31,6 +33,8 @@ public class CountriesView extends LinearLayout implements CountriesDisplayer {
     private CountryInteractionListener countryInteractionListener;
     private ClearableEditText searchView;
     private MultiStateView multiView;
+    private TextView emptyViewTxt;
+    private AppCompatImageView emptyViewIcon;
 
     public CountriesView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,6 +53,8 @@ public class CountriesView extends LinearLayout implements CountriesDisplayer {
     private void initControls(){
         searchView = Views.findById(this, R.id.search_view);
         multiView = Views.findById(this,R.id.multi_view);
+        emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
+        emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
     }
 
     private void setRecyclerView() {
@@ -103,6 +109,8 @@ public class CountriesView extends LinearLayout implements CountriesDisplayer {
 
     @Override
     public void displayEmpty() {
+        emptyViewTxt.setText(getContext().getString(R.string.str_empty_country));
+        emptyViewIcon.setImageResource(R.drawable.ic_assistant_photo_24dp);
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 
