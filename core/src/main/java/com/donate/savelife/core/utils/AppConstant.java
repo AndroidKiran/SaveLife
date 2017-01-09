@@ -12,6 +12,7 @@ public class AppConstant {
     public static final String USER_EXTRA = "user_extra";
     public static final String MESSAGE_EXTRA = "message_extra";
     public static final String BUNDLE_EXTRA = "bundle_extra";
+    public static final String REG_EXTRA = "reg_extra";
 
     // Fragment TAGS
     public static final String NEEDS_SCREEN = "Blood Requirements screen";

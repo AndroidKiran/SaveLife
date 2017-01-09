@@ -1,5 +1,6 @@
 package com.donate.savelife.intro;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,7 +56,7 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
                 viewPager.setCurrentItem(2, true);
                 User user = gsonService.toUser(sharedPreference.getLoginUserPreference());
                 Bundle skipToLoginBundle = new Bundle();
-                skipToLoginBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+
                 skipToLoginBundle.putInt(Analytics.PARAM_INTRO_SCREEN, viewPager.getCurrentItem());
                 skipToLoginBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.SKIP_INTRO_BUTTON);
                 analytics.trackButtonClick(skipToLoginBundle);
@@ -74,8 +75,8 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            if (fragment.isAdded()){
+        if (resultCode == Activity.RESULT_OK) {
+            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
         }

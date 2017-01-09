@@ -15,6 +15,7 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     private SharedPreferences prefs;
 
     private final static String USER_DATA = "user_data";
+    private final static String REG_ID = "reg_id";
 
 
     public AppPreferencesImpl(Context context) {
@@ -29,6 +30,26 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     @Override
     public String getLoginUserPreference() {
         return prefs.getString(USER_DATA, "");
+    }
+
+    @Override
+    public void setRegistrationId(String registrationId) {
+        prefs.edit().putString(REG_ID, registrationId).apply();
+    }
+
+    @Override
+    public String getRegistrationId() {
+        return prefs.getString(REG_ID, "");
+    }
+
+    @Override
+    public void setRegistrationComplete() {
+        prefs.edit().putBoolean(UtilBundles.REG_COMPLETE_EXTRA, true).apply();
+    }
+
+    @Override
+    public boolean isRegistrationComplete() {
+        return prefs.getBoolean(UtilBundles.REG_COMPLETE_EXTRA, false);
     }
 
 }

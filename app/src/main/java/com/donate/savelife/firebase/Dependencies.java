@@ -16,6 +16,8 @@ import com.donate.savelife.core.country.service.CountryService;
 import com.donate.savelife.core.country.service.PersistedCountryService;
 import com.donate.savelife.core.login.service.FirebaseLoginService;
 import com.donate.savelife.core.login.service.LoginService;
+import com.donate.savelife.core.notifications.service.NotificationRegistrationService;
+import com.donate.savelife.core.notifications.service.PersistedNotificationRegistrationService;
 import com.donate.savelife.core.requirement.database.NeedDatabase;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.requirement.service.PersistedNeedService;
@@ -28,6 +30,7 @@ import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.country.database.FirebaseCountryDatabase;
 import com.donate.savelife.login.database.FirebaseAuthDatabase;
+import com.donate.savelife.notifications.database.FirebaseNotificationRegistrationDatabase;
 import com.donate.savelife.requirements.database.FirebaseNeedDatabase;
 import com.donate.savelife.rx.FirebaseObservableListeners;
 import com.donate.savelife.user.database.FirebaseHeroDatabase;
@@ -49,10 +52,11 @@ public enum Dependencies {
     private FirebaseDatabase firebaseDatabase;
     private FirebaseLoginService loginService;
     private UserService userService;
-    private PersistedCountryService countryService;
-    private PersistedNeedService needService;
-    private PersistedChatService chatService;
-    private PersistedHeroService heroService;
+    private CountryService countryService;
+    private NeedService needService;
+    private ChatService chatService;
+    private HeroService heroService;
+    private NotificationRegistrationService notificationRegistrationsService;
 
     public void init(Context context) {
         if (needsInitialisation()) {
@@ -82,6 +86,8 @@ public enum Dependencies {
 
             FirebaseChatDatabase chatDatabase = new FirebaseChatDatabase(firebaseDatabase, firebaseObservableListeners);
 
+            FirebaseNotificationRegistrationDatabase firebaseNotificationRegistrationDatabase = new FirebaseNotificationRegistrationDatabase(firebaseDatabase, firebaseObservableListeners);
+
             loginService = new FirebaseLoginService(authDatabase, userDatabase);
 
             userService = new PersistedUserService(userDatabase);
@@ -93,6 +99,8 @@ public enum Dependencies {
             chatService = new PersistedChatService(chatDatabase, userDatabase);
 
             heroService = new PersistedHeroService(heroDatabase, userDatabase);
+
+            notificationRegistrationsService = new PersistedNotificationRegistrationService(firebaseNotificationRegistrationDatabase);
 
             config = FirebaseConfig.newInstance().init(errorLogger);
             pref = new AppPreferencesImpl(appContext);
@@ -149,6 +157,8 @@ public enum Dependencies {
         return heroService;
     }
 
-
+    public NotificationRegistrationService  getNotificationRegistrationService(){
+        return notificationRegistrationsService;
+    }
 
 }

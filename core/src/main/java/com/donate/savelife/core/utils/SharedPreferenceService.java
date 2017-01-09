@@ -8,4 +8,13 @@ public interface SharedPreferenceService {
     void setLoginUserPreference(String loginUser);
 
     String getLoginUserPreference();
+
+    void setRegistrationId(String registrationId);
+
+    String getRegistrationId();
+
+    void setRegistrationComplete();
+
+    boolean isRegistrationComplete();
+
 }
