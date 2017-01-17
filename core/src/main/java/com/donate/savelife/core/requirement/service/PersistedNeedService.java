@@ -12,6 +12,7 @@ import com.donate.savelife.core.user.database.UserDatabase;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -28,8 +29,8 @@ public class PersistedNeedService implements NeedService {
     }
 
     @Override
-    public Observable<DatabaseResult<Needs>> observeNeedsWithUsers(User user) {
-        return Observable.combineLatest(observeNeeds(user), observeUserIdsFor(user), mergeNeedsWithUser())
+    public Observable<DatabaseResult<Needs>> observeNeedsWithUsers(User owner) {
+        return Observable.combineLatest(observeNeeds(owner), observeUserIdsFor(), mergeNeedsWithUser())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
     }
@@ -64,6 +65,44 @@ public class PersistedNeedService implements NeedService {
                 .onErrorReturn(DatabaseResult.<Need>errorAsDatabaseResult());
     }
 
+    @Override
+    public Observable<DatabaseResult<Needs>> observeNeedsFor(User user) {
+        return needDatabase.observeNeedsFor(user)
+                .map(asReverseDatabaseResultWithUserUpdated(user))
+                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
+    }
+
+    @Override
+    public Observable<DatabaseResult<Integer>> observerResponseCount(Need need) {
+        return needDatabase.observerResponseCount(need)
+                .map(new Func1<Integer, DatabaseResult<Integer>>() {
+                    @Override
+                    public DatabaseResult<Integer> call(Integer integer) {
+                        return new DatabaseResult<Integer>(integer);
+                    }
+                })
+                .onErrorReturn(DatabaseResult.<Integer>errorAsDatabaseResult());
+    }
+
+    @Override
+    public Observable<DatabaseResult<Integer>> updateResponseCount(Need need, int count) {
+        return needDatabase.updateResponseCount(need, count)
+                .map(new Func1<Integer, DatabaseResult<Integer>>() {
+                    @Override
+                    public DatabaseResult<Integer> call(Integer integer) {
+                        return new DatabaseResult<Integer>(integer);
+                    }
+                })
+                .onErrorReturn(DatabaseResult.<Integer>errorAsDatabaseResult());
+    }
+
+    @Override
+    public Observable<DatabaseResult<Needs>> observeLatestNeedsFor(User user) {
+        return needDatabase.observeLatestNeedsFor(user)
+                .map(asNeedsDatabaseResult())
+                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
+    }
+
 
     @Override
     public Observable<DatabaseResult<Need>> writeNeed(Need need) {
@@ -78,8 +117,8 @@ public class PersistedNeedService implements NeedService {
     }
 
     @Override
-    public Observable<DatabaseResult<Users>> observeUserIdsFor(User user) {
-        return needDatabase.observerUserIdsFor(user)
+    public Observable<DatabaseResult<Users>> observeUserIdsFor() {
+        return needDatabase.observerUserIdsFor()
                 .flatMap(getUsersFromIds());
     }
 
@@ -103,6 +142,20 @@ public class PersistedNeedService implements NeedService {
             @Override
             public DatabaseResult<Needs> call(Needs needs) {
                 return new DatabaseResult<Needs>(needs);
+            }
+        };
+    }
+
+    private Func1<Needs, DatabaseResult<Needs>> asReverseDatabaseResultWithUserUpdated(final User user) {
+        return new Func1<Needs, DatabaseResult<Needs>>() {
+            @Override
+            public DatabaseResult<Needs> call(Needs needs) {
+                ListIterator<Need> needListIterator = needs.getNeeds().listIterator();
+                while (needListIterator.hasNext()){
+                    Need need = needListIterator.next();
+                    need.setUser(user);
+                }
+               return new DatabaseResult<Needs>(reverse(needs));
             }
         };
     }
@@ -155,19 +208,20 @@ public class PersistedNeedService implements NeedService {
         return new Func2<DatabaseResult<Needs>, DatabaseResult<Users>, Needs>() {
             @Override
             public Needs call(DatabaseResult<Needs> needsDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
-                UniqueList<Need> needs = new UniqueList<Need>();
-                for (Need need : needsDatabaseResult.getData().getNeeds()){
-                    for (User user : usersDatabaseResult.getData().getUsers()){
+                ListIterator<Need> needListIterator = needsDatabaseResult.getData().getNeeds().listIterator();
+                while (needListIterator.hasNext()){
+                    Need need = needListIterator.next();
+                    ListIterator<User> userListIterator = usersDatabaseResult.getData().getUsers().listIterator();
+                    while (userListIterator.hasNext()){
+                        User user = userListIterator.next();
                         if (need.getUserID().equals(user.getId())){
                             need.setUser(user);
-                            needs.add(need);
                         }
                     }
                 }
-                return new Needs(needs);
+                return needsDatabaseResult.getData();
             }
         };
     }
-
 
 }

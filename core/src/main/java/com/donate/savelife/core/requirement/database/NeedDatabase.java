@@ -11,9 +11,9 @@ import rx.Observable;
 
 public interface NeedDatabase {
 
-    Observable<Needs> observeNeeds(User user);
+    Observable<Needs> observeNeeds(User owner);
 
-    Observable<List<String>> observerUserIdsFor(User user);
+    Observable<List<String>> observerUserIdsFor();
 
     Observable<Needs> observeMoreNeeds(User user, Need need);
 
@@ -23,6 +23,12 @@ public interface NeedDatabase {
 
     Observable<Need> observeNeed(String needID);
 
-    Observable<Needs> observeLatestNeedFor(User user);
+    Observable<Needs> observeNeedsFor(User user);
+
+    Observable<Integer> observerResponseCount(Need need);
+
+    Observable<Integer> updateResponseCount(Need need, int count);
+
+    Observable<Needs> observeLatestNeedsFor(User user);
 
 }

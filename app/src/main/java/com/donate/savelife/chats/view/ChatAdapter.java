@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.donate.savelife.R;
-import com.donate.savelife.component.MessageBubbleDrawable;
 import com.donate.savelife.core.UniqueList;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.model.Chat;
 import com.donate.savelife.core.chats.model.Message;
+import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
 
 class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
@@ -21,6 +21,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     private final LayoutInflater inflater;
     private MessageView messageView;
     private ChatDisplayer.ChatActionListener chatActionListener;
+    private Need need;
 
     ChatAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
@@ -29,10 +30,11 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
         setHasStableIds(true);
     }
 
-    public void update(Chat chat, User user) {
+    public void update(Chat chat, User user, Need need) {
         if (chat.size() > 0){
             this.chat = chat;
             this.user = user;
+            this.need = need;
             notifyDataSetChanged();
             chatActionListener.onContentLoaded();
         } else {
@@ -40,9 +42,10 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
         }
     }
 
-    public void updateMoreChat(Chat chat, User user){
+    public void updateMoreChat(Chat chat, User user,Need need){
         this.chat.addAll(chat.getMessages());
         this.user = user;
+        this.need = need;
         notifyItemRangeInserted(getItemCount(), chat.size());
     }
 
@@ -54,21 +57,18 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MessageBubbleDrawable bubbleDrawable = null;
+
         if (viewType == VIEW_TYPE_MESSAGE_THIS_USER) {
-            bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.material_green, MessageBubbleDrawable.Gravity.END);
             messageView = (MessageView) inflater.inflate(R.layout.self_message_item_layout, parent, false);
         } else if (viewType == VIEW_TYPE_MESSAGE_OTHER_USERS) {
-            bubbleDrawable = new MessageBubbleDrawable(parent.getContext(), R.color.grey_cool, MessageBubbleDrawable.Gravity.START);
             messageView = (MessageView) inflater.inflate(R.layout.message_item_layout, parent, false);
         }
-        messageView.setTextBackground(bubbleDrawable);
         return new MessageViewHolder(messageView);
     }
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
-        holder.bind(chat.get(position), onChatSelectionListener);
+        holder.bind(chat.get(position), user, need, onChatSelectionListener);
     }
 
     @Override
@@ -91,7 +91,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return chat.get(position).getAuthor().getId().equals(user.getId()) ? VIEW_TYPE_MESSAGE_THIS_USER : VIEW_TYPE_MESSAGE_OTHER_USERS;
+        return chat.get(position).getUserId().equals(user.getId()) ? VIEW_TYPE_MESSAGE_THIS_USER : VIEW_TYPE_MESSAGE_OTHER_USERS;
     }
 
     public void attach(ChatDisplayer.ChatActionListener chatActionListener){

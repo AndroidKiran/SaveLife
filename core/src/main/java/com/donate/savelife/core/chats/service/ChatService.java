@@ -27,4 +27,5 @@ public interface ChatService {
     Observable<DatabaseResult<Users>> observeMoreUserIdsFor(Need need, Message message);
 
     Observable<DatabaseResult<User>> observeUserFor(Need need);
+
 }

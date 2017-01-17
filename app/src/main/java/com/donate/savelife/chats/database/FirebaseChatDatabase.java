@@ -51,6 +51,11 @@ public class FirebaseChatDatabase implements ChatDatabase {
         return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need).orderByKey().endAt(message.getId()).limitToLast(DEFAULT_LIMIT), getKeys());
     }
 
+    @Override
+    public Observable<List<String>> observerChatUserIdsFor(Need need) {
+        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need), getKeys());
+    }
+
 
     private DatabaseReference messagesInChannel(Need need) {
         return messagesDB.child(need.getId());

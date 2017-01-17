@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 
+import com.donate.savelife.CentralAppServiceIml;
 import com.donate.savelife.R;
 import com.donate.savelife.chats.ChatActivity;
 import com.donate.savelife.core.chats.model.Message;
@@ -12,6 +14,7 @@ import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.home.HomeActivity;
 import com.donate.savelife.intro.IntroActivity;
+import com.donate.savelife.requirements.MyNeedsActivity;
 import com.donate.savelife.requirements.NeedActivity;
 import com.donate.savelife.user.CompleteProfileActivity;
 import com.donate.savelife.user.ProfileActivity;
@@ -117,10 +120,15 @@ public class AndroidNavigator implements Navigator {
     }
 
     @Override
-    public void onSetResults(int resultCode) {
-        activity.setResult(resultCode);
-        activity.finish();
+    public void toMyNeeds() {
+        activity.startActivity(MyNeedsActivity.createIntentFor(activity));
     }
+
+    @Override
+    public void startAppCentralService(Bundle bundle, String action) {
+        CentralAppServiceIml.startActionSend(activity, bundle, action);
+    }
+
 
     @Override
     public Activity getActivity() {

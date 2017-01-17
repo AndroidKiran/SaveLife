@@ -12,6 +12,7 @@ import com.donate.savelife.core.user.database.UserDatabase;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -29,7 +30,7 @@ public class PersistedChatService implements ChatService {
 
     @Override
     public Observable<DatabaseResult<Chat>> observeChats(Need need) {
-        return Observable.combineLatest(observeChat(need),observeUserIdsFor(need), mergeChat())
+        return Observable.combineLatest(observeChat(need), observeUserIdsFor(need), mergeChat())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Chat>errorAsDatabaseResult());
     }
@@ -58,12 +59,7 @@ public class PersistedChatService implements ChatService {
     @Override
     public Observable<DatabaseResult<Message>> sendMessage(Need need, Message message) {
         return chatDatabase.sendMessage(need, message)
-                .map(new Func1<Message, DatabaseResult<Message>>() {
-                    @Override
-                    public DatabaseResult<Message> call(Message message) {
-                        return new DatabaseResult<Message>(message);
-                    }
-                })
+                .map(asMessageDatabaseResults())
                 .onErrorReturn(DatabaseResult.<Message>errorAsDatabaseResult());
     }
 
@@ -130,22 +126,24 @@ public class PersistedChatService implements ChatService {
         };
     }
 
-    private Func2<DatabaseResult<Chat>, DatabaseResult<Users>, Chat> mergeChat(){
-       return new Func2<DatabaseResult<Chat>, DatabaseResult<Users>, Chat>() {
-           @Override
-           public Chat call(DatabaseResult<Chat> chatDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
-               UniqueList<Message> messages = new UniqueList<Message>();
-               for (Message message : chatDatabaseResult.getData().getMessages()){
-                   for (User user : usersDatabaseResult.getData().getUsers()){
-                       if (message.getUserId().equals(user.getId())){
-                           message.setAuthor(user);
-                           messages.add(message);
-                       }
-                   }
-               }
-               return new Chat(messages);
-           }
-       };
+    private Func2<DatabaseResult<Chat>, DatabaseResult<Users>, Chat> mergeChat() {
+        return new Func2<DatabaseResult<Chat>, DatabaseResult<Users>, Chat>() {
+            @Override
+            public Chat call(DatabaseResult<Chat> chatDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
+                ListIterator<Message> chatListIterator = chatDatabaseResult.getData().getMessages().listIterator();
+                while (chatListIterator.hasNext()) {
+                    Message message = chatListIterator.next();
+                    ListIterator<User> userListIterator = usersDatabaseResult.getData().getUsers().listIterator();
+                    while (userListIterator.hasNext()) {
+                        User user = userListIterator.next();
+                        if (message.getUserId().equals(user.getId())) {
+                            message.setAuthor(user);
+                        }
+                    }
+                }
+                return chatDatabaseResult.getData();
+            }
+        };
     }
 
     public Chat reverse(Chat chat) {
@@ -156,13 +154,20 @@ public class PersistedChatService implements ChatService {
     }
 
     private Func1<User, DatabaseResult<User>> aUsersDatabaseResult() {
-       return new Func1<User, DatabaseResult<User>>() {
-           @Override
-           public DatabaseResult<User> call(User user) {
-               return new DatabaseResult<User>(user);
-           }
-       };
+        return new Func1<User, DatabaseResult<User>>() {
+            @Override
+            public DatabaseResult<User> call(User user) {
+                return new DatabaseResult<User>(user);
+            }
+        };
     }
 
-
+    private Func1<Message, DatabaseResult<Message>> asMessageDatabaseResults() {
+        return new Func1<Message, DatabaseResult<Message>>() {
+            @Override
+            public DatabaseResult<Message> call(Message message) {
+                return new DatabaseResult<Message>(message);
+            }
+        };
+    }
 }

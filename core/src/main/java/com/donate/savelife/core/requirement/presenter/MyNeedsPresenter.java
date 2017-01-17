@@ -22,7 +22,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by ravi on 22/11/16.
  */
 
-public class NeedsPresenter {
+public class MyNeedsPresenter {
 
     private final NeedsDisplayer needsDisplayer;
     private final NeedService needService;
@@ -32,10 +32,10 @@ public class NeedsPresenter {
     private final User user;
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
-    public NeedsPresenter(NeedsDisplayer needsDisplayer, NeedService needService,
-                          ErrorLogger errorLogger, Analytics analytics,
-                          Navigator navigator, SharedPreferenceService preferenceService,
-                          GsonService gsonService) {
+    public MyNeedsPresenter(NeedsDisplayer needsDisplayer, NeedService needService,
+                            ErrorLogger errorLogger, Analytics analytics,
+                            Navigator navigator, SharedPreferenceService preferenceService,
+                            GsonService gsonService) {
         this.needsDisplayer = needsDisplayer;
         this.needService = needService;
         this.errorLogger = errorLogger;
@@ -45,11 +45,9 @@ public class NeedsPresenter {
     }
 
     public void startPresenting(){
-
         needsDisplayer.attach(needInteractionListener);
-
         compositeSubscription.add(
-                needService.observeNeedsWithUsers(user)
+                needService.observeNeedsFor(user)
                         .subscribe(new Action1<DatabaseResult<Needs>>() {
                             @Override
                             public void call(DatabaseResult<Needs> needsDatabaseResult) {
@@ -79,24 +77,11 @@ public class NeedsPresenter {
             listItemBundle.putString(Analytics.PARAM_NEED_ID, need.getId());
             listItemBundle.putString(Analytics.PARAM_LIST_NAME, AppConstant.NEED_LIST);
             analytics.trackListItemClick(listItemBundle);
-
         }
 
         @Override
         public void onLoadMore(Need need) {
-            compositeSubscription.add(
-                    needService.observeMoreNeedsWithUsers(user, need)
-                            .subscribe(new Action1<DatabaseResult<Needs>>() {
-                                @Override
-                                public void call(DatabaseResult<Needs> needsDatabaseResult) {
-                                    if (needsDatabaseResult.isSuccess()) {
-                                        needsDisplayer.displayMore(needsDatabaseResult.getData(), user);
-                                    } else {
-                                        errorLogger.reportError(needsDatabaseResult.getFailure(), "load more fetch needs failed");
-                                    }
-                                }
-                            })
-            );
+
         }
 
         @Override

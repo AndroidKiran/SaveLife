@@ -11,6 +11,10 @@ import java.util.Locale;
 public class Need implements Parcelable{
 
     public static final String CITY = "city";
+    public static final String USER_ID = "userID";
+    public static final String RESPONSE_COUNT = "responseCount";
+
+
 
     private String id;
     private String city;
@@ -20,6 +24,7 @@ public class Need implements Parcelable{
     private String userID;
     private long timeStamp;
     private User user;
+    private int responseCount = 0;
 
     public Need() {
     }
@@ -34,6 +39,7 @@ public class Need implements Parcelable{
         userID = in.readString();
         timeStamp = in.readLong();
         user = in.readParcelable(User.class.getClassLoader());
+        responseCount = in.readInt();
     }
 
     public static final Creator<Need> CREATOR = new Creator<Need>() {
@@ -148,10 +154,19 @@ public class Need implements Parcelable{
         this.user = user;
     }
 
+    public int getResponseCount() {
+        return responseCount;
+    }
+
+    public void setResponseCount(int responseCount) {
+        this.responseCount = responseCount;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
+
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -163,5 +178,7 @@ public class Need implements Parcelable{
         parcel.writeString(userID);
         parcel.writeLong(timeStamp);
         parcel.writeParcelable(user, i);
+        parcel.writeInt(responseCount);
+
     }
 }

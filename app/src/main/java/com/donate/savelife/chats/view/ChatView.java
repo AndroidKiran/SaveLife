@@ -209,16 +209,16 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
 
     @Override
-    public void display(Chat chat, User user) {
+    public void display(Chat chat, User user, Need need) {
         lastItemMessage = new Message();
         lastItemMessage.setId("");
-        chatAdapter.update(chat, user);
+        chatAdapter.update(chat, user, need);
         isloading = false;
     }
 
     @Override
-    public void displayMore(Chat chat, User user) {
-        chatAdapter.updateMoreChat(chat, user);
+    public void displayMore(Chat chat, User user, Need need) {
+        chatAdapter.updateMoreChat(chat, user, need);
         isloading = false;
     }
 

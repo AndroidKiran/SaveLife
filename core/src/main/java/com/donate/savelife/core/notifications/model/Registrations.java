@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Registrations {
 
-    private ArrayList<String> registrationList;
+    private ArrayList<FcmRegistration> registrationList;
 
-    public Registrations(ArrayList<String> registrationList){
+    public Registrations(ArrayList<FcmRegistration> registrationList){
         this.registrationList = registrationList;
     }
 
@@ -18,7 +18,11 @@ public class Registrations {
         return registrationList.size();
     }
 
-    public String getRegistrationId(int position){
+    public FcmRegistration getRegistrationId(int position){
         return registrationList.get(position);
+    }
+
+    public ArrayList<FcmRegistration> getRegistrationList(){
+        return this.registrationList;
     }
 }

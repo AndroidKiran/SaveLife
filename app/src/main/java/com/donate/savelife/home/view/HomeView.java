@@ -30,7 +30,6 @@ import com.donate.savelife.core.user.data.model.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.donate.savelife.R.id.title_container;
 
 /**
  * Created by ravi on 09/09/16.
@@ -51,6 +50,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
     private View titleContainer;
     private AHBottomNavigation bottomNavigation;
     private AHBottomNavigationAdapter navigationAdapter;
+    private View myRequestContainer;
 
 
     public HomeView(Context context, AttributeSet attrs) {
@@ -73,7 +73,8 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         viewPager = Views.findById(this, R.id.vp_home);
         fabButton = Views.findById(this, R.id.fab_button);
         fabButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.material_red)));
-        titleContainer = Views.findById(this, title_container);
+        titleContainer = Views.findById(this, R.id.title_container);
+        myRequestContainer = Views.findById(this,R.id.my_needs);
         bottomNavigation = Views.findById(this, R.id.bottom_navigation);
         bottomNavigation.setBehaviorTranslationEnabled(true);
         bottomNavigation.setTranslucentNavigationEnabled(true);
@@ -105,6 +106,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         fabButton.setOnClickListener(onClickListener);
         titleContainer.setOnClickListener(onClickListener);
         bottomNavigation.setOnTabSelectedListener(onTabSelectedListener);
+        myRequestContainer.setOnClickListener(onClickListener);
         SaveLifeApplication.getInstance().setConnectivityListener(this);
         checkConnection();
     }
@@ -115,6 +117,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         fabButton.setOnClickListener(null);
         titleContainer.setOnClickListener(null);
         bottomNavigation.setOnTabSelectedListener(null);
+        myRequestContainer.setOnClickListener(null);
         SaveLifeApplication.getInstance().setConnectivityListener(null);
     }
 
@@ -122,6 +125,11 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
     public void onTabSelected(int position) {
         setTheme(position);
         viewPager.setCurrentItem(position, true);
+    }
+
+    @Override
+    public void toggleMyNeedVisibility(boolean toggle) {
+        myRequestContainer.setVisibility(toggle ? VISIBLE : GONE);
     }
 
 
@@ -136,6 +144,11 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
                 case R.id.title_container:
                     homeInteractionListener.onProfileClicked();
                     break;
+
+                case R.id.my_needs:
+                    homeInteractionListener.onMyNeedClicked();
+                    break;
+
             }
         }
     };

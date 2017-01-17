@@ -6,6 +6,7 @@ import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.link.LinkFactory;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.notifications.service.AppNotificationService;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.AppConstant;
@@ -26,6 +27,7 @@ public class PreferencePresenter {
     private final LinkFactory linkFactory;
     private final GsonService gsonService;
     private final SharedPreferenceService preferenceService;
+    private final AppNotificationService appNotificationService;
 
     public PreferencePresenter(PreferenceDisplayer preferenceDisplayer,
                                Navigator navigator,
@@ -33,7 +35,8 @@ public class PreferencePresenter {
                                Analytics analytics,
                                GsonService gsonService,
                                SharedPreferenceService preferenceService,
-                               LinkFactory linkFactory){
+                               LinkFactory linkFactory,
+                               AppNotificationService appNotificationService){
         this.preferenceDisplayer = preferenceDisplayer;
         this.navigator = navigator;
         this.errorLogger = errorLogger;
@@ -42,14 +45,14 @@ public class PreferencePresenter {
         this.preferenceService = preferenceService;
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         this.linkFactory = linkFactory;
+        this.appNotificationService = appNotificationService;
     }
 
     public void startPresenting(){
         preferenceDisplayer.attach(preferenceInteractionListener);
         preferenceDisplayer.showNotificationCity(user.getCity());
-
+        preferenceDisplayer.showNotificationStatus(preferenceService.isNotificationEnabled());
         analytics.setUserLocationProperty(user.getCity());
-
     }
 
     public void stopPresenting(){
@@ -60,8 +63,10 @@ public class PreferencePresenter {
 
     final PreferenceDisplayer.PreferenceInteractionListener preferenceInteractionListener = new PreferenceDisplayer.PreferenceInteractionListener() {
         @Override
-        public void onNotificationModifyClicked() {
-//            Bundle aboutUsBundle = new Bundle();
+        public void onNotificationModifyClicked(boolean toggle) {
+            appNotificationService.toggleNotificationStatus(toggle);
+
+            //            Bundle aboutUsBundle = new Bundle();
 //            aboutUsBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
 //            aboutUsBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.ABOUT_US_BUTTON);
 //            analytics.trackButtonClick(aboutUsBundle);

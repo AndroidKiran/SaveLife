@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="home_top_margin">@dimen/dimen_26</dimen>
+    <dimen name="home_top_margin">@dimen/dimen_24</dimen>
     <dimen name="home_fab_btm_margin">@dimen/dimen_90</dimen>
     <dimen name="home_fab_rght_margin">@dimen/dimen_4</dimen>
     <dimen name="profile_card_height">@dimen/dimen_54</dimen>
     <dimen name="profile_backdrop_height">@dimen/dimen_232</dimen>
-    <dimen name="home_back_drop_height">@dimen/dimen_150</dimen>
+    <dimen name="home_back_drop_height">@dimen/dimen_180</dimen>
     <dimen name="home_circ_profile_pic_height">@dimen/dimen_120</dimen>
     <dimen name="complete_profile_back_drop_height">@dimen/dimen_232</dimen>
 

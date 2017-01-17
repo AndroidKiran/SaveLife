@@ -49,7 +49,11 @@ public class ChatActivity extends AppCompatActivity {
                 need,
                 analytics,
                 new AndroidNavigator(this),
-                Dependencies.INSTANCE.getErrorLogger()
+                Dependencies.INSTANCE.getErrorLogger(),
+                Dependencies.INSTANCE.getNeedService(),
+                Dependencies.INSTANCE.getGsonService(),
+                Dependencies.INSTANCE.getPreference(),
+                Dependencies.INSTANCE.getNotificationRegistrationService()
         );
     }
 
@@ -63,11 +67,5 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStop() {
         presenter.stopPresenting();
         super.onStop();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        presenter.onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
     }
 }

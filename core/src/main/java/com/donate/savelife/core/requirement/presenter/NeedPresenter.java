@@ -1,15 +1,20 @@
 package com.donate.savelife.core.requirement.presenter;
 
-import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.SharedPreferenceService;
+import android.os.Bundle;
+
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.country.model.Country;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
 import com.donate.savelife.core.requirement.displayer.NeedDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.service.NeedService;
+import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.AppConstant;
+import com.donate.savelife.core.utils.GsonService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -20,7 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class NeedPresenter {
 
-
+    public static final String TAG = NeedPresenter.class.getSimpleName();
     private final NeedDisplayer needDisplayer;
     private final Navigator navigator;
     private final ErrorLogger errorLogger;
@@ -28,6 +33,7 @@ public class NeedPresenter {
     private final NeedService needService;
     private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
+    private final User user;
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
         public NeedPresenter(
@@ -46,6 +52,7 @@ public class NeedPresenter {
             this.analytics = analytics;
             this.preferenceService = preferenceService;
             this.gsonService = gsonService;
+            this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         }
 
     public void startPresenting(){
@@ -71,7 +78,7 @@ public class NeedPresenter {
 
     NeedDisplayer.OnNeedInteractionListener onNeedInteractionListener = new NeedDisplayer.OnNeedInteractionListener() {
         @Override
-        public void onNeedPost(Need need) {
+        public void onNeedPost(final Need need) {
             needDisplayer.showProgress();
             subscriptions.add(
                     needService.writeNeed(need)
@@ -80,9 +87,8 @@ public class NeedPresenter {
                         public void call(DatabaseResult<Need> needDatabaseResult) {
                             needDisplayer.dismissProgress();
                             if (needDatabaseResult.isSuccess()){
-                                navigator.onSetResults(Navigator.SEEK_NEED_SUCCESS);
-                            } else {
-                                navigator.onSetResults(Navigator.SEEK_NEED_FAILED);
+                                pushToNotifiationQueue(need);
+                                navigator.toMyNeeds();
                             }
                         }
                     })
@@ -94,4 +100,18 @@ public class NeedPresenter {
             navigator.toParent();
         }
     };
+
+    private void pushToNotifiationQueue(Need need) {
+        Bundle notificationQueueBundle = new Bundle();
+        FCMRemoteMsg fcmRemoteMsg = new FCMRemoteMsg();
+        fcmRemoteMsg.setTo(need.getCity()+need.getCountry());
+        fcmRemoteMsg.setCollapse_key(need.getCity()+need.getCountry());
+        fcmRemoteMsg.setPriority("high");
+        FCMRemoteMsg.Notification notification = new FCMRemoteMsg.Notification();
+        notification.setTitle(user.getName());
+        notification.setBody(need.getBloodGroup() + "required on urgent basis");
+        fcmRemoteMsg.setNotification(notification);
+        notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
+        navigator.startAppCentralService(notificationQueueBundle, AppConstant.ACTION_ADD_NOTIFICATION_TO_QUEUE);
+    }
 }

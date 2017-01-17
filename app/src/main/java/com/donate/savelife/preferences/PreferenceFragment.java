@@ -10,11 +10,17 @@ import android.view.ViewGroup;
 import com.donate.savelife.BuildConfig;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.UtilBundles;
+import com.donate.savelife.core.analytics.Analytics;
+import com.donate.savelife.core.analytics.ErrorLogger;
+import com.donate.savelife.core.notifications.service.AppNotificationService;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 import com.donate.savelife.core.preferences.presenter.PreferencePresenter;
+import com.donate.savelife.core.utils.GsonService;
+import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.link.FirebaseDynamicLinkFactory;
 import com.donate.savelife.navigation.AndroidNavigator;
+import com.donate.savelife.notifications.services.AppNotificationServiceImpl;
 
 /**
  * Created by ravi on 24/12/16.
@@ -25,6 +31,11 @@ public class PreferenceFragment extends Fragment {
     public static final String TAG = UtilBundles.PREFERENCES_SCREEN;
     private FirebaseDynamicLinkFactory firebaseDynamicLinkFactory;
     private PreferencePresenter presenter;
+    private ErrorLogger errorLogger;
+    private Analytics analytics;
+    private GsonService gsonService;
+    private SharedPreferenceService preference;
+    private AppNotificationServiceImpl appNotificationSerive;
 
     public static PreferenceFragment newInstance(Bundle bundle) {
         PreferenceFragment instance = new PreferenceFragment();
@@ -41,6 +52,12 @@ public class PreferenceFragment extends Fragment {
                 getResources().getString(R.string.deepLinkBaseUrl),
                 BuildConfig.APPLICATION_ID
         );
+
+        errorLogger = Dependencies.INSTANCE.getErrorLogger();
+        analytics = Dependencies.INSTANCE.getAnalytics();
+        gsonService = Dependencies.INSTANCE.getGsonService();
+        preference = Dependencies.INSTANCE.getPreference();
+        appNotificationSerive = new AppNotificationServiceImpl(Dependencies.INSTANCE.getFirebaseMessageInstance(), gsonService, preference);
     }
 
     @Nullable
@@ -55,11 +72,12 @@ public class PreferenceFragment extends Fragment {
         PreferenceDisplayer preferenceDisplayer = (PreferenceDisplayer) view.findViewById(R.id.preference_view);
         presenter = new PreferencePresenter(preferenceDisplayer,
                 new AndroidNavigator(getActivity()),
-                Dependencies.INSTANCE.getErrorLogger(),
-                Dependencies.INSTANCE.getAnalytics(),
-                Dependencies.INSTANCE.getGsonService(),
-                Dependencies.INSTANCE.getPreference(),
-                firebaseDynamicLinkFactory);
+                errorLogger,
+                analytics,
+                gsonService,
+                preference,
+                firebaseDynamicLinkFactory,
+                (AppNotificationService) appNotificationSerive);
     }
 
     @Override

@@ -14,9 +14,9 @@ public interface ChatDisplayer {
 
     void setTitle(String title);
 
-    void display(Chat chat, User user);
+    void display(Chat chat, User user, Need need);
 
-    void displayMore(Chat chat, User user);
+    void displayMore(Chat chat, User user, Need need);
 
     void enableInteraction();
 

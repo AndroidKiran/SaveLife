@@ -9,6 +9,7 @@ import com.donate.savelife.core.UniqueList;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.model.Needs;
+import com.donate.savelife.core.user.data.model.User;
 
 /**
  * Created by ravi on 04/09/16.
@@ -19,6 +20,7 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
     private Needs needs;
     private NeedItemView needItemView;
     private NeedsDisplayer.NeedInteractionListener needInteractionListener;
+    private User owner;
 
     public NeedsAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
@@ -26,9 +28,10 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
         setHasStableIds(true);
     }
 
-    public void setData(Needs needs){
+    public void setData(Needs needs, User owner){
         if (needs.size() > 0){
             this.needs = needs;
+            this.owner = owner;
             notifyDataSetChanged();
             needInteractionListener.onContentLoaded();
         } else {
@@ -37,8 +40,9 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
 
     }
 
-    public void setMoreData(Needs needs){
+    public void setMoreData(Needs needs, User owner){
         if (needs.size() > 0) {
+            this.owner = owner;
             this.needs.addAll(needs.getNeeds());
             notifyItemRangeInserted(getItemCount(), needs.size());
         }
@@ -53,7 +57,7 @@ public class NeedsAdapter extends RecyclerView.Adapter<NeedViewHolder>{
 
     @Override
     public void onBindViewHolder(NeedViewHolder holder, int position) {
-        holder.bind(needs.getNeed(position), needSelectionListener);
+        holder.bind(needs.getNeed(position), owner, needSelectionListener);
     }
 
     @Override

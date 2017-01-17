@@ -18,9 +18,11 @@ public interface PreferenceDisplayer {
 
     void showNotificationCity(String city);
 
+    void showNotificationStatus(boolean status);
+
     interface PreferenceInteractionListener {
 
-        void onNotificationModifyClicked();
+        void onNotificationModifyClicked(boolean toggle);
 
         void onAboutClicked();
 

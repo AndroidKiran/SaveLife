@@ -1,6 +1,7 @@
 package com.donate.savelife.notifications.database;
 
 import com.donate.savelife.core.notifications.database.NotificationRegistrationDatabase;
+import com.donate.savelife.core.notifications.model.FcmRegistration;
 import com.donate.savelife.core.notifications.model.Registrations;
 import com.donate.savelife.rx.FirebaseObservableListeners;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +23,9 @@ public class FirebaseNotificationRegistrationDatabase implements NotificationReg
     private final FirebaseObservableListeners firebaseObservableListeners;
 
     public FirebaseNotificationRegistrationDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
-        notificationRegistrationDatabase = firebaseDatabase.getReference("NotificationRegistrations");
+        notificationRegistrationDatabase = firebaseDatabase.getReference("notification_registrations");
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
-
 
     @Override
     public Observable<Registrations> observeRegistrations() {
@@ -44,9 +44,12 @@ public class FirebaseNotificationRegistrationDatabase implements NotificationReg
             @Override
             public Registrations call(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                ArrayList<String> registrationList = new ArrayList<String>();
+                ArrayList<FcmRegistration> registrationList = new ArrayList<FcmRegistration>();
                 for (DataSnapshot child : children) {
-                    registrationList.add(child.getValue(String.class));
+                    FcmRegistration fcmRegistration = new FcmRegistration();
+                    fcmRegistration.setRegId(child.getValue(String.class));
+                    fcmRegistration.setUserId(child.getKey());
+                    registrationList.add(fcmRegistration);
                 }
                 return new Registrations(registrationList);
             }

@@ -23,4 +23,7 @@ public interface ChatDatabase {
 
     Observable<List<String>> observerMoreUserIdsFor(Need need, Message message);
 
+    Observable<List<String>> observerChatUserIdsFor(Need need);
+
+
 }

@@ -21,6 +21,7 @@ import com.donate.savelife.core.chats.database.ChatDatabase;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.model.Needs;
+import com.donate.savelife.core.user.data.model.User;
 
 /**
  * Created by ravi on 22/11/16.
@@ -124,16 +125,16 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     };
 
     @Override
-    public void display(Needs needs) {
+    public void display(Needs needs, User owner) {
         lastNeedItem = new Need();
         lastNeedItem.setId("");
-        needsAdapter.setData(needs);
+        needsAdapter.setData(needs, owner);
         isloading = false;
     }
 
     @Override
-    public void displayMore(Needs needs) {
-        needsAdapter.setMoreData(needs);
+    public void displayMore(Needs needs, User owner) {
+        needsAdapter.setMoreData(needs, owner);
         isloading = false;
     }
 

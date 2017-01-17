@@ -17,4 +17,8 @@ public interface SharedPreferenceService {
 
     boolean isRegistrationComplete();
 
+    void setNotificationEnabled(boolean notificationEnabled);
+
+    boolean isNotificationEnabled();
+
 }

@@ -3,6 +3,7 @@ package com.donate.savelife.core.requirement.displayer;
 
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.model.Needs;
+import com.donate.savelife.core.user.data.model.User;
 
 public interface NeedsDisplayer {
 
@@ -10,9 +11,9 @@ public interface NeedsDisplayer {
 
     void detach(NeedInteractionListener needInteractionListener);
 
-    void display(Needs needs);
+    void display(Needs needs, User owner);
 
-    void displayMore(Needs needs);
+    void displayMore(Needs needs, User owner);
 
     void displayLoading();
 

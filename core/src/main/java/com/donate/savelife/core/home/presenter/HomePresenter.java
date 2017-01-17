@@ -6,12 +6,18 @@ import android.os.Bundle;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.chats.model.Message;
+import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.requirement.model.Needs;
+import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.core.utils.AppConstant;
+
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by ravi on 09/09/16.
@@ -25,19 +31,23 @@ public class HomePresenter {
     private final SharedPreferenceService preferenceService;
     private final GsonService gsonService;
     private final User user;
+    private final NeedService needService;
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     public HomePresenter(HomeDisplayer homeDisplayer,
                          SharedPreferenceService preferenceService,
                          GsonService gsonService,
                          Navigator navigator,
                          Analytics analytics,
-                         ErrorLogger errorLogger){
+                         ErrorLogger errorLogger,
+                         NeedService needService){
         this.homeDisplayer = homeDisplayer;
         this.preferenceService = preferenceService;
         this.gsonService = gsonService;
         this.navigator = navigator;
         this.analytics = analytics;
         this.errorLogger = errorLogger;
+        this.needService = needService;
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         homeDisplayer.setUpViewPager();
         homeDisplayer.setProfile(user);
@@ -46,10 +56,25 @@ public class HomePresenter {
 
     public void startPresenting(){
         homeDisplayer.attach(homeInteractionListener);
+        compositeSubscription.add(
+                needService.observeLatestNeedsFor(user)
+                .subscribe(new Action1<DatabaseResult<Needs>>() {
+                    @Override
+                    public void call(DatabaseResult<Needs> needsDatabaseResult) {
+                        if (needsDatabaseResult.isSuccess()){
+                            homeDisplayer.toggleMyNeedVisibility(needsDatabaseResult.getData().size() > 0);
+                        } else {
+                            errorLogger.reportError(needsDatabaseResult.getFailure(), "Unable to fetch user latest need");
+                        }
+                    }
+                })
+        );
     }
 
     public void stopPresenting(){
         homeDisplayer.detach(homeInteractionListener);
+        compositeSubscription.clear();
+        compositeSubscription = new CompositeSubscription();
     }
 
     private final HomeDisplayer.HomeInteractionListener homeInteractionListener = new HomeDisplayer.HomeInteractionListener() {
@@ -91,6 +116,11 @@ public class HomePresenter {
                     analytics.trackScreen(navigator.getActivity(), AppConstant.PREFERENCES_SCREEN, null);
                     break;
             }
+        }
+
+        @Override
+        public void onMyNeedClicked() {
+            navigator.toMyNeeds();
         }
     };
 }

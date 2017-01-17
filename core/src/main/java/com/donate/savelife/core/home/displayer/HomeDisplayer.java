@@ -17,11 +17,15 @@ public interface HomeDisplayer {
 
     void onTabSelected(int position);
 
+    void toggleMyNeedVisibility(boolean toggle);
+
     interface HomeInteractionListener {
         void onFabBtnClicked();
 
         void onProfileClicked();
 
         void onTabSelected(int postion);
+
+        void onMyNeedClicked();
     }
 }

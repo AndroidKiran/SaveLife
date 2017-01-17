@@ -22,22 +22,31 @@
                 android:text="@string/str_reminder_settings"
                 app:fontTypeface="museosans700" />
 
-            <LinearLayout
-                android:id="@+id/notification_setting"
-                style="@style/Preference.Actionable.Container">
+            <RelativeLayout
+                style="@style/Preference.Actionable.Container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.donate.savelife.component.text.TextView
+                    android:id="@+id/notification_header"
                     style="@style/Preference.Actionable.HeaderTxt"
                     android:text="@string/str_pop_notification"
                     app:fontTypeface="museosans500" />
 
-
                 <com.donate.savelife.component.text.TextView
                     android:id="@+id/notification_city"
                     style="@style/Preference.Actionable.SubTxt"
+                    android:layout_below="@id/notification_header"
                     app:fontTypeface="museosans500" />
 
-            </LinearLayout>
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/notification_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
 
 
             <com.donate.savelife.component.text.TextView

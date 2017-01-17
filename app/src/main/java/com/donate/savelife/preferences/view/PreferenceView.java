@@ -3,9 +3,11 @@ package com.donate.savelife.preferences.view;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.donate.savelife.R;
@@ -23,7 +25,7 @@ import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 public class PreferenceView extends LinearLayout implements PreferenceDisplayer {
 
     private PreferenceInteractionListener preferenceInteractionListener;
-    private View notificationSetting;
+    private SwitchCompat notificationSwitch;
     private AppCompatTextView notificationStatus;
     private View aboutUs;
     private View invite;
@@ -45,7 +47,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     }
 
     private void initControls() {
-        notificationSetting = Views.findById(this, R.id.notification_setting);
+        notificationSwitch = Views.findById(this, R.id.notification_switch);
         notificationStatus = Views.findById(this, R.id.notification_city);
         aboutUs = Views.findById(this, R.id.about_us);
         invite = Views.findById(this, R.id.invite);
@@ -57,7 +59,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     @Override
     public void attach(PreferenceInteractionListener preferenceInteractionListener) {
         this.preferenceInteractionListener = preferenceInteractionListener;
-        notificationSetting.setOnClickListener(onClickListener);
+        notificationSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
         aboutUs.setOnClickListener(onClickListener);
         invite.setOnClickListener(onClickListener);
         rateUs.setOnClickListener(onClickListener);
@@ -67,7 +69,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     @Override
     public void detach(PreferenceInteractionListener preferenceInteractionListener) {
         this.preferenceInteractionListener = preferenceInteractionListener;
-        notificationSetting.setOnClickListener(null);
+        notificationSwitch.setOnCheckedChangeListener(null);
         aboutUs.setOnClickListener(null);
         invite.setOnClickListener(null);
         rateUs.setOnClickListener(null);
@@ -99,14 +101,15 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         notificationCity.setText(city);
     }
 
+    @Override
+    public void showNotificationStatus(boolean status) {
+        notificationSwitch.setChecked(status);
+    }
+
     final OnClickListener onClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-
-                case R.id.notification_setting:
-                    preferenceInteractionListener.onNotificationModifyClicked();
-                    break;
 
                 case R.id.about_us:
                     preferenceInteractionListener.onAboutClicked();
@@ -124,6 +127,13 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
                     preferenceInteractionListener.onTermsClicked();
                     break;
             }
+        }
+    };
+
+    CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            preferenceInteractionListener.onNotificationModifyClicked(b);
         }
     };
 

@@ -6,17 +6,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.donate.savelife.CentralService;
+import com.donate.savelife.CentralAppServiceIml;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.UtilBundles;
 import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.home.presenter.HomePresenter;
 import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
@@ -66,7 +66,8 @@ public class HomeActivity extends AppCompatActivity {
                 gsonService,
                 new AndroidNavigator(this),
                 Dependencies.INSTANCE.getAnalytics(),
-                Dependencies.INSTANCE.getErrorLogger()
+                Dependencies.INSTANCE.getErrorLogger(),
+                Dependencies.INSTANCE.getNeedService()
         );
 
         intentFilter = new IntentFilter();
@@ -113,13 +114,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -141,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         Bundle regBundle = new Bundle();
         regBundle.putString(UtilBundles.USER_EXTRA, user.getId());
         regBundle.putString(UtilBundles.REG_EXTRA, regId);
-        CentralService.startActionSend(this, regBundle, CentralService.SEND_REG_ID_TO_SERVER);
+        CentralAppServiceIml.startActionSend(this, regBundle, AppConstant.ACTION_SEND_REG_ID_TO_SERVER);
     }
 
     public class AppBroadcastReceiver extends BroadcastReceiver {

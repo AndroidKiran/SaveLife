@@ -5,6 +5,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:orientation="horizontal">
 
         <com.donate.savelife.component.text.TextView
@@ -33,7 +34,11 @@
             android:id="@+id/message_author_image"
             android:layout_width="@dimen/dimen_36"
             android:layout_height="@dimen/dimen_36"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:src="@color/black_2"
+            app:border_color="@color/material_red"
+            app:border_width="@dimen/dimen_2" />
 
         <com.donate.savelife.component.text.TextView
             android:id="@+id/message_body"
@@ -43,6 +48,7 @@
             android:layout_alignTop="@id/message_author_image"
             android:layout_marginRight="@dimen/dimen_8"
             android:layout_toLeftOf="@id/message_author_image"
+            android:textColor="@color/material_white"
             app:fontTypeface="museosans500" />
 
     </RelativeLayout>

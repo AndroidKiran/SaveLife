@@ -28,12 +28,12 @@ public class FirebaseNeedDatabase implements NeedDatabase {
     }
 
     @Override
-    public Observable<Needs> observeNeeds(User user) {
-        return firebaseObservableListeners.listenToValueEvents(needDB.limitToLast(DEFAULT_LIMIT), toNeeds());
+    public Observable<Needs> observeNeeds(User owner) {
+        return firebaseObservableListeners.listenToValueEvents(needDB.limitToLast(DEFAULT_LIMIT), toNeeds(owner));
     }
 
     @Override
-    public Observable<List<String>> observerUserIdsFor(User user) {
+    public Observable<List<String>> observerUserIdsFor() {
         return firebaseObservableListeners.listenToValueEvents(needDB.limitToLast(DEFAULT_LIMIT), getKeys());
     }
 
@@ -58,9 +58,25 @@ public class FirebaseNeedDatabase implements NeedDatabase {
     }
 
     @Override
-    public Observable<Needs> observeLatestNeedFor(User user) {
-        return null;
+    public Observable<Needs> observeNeedsFor(User user) {
+        return firebaseObservableListeners.listenToValueEvents(needDB.orderByChild(Need.USER_ID).equalTo(user.getId()).limitToLast(DEFAULT_LIMIT), toNeeds());
     }
+
+    @Override
+    public Observable<Integer> observerResponseCount(Need need) {
+        return firebaseObservableListeners.listenToValueEvents(needDB.child(need.getId()).child(Need.RESPONSE_COUNT), as(Integer.class));
+    }
+
+    @Override
+    public Observable<Integer> updateResponseCount(Need need, int count) {
+        return firebaseObservableListeners.setValue(count, needDB.child(need.getId()).child(Need.RESPONSE_COUNT), count);
+    }
+
+    @Override
+    public Observable<Needs> observeLatestNeedsFor(User user) {
+        return firebaseObservableListeners.listenToValueEvents(needDB.orderByChild(Need.USER_ID).equalTo(user.getId()).limitToLast(1), toNeeds());
+    }
+
 
     private Func1<DataSnapshot, Needs> toNeeds(){
         return new Func1<DataSnapshot, Needs>() {
@@ -72,6 +88,24 @@ public class FirebaseNeedDatabase implements NeedDatabase {
                     Need need = child.getValue(Need.class);
                     need.setId(child.getKey());
                     needs.add(need);
+                }
+                return new Needs(needs);
+            }
+        };
+    }
+
+    private Func1<DataSnapshot, Needs> toNeeds(final User user){
+        return new Func1<DataSnapshot, Needs>() {
+            @Override
+            public Needs call(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                UniqueList<Need> needs = new UniqueList<Need>();
+                for (DataSnapshot child : children){
+                    Need need = child.getValue(Need.class);
+                    if (!need.getUserID().equals(user.getId())){
+                        need.setId(child.getKey());
+                        needs.add(need);
+                    }
                 }
                 return new Needs(needs);
             }

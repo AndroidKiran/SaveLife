@@ -3,6 +3,7 @@ package com.donate.savelife.core.navigation;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Bundle;
 
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.requirement.model.Need;
@@ -37,7 +38,10 @@ public interface Navigator {
 
     void toRateUs();
 
-    void onSetResults(int resultCode);
+    void toMyNeeds();
+
+    void startAppCentralService(Bundle bundle, String action);
 
     Activity getActivity();
+
 }

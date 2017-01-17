@@ -16,6 +16,7 @@ public class AppPreferencesImpl implements SharedPreferenceService {
 
     private final static String USER_DATA = "user_data";
     private final static String REG_ID = "reg_id";
+    private final static String NOTIFICATION_ENABLED = "notification_enabled";
 
 
     public AppPreferencesImpl(Context context) {
@@ -50,6 +51,16 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     @Override
     public boolean isRegistrationComplete() {
         return prefs.getBoolean(UtilBundles.REG_COMPLETE_EXTRA, false);
+    }
+
+    @Override
+    public void setNotificationEnabled(boolean notificationEnabled) {
+        prefs.edit().putBoolean(NOTIFICATION_ENABLED, notificationEnabled).apply();
+    }
+
+    @Override
+    public boolean isNotificationEnabled() {
+        return prefs.getBoolean(NOTIFICATION_ENABLED, true);
     }
 
 }

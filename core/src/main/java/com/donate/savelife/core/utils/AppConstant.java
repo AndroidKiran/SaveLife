@@ -13,6 +13,11 @@ public class AppConstant {
     public static final String MESSAGE_EXTRA = "message_extra";
     public static final String BUNDLE_EXTRA = "bundle_extra";
     public static final String REG_EXTRA = "reg_extra";
+    public static final String SCREEN_NAME_EXTRA = "screen_name_extra";
+    public static final String NOFICATION_QUEUE_EXTRA = "notification_queue";
+    public static final String EXTRA_BUNDLE = "extra_bundle";
+
+
 
     // Fragment TAGS
     public static final String NEEDS_SCREEN = "Blood Requirements screen";
@@ -44,4 +49,13 @@ public class AppConstant {
     public static final String INVITE_BUTTON = "invite button";
     public static final String RATE_BUTTON = "rate button";
     public static final String TERMS_BUTTON = "terms button";
+
+//    Service actions
+
+    public static final String ACTION_SEND_REG_ID_TO_SERVER = "com.donate.savelife.registration";
+    public static final String ACTION_ADD_NOTIFICATION_TO_QUEUE = "com.donate.savelife.notification.queue";
+    public static final String ACTION_ADD_CHAT_NOTIFICATION_TO_QUEUE = "com.donate.savelife.chat.notification.queue";
+
+    //Notification
+    public static final String TOPIC = "/topics/";
 }
