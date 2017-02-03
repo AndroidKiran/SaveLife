@@ -5,20 +5,38 @@ import android.os.Bundle;
 
 public interface Analytics {
 
-    public static final String PARAM_INTRO_SCREEN = "intro_screen";
-    public static final String PARAM_OWNER_ID = "owner_id";
-    public static final String PARAM_HERO_ID = "hero_id";
-    public static final String PARAM_NEED_ID = "need_id";
-    public static final String PARAM_MESSAGE_LENGTH = "message_length";
-    public static final String PARAM_BUTTON_NAME = "button_name";
-    public static final String PARAM_MOBILE_NUM = "mobile_num";
-    public static final String PARAM_ADDRESS = "address";
-    public static final String PARAM_LIST_NAME = "list_name";
-    public static final String PARAM_MESSAGE_ID = "message_id";
+    String PARAM_INTRO_SCREEN = "intro_screen";
+    String PARAM_OWNER_ID = "owner_id";
+    String PARAM_HERO_ID = "hero_id";
+    String PARAM_NEED_ID = "need_id";
+    String PARAM_MESSAGE_LENGTH = "message_length";
+    String PARAM_BUTTON_NAME = "button_name";
+    String PARAM_MOBILE_NUM = "mobile_num";
+    String PARAM_ADDRESS = "address";
+    String PARAM_LIST_NAME = "list_name";
+    String PARAM_MESSAGE_ID = "message_id";
 
-    public static final String EVENT_BUTTON_CLICK = "button_click";
-    public static final String EVENT_ON_LIST_ITEM_CLICK = "list_item_click";
-    public static final String PARAM_CITY = "city";
+    String PARAM_EVENT_NAME = "event_name";
+    String PARAM_CITY = "city";
+
+    //    Events list
+    String PARAM_WRITE_MESSAGE = "write_message_event";
+    String PARAM_BRIEF_NEED = "brief_need_event";
+    String PARAM_CALL_SEEKER = "call_seeker_event";
+    String PARAM_OPEN_SEEKER_LOCATION = "open_seeker_location_event";
+    String PARAM_VIEW_PROFILE_FROM_CHAT ="view_profile_from_chat_event" ;
+    String PARAM_OPEN_BLOOD_REQUEST = "open_blood_request_event";
+    String PARAM_OPEN_PROFILE = "open_profile_event";
+    String PARAM_OPEN_ABOUT_US = "open_about_us_event";
+    String PARAM_INVITE = "invite_event";
+    String PARAM_RATE_ON_PLAY_STORE = "rate_on_play_store_event";
+    String PARAM_TERMS = "open_terms_event";
+    String PARAM_OPEN_CHAT = "open_chat_event";
+    String PARAM_COMPLETE_PROFILE = "complete_profile_event";
+    String PARAM_OPEN_COMPLETE_PROFILE = "open_complete_profile_event";
+    String PARAM_HONOR_HERO = "honor_hero_event";
+    String PARAM_SKIP_INTRO = "skip_intro_event";
+    String PARAM_OPEN_MY_NEED = "open_my_need_event";
 
 
     void trackSignInStarted(String method);
@@ -29,11 +47,10 @@ public interface Analytics {
 
     void trackInvitationAccepted(String senderId);
 
-    void trackButtonClick(Bundle bundle);
+    void trackEventOnClick(Bundle bundle);
 
     void trackScreen(Activity activity, String screenName, String dummy);
 
-    void trackListItemClick(Bundle bundle);
 
     void setUserLocationProperty(String city);
 

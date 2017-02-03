@@ -101,5 +101,10 @@
     <!--Heros-->
     <string name="str_heros_empty_state">Couldnt find any Heros</string>
 
+    <!--Launcher-->
+    <string name="str_app_deprecated_msg">Version is deprecated ,please update</string>
+    <string name="str_app_error_msg">Something went wrong, please try agin</string>
+    <string name="str_btn_try_again_txt">TRY AGAIN</string>
+    <string name="str_btn_update_txt">UPDATE NOW</string>
 
 </resources>

@@ -1,0 +1,18 @@
+{
+	"notification_queue":{
+		"1":{
+	        "to": "/topics/global",
+	        "data": { 
+	            "ownerId": "1234567890"
+	        },
+	        "priority": "high",
+	        "content_available": true,
+	        "notification": { 
+	            "title": "username",
+	            "body": "message",
+	            "sound": "default",
+	            "badge": "1"
+	        }
+	    }
+	}
+}

@@ -103,14 +103,25 @@ public class NeedPresenter {
 
     private void pushToNotifiationQueue(Need need) {
         Bundle notificationQueueBundle = new Bundle();
+        String topic = need.getCity().toLowerCase()+need.getCountry().toLowerCase();
         FCMRemoteMsg fcmRemoteMsg = new FCMRemoteMsg();
-        fcmRemoteMsg.setTo(need.getCity()+need.getCountry());
-        fcmRemoteMsg.setCollapse_key(need.getCity()+need.getCountry());
+        fcmRemoteMsg.setTo(AppConstant.TOPIC + topic);
+        fcmRemoteMsg.setCollapse_key(topic);
         fcmRemoteMsg.setPriority("high");
+        fcmRemoteMsg.setContent_available(true);
+
         FCMRemoteMsg.Notification notification = new FCMRemoteMsg.Notification();
-        notification.setTitle(user.getName());
-        notification.setBody(need.getBloodGroup() + "required on urgent basis");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(user.getName()+ " required ");
+        stringBuilder.append(need.getBloodGroup() + " on urgent basis");
+        notification.setBody(stringBuilder.toString());
+
+        FCMRemoteMsg.Data data = new FCMRemoteMsg.Data();
+        data.setClick_action(AppConstant.CLICK_ACTION_HOME);
+
         fcmRemoteMsg.setNotification(notification);
+        fcmRemoteMsg.setData(data);
+
         notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
         navigator.startAppCentralService(notificationQueueBundle, AppConstant.ACTION_ADD_NOTIFICATION_TO_QUEUE);
     }

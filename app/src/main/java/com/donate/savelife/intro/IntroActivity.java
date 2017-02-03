@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.donate.savelife.R;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.user.data.model.User;
-import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
@@ -58,8 +57,8 @@ public class IntroActivity extends AppCompatActivity implements ViewPager.OnPage
                 Bundle skipToLoginBundle = new Bundle();
 
                 skipToLoginBundle.putInt(Analytics.PARAM_INTRO_SCREEN, viewPager.getCurrentItem());
-                skipToLoginBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.SKIP_INTRO_BUTTON);
-                analytics.trackButtonClick(skipToLoginBundle);
+                skipToLoginBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_SKIP_INTRO);
+                analytics.trackEventOnClick(skipToLoginBundle);
             }
         });
         

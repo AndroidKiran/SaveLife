@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.TransitionInflater;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.donate.savelife.R;
+import com.donate.savelife.chats.view.ChatView;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.presenter.ChatPresenter;
-import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
@@ -21,11 +24,15 @@ public class ChatActivity extends AppCompatActivity {
 
     private ChatPresenter presenter;
     private Analytics analytics;
+    private LinearLayout contentView;
+    private ChatView chatView;
+    private TransitionInflater transitionInflater;
+    private RelativeLayout toolbarContent;
 
-    public static Intent createIntentFor(Context context, Need need) {
+    public static Intent createIntentFor(Context context, String needId) {
         Intent intent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(AppConstant.NEED_EXTRA, need);
+        bundle.putString(AppConstant.NEED_EXTRA, needId);
         intent.putExtras(bundle);
         return intent;
     }
@@ -33,6 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_chat);
         analytics = Dependencies.INSTANCE.getAnalytics();
 
@@ -40,13 +48,15 @@ public class ChatActivity extends AppCompatActivity {
             analytics.trackScreen(this, AppConstant.CHAT_SCREEN, null);
         }
 
-        ChatDisplayer chatDisplayer = (ChatDisplayer) findViewById(R.id.chat_view);
-        Need need = (Need) getIntent().getExtras().getParcelable(NEED_EXTRA);
+        chatView = (ChatView) findViewById(R.id.chat_view);
+        contentView = (LinearLayout) chatView.findViewById(R.id.content);
+        toolbarContent = (RelativeLayout) chatView.findViewById(R.id.toolbar_content);
+        String needId = getIntent().getExtras().getString(NEED_EXTRA);
         presenter = new ChatPresenter(
                 Dependencies.INSTANCE.getLoginService(),
                 Dependencies.INSTANCE.getChatService(),
-                chatDisplayer,
-                need,
+                (ChatDisplayer) chatView,
+                needId,
                 analytics,
                 new AndroidNavigator(this),
                 Dependencies.INSTANCE.getErrorLogger(),
@@ -68,4 +78,5 @@ public class ChatActivity extends AppCompatActivity {
         presenter.stopPresenting();
         super.onStop();
     }
+
 }

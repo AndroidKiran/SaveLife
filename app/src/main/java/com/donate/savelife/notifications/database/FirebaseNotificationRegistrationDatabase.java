@@ -3,6 +3,7 @@ package com.donate.savelife.notifications.database;
 import com.donate.savelife.core.notifications.database.NotificationRegistrationDatabase;
 import com.donate.savelife.core.notifications.model.FcmRegistration;
 import com.donate.savelife.core.notifications.model.Registrations;
+import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.rx.FirebaseObservableListeners;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,11 @@ public class FirebaseNotificationRegistrationDatabase implements NotificationReg
         return firebaseObservableListeners.setValue(registrationId, notificationRegistrationDatabase.child(uid), registrationId);
     }
 
+    @Override
+    public Observable<String> observeRegistrationIdForUser(User user) {
+        return firebaseObservableListeners.listenToValueEvents(notificationRegistrationDatabase.child(user.getId()), asRegId());
+    }
+
 
     private Func1<DataSnapshot, Registrations> toRegistrations() {
         return new Func1<DataSnapshot, Registrations>() {
@@ -55,5 +61,15 @@ public class FirebaseNotificationRegistrationDatabase implements NotificationReg
             }
         };
 
+    }
+
+    private Func1<DataSnapshot, String> asRegId(){
+        return new Func1<DataSnapshot, String>() {
+            @Override
+            public String call(DataSnapshot dataSnapshot) {
+                String regId = dataSnapshot.getValue(String.class);
+                return regId;
+            }
+        };
     }
 }

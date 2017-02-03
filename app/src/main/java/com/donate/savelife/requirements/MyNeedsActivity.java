@@ -26,6 +26,7 @@ public class MyNeedsActivity extends AppCompatActivity {
     private MyNeedsPresenter presenter;
     private SharedPreferenceService preference;
     private GsonService gsonService;
+    private AndroidNavigator androidNavigator;
 
     public static Intent createIntentFor(Context context) {
         Intent intent = new Intent(context, MyNeedsActivity.class);
@@ -35,16 +36,19 @@ public class MyNeedsActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.needs_view);
         preference = Dependencies.INSTANCE.getPreference();
         gsonService = Dependencies.INSTANCE.getGsonService();
+        androidNavigator = new AndroidNavigator(this);
+
         NeedsDisplayer needsDisplayer = (NeedsDisplayer) findViewById(R.id.needs_view);
         presenter = new MyNeedsPresenter(
                 needsDisplayer,
                 Dependencies.INSTANCE.getNeedService(),
                 Dependencies.INSTANCE.getErrorLogger(),
                 Dependencies.INSTANCE.getAnalytics(),
-                new AndroidNavigator(this),
+                androidNavigator,
                 preference,
                 gsonService
         );
@@ -65,9 +69,13 @@ public class MyNeedsActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//            androidNavigator.toParent();
+//            return true;
+//        }
+//        return false;
+//    }
 }

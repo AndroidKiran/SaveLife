@@ -3,6 +3,8 @@ package com.donate.savelife.core.notifications.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by ravi on 17/01/17.
  */
@@ -15,12 +17,11 @@ public class FCMRemoteMsg implements Parcelable{
     private Data data;
     private Notification notification;
     private boolean content_available = false;
-    private String registration_ids;
+    private List<String> registration_ids;
 
     public FCMRemoteMsg(){
 
     }
-
 
     protected FCMRemoteMsg(Parcel in) {
         to = in.readString();
@@ -29,8 +30,23 @@ public class FCMRemoteMsg implements Parcelable{
         data = in.readParcelable(Data.class.getClassLoader());
         notification = in.readParcelable(Notification.class.getClassLoader());
         content_available = in.readByte() != 0;
-        registration_ids = in.readString();
+        registration_ids = in.createStringArrayList();
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(to);
+        dest.writeString(priority);
+        dest.writeString(collapse_key);
+        dest.writeParcelable(data, flags);
+        dest.writeParcelable(notification, flags);
+        dest.writeByte((byte) (content_available ? 1 : 0));
+        dest.writeStringList(registration_ids);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<FCMRemoteMsg> CREATOR = new Creator<FCMRemoteMsg>() {
@@ -93,37 +109,25 @@ public class FCMRemoteMsg implements Parcelable{
         this.content_available = content_available;
     }
 
-    public String getRegistration_ids() {
+    public List<String> getRegistration_ids() {
         return registration_ids;
     }
 
-    public void setRegistration_ids(String registration_ids) {
+    public void setRegistration_ids(List<String> registration_ids) {
         this.registration_ids = registration_ids;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(to);
-        parcel.writeString(priority);
-        parcel.writeString(collapse_key);
-        parcel.writeParcelable(data, i);
-        parcel.writeParcelable(notification, i);
-        parcel.writeByte((byte) (content_available ? 1 : 0));
-        parcel.writeString(registration_ids);
-    }
-
     public static class Data implements Parcelable{
-        private String ownerId;
-        private String imageUrl;
+        private String click_action;
+        private String need_id;
+
+        public Data(){
+
+        }
 
         protected Data(Parcel in) {
-            ownerId = in.readString();
-            imageUrl = in.readString();
+            click_action = in.readString();
+            need_id = in.readString();
         }
 
         public static final Creator<Data> CREATOR = new Creator<Data>() {
@@ -138,20 +142,21 @@ public class FCMRemoteMsg implements Parcelable{
             }
         };
 
-        public String getOwnerId() {
-            return ownerId;
+
+        public String getClick_action() {
+            return click_action;
         }
 
-        public void setOwnerId(String ownerId) {
-            this.ownerId = ownerId;
+        public String getNeed_id() {
+            return need_id;
         }
 
-        public String getImageUrl() {
-            return imageUrl;
+        public void setNeed_id(String need_id) {
+            this.need_id = need_id;
         }
 
-        public void setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
+        public void setClick_action(String click_action) {
+            this.click_action = click_action;
         }
 
         @Override
@@ -161,8 +166,8 @@ public class FCMRemoteMsg implements Parcelable{
 
         @Override
         public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeString(ownerId);
-            parcel.writeString(imageUrl);
+            parcel.writeString(click_action);
+            parcel.writeString(need_id);
         }
     }
 
@@ -172,6 +177,7 @@ public class FCMRemoteMsg implements Parcelable{
         private String sound = "default";
         private String icon;
         private String badge = "1";
+        private String click_action;
 
         public Notification() {
 
@@ -182,6 +188,7 @@ public class FCMRemoteMsg implements Parcelable{
             body = in.readString();
             sound = in.readString();
             icon = in.readString();
+            click_action = in.readString();
         }
 
         @Override
@@ -190,6 +197,7 @@ public class FCMRemoteMsg implements Parcelable{
             dest.writeString(body);
             dest.writeString(sound);
             dest.writeString(icon);
+            dest.writeString(click_action);
         }
 
         @Override
@@ -239,6 +247,22 @@ public class FCMRemoteMsg implements Parcelable{
 
         public void setIcon(String icon) {
             this.icon = icon;
+        }
+
+        public String getBadge() {
+            return badge;
+        }
+
+        public void setBadge(String badge) {
+            this.badge = badge;
+        }
+
+        public String getClick_action() {
+            return click_action;
+        }
+
+        public void setClick_action(String click_action) {
+            this.click_action = click_action;
         }
     }
 }

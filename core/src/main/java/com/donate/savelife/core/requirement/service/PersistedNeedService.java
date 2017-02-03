@@ -10,6 +10,7 @@ import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.database.UserDatabase;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,23 +40,23 @@ public class PersistedNeedService implements NeedService {
     @Override
     public Observable<DatabaseResult<Needs>> observeNeeds(User user) {
         return needDatabase.observeNeeds(user)
-                .map(asNeedsDatabaseResult())
+                .map(asNeedsDatabaseResultWithFilter(user))
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
     }
 
-    @Override
-    public Observable<DatabaseResult<Needs>> observeMoreNeeds(User user, Need need) {
-        return needDatabase.observeMoreNeeds(user, need)
-                .map(asReverseDatabaseResult())
-                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
-    }
-
-    @Override
-    public Observable<DatabaseResult<Needs>> observeMoreNeedsWithUsers(User user, Need need) {
-        return Observable.combineLatest(observeMoreNeeds(user, need), observeMoreUserIdsFor(user, need), mergeNeedsWithUser())
-                .map(asReverseDatabaseResult())
-                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
-    }
+//    @Override
+//    public Observable<DatabaseResult<Needs>> observeMoreNeeds(User user, Need need) {
+//        return needDatabase.observeMoreNeeds(user, need)
+//                .map(asReverseDatabaseResult())
+//                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
+//    }
+//
+//    @Override
+//    public Observable<DatabaseResult<Needs>> observeMoreNeedsWithUsers(User user, Need need) {
+//        return Observable.combineLatest(observeMoreNeeds(user, need), observeMoreUserIdsFor(user, need), mergeNeedsWithUser())
+//                .map(asReverseDatabaseResult())
+//                .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
+//    }
 
 
     @Override
@@ -99,7 +100,7 @@ public class PersistedNeedService implements NeedService {
     @Override
     public Observable<DatabaseResult<Needs>> observeLatestNeedsFor(User user) {
         return needDatabase.observeLatestNeedsFor(user)
-                .map(asNeedsDatabaseResult())
+                .map(asNeedsDatabaseResult(user))
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
     }
 
@@ -122,11 +123,11 @@ public class PersistedNeedService implements NeedService {
                 .flatMap(getUsersFromIds());
     }
 
-    @Override
-    public Observable<DatabaseResult<Users>> observeMoreUserIdsFor(User user, Need need) {
-        return needDatabase.observerMoreUserIdsFor(user, need)
-                .flatMap(getUsersFromIds());
-    }
+//    @Override
+//    public Observable<DatabaseResult<Users>> observeMoreUserIdsFor(User user, Need need) {
+//        return needDatabase.observerMoreUserIdsFor(user, need)
+//                .flatMap(getUsersFromIds());
+//    }
 
     private Func1<Needs, DatabaseResult<Needs>> asReverseDatabaseResult() {
         return new Func1<Needs, DatabaseResult<Needs>>() {
@@ -137,7 +138,23 @@ public class PersistedNeedService implements NeedService {
         };
     }
 
-    private Func1<Needs, DatabaseResult<Needs>> asNeedsDatabaseResult() {
+    private Func1<Needs, DatabaseResult<Needs>> asNeedsDatabaseResultWithFilter(final User user) {
+        return new Func1<Needs, DatabaseResult<Needs>>() {
+            @Override
+            public DatabaseResult<Needs> call(Needs needs) {
+//                ListIterator<Need> listIterator = needs.getNeeds().listIterator();
+//                while (listIterator.hasNext()){
+//                    Need need = listIterator.next();
+//                    if (isDurationValid(need)) {
+//                        listIterator.remove();
+//                    }
+//                }
+                return new DatabaseResult<Needs>(needs);
+            }
+        };
+    }
+
+    private Func1<Needs, DatabaseResult<Needs>> asNeedsDatabaseResult(final User user) {
         return new Func1<Needs, DatabaseResult<Needs>>() {
             @Override
             public DatabaseResult<Needs> call(Needs needs) {
@@ -224,4 +241,17 @@ public class PersistedNeedService implements NeedService {
         };
     }
 
+    private boolean isDurationValid(Need need){
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTimeInMillis(need.getTimeStamp());
+        cal2.setTimeInMillis(System.currentTimeMillis());
+
+        int days = cal2.get(Calendar.DAY_OF_YEAR) - cal1.get(Calendar.DAY_OF_YEAR);
+
+        if (days > 5){
+            return true;
+        }
+        return false;
+    }
 }

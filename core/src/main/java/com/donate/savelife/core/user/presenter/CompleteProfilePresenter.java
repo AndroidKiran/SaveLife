@@ -11,7 +11,6 @@ import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.core.user.service.UserService;
-import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
@@ -103,8 +102,8 @@ public class CompleteProfilePresenter {
 
             Bundle onCompleteBundle = new Bundle();
             onCompleteBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            onCompleteBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.COMPLETE_PROFILE_BUTTON);
-            analytics.trackButtonClick(onCompleteBundle);
+            onCompleteBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_COMPLETE_PROFILE);
+            analytics.trackEventOnClick(onCompleteBundle);
 
         }
 

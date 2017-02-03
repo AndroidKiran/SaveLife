@@ -16,6 +16,7 @@ public class AppConstant {
     public static final String SCREEN_NAME_EXTRA = "screen_name_extra";
     public static final String NOFICATION_QUEUE_EXTRA = "notification_queue";
     public static final String EXTRA_BUNDLE = "extra_bundle";
+    public static final String NEED_ID_EXTRA = "need_id";
 
 
 
@@ -58,4 +59,18 @@ public class AppConstant {
 
     //Notification
     public static final String TOPIC = "/topics/";
+
+//    FCM CLICK ACTIONS
+    public static final String CLICK_ACTION_HOME = ".home.HomeActivity";
+    public static final String CLICK_ACTION_CHAT = ".chats.ChatActivity";
+    public static final String CLICK_ACTION_PROFILE = ".user.ProfileActivity";
+
+
+    public static final String FCM_REMOTE_MSG_EXTRA = "fcm_remote_msg";
+    public static final String CLICK_ACTION_EXTRA = "click_action";
+
+
+
+//
+
 }

@@ -11,9 +11,9 @@ import com.donate.savelife.R;
 import com.donate.savelife.chats.ChatActivity;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.navigation.Navigator;
-import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.home.HomeActivity;
 import com.donate.savelife.intro.IntroActivity;
+import com.donate.savelife.launcher.LauncherActivity;
 import com.donate.savelife.requirements.MyNeedsActivity;
 import com.donate.savelife.requirements.NeedActivity;
 import com.donate.savelife.user.CompleteProfileActivity;
@@ -25,8 +25,8 @@ public class AndroidNavigator implements Navigator {
 
     private final Activity activity;
 
-    public static  final int FIRST_FLOW_REQUEST_CODE = 001;
-    public static  final int FIRST_FLOW_RESPONSE_CODE = 002;
+    public static final int FIRST_FLOW_REQUEST_CODE = 001;
+    public static final int FIRST_FLOW_RESPONSE_CODE = 002;
 
     public AndroidNavigator(Activity activity) {
         this.activity = activity;
@@ -34,7 +34,7 @@ public class AndroidNavigator implements Navigator {
 
     @Override
     public void toHome() {
-        activity.startActivity(new Intent(activity, HomeActivity.class));
+        activity.startActivity(HomeActivity.createIntentFor(activity));
         activity.finish();
     }
 
@@ -47,12 +47,11 @@ public class AndroidNavigator implements Navigator {
 
     @Override
     public void toParent() {
-        activity.finish();
+        activity.onBackPressed();
     }
 
-    @Override
-    public void toChat(Need need) {
-        activity.startActivity(ChatActivity.createIntentFor(activity, need));
+    public void toChat(String needId) {
+        activity.startActivity(ChatActivity.createIntentFor(activity, needId));
     }
 
 
@@ -69,8 +68,7 @@ public class AndroidNavigator implements Navigator {
 
     @Override
     public void toMain() {
-        Intent intent = new Intent(activity, WelcomeActivity.class);
-        activity.startActivity(intent);
+        activity.startActivity(LauncherActivity.createIntentFor(activity));
         activity.finish();
     }
 
@@ -107,7 +105,7 @@ public class AndroidNavigator implements Navigator {
     }
 
     @Override
-    public void toRateUs() {
+    public void toMarketPlace() {
         Intent intentMarket = new Intent(Intent.ACTION_VIEW);
         PackageManager myAppPackage = activity.getPackageManager();
         intentMarket
@@ -122,6 +120,13 @@ public class AndroidNavigator implements Navigator {
     @Override
     public void toMyNeeds() {
         activity.startActivity(MyNeedsActivity.createIntentFor(activity));
+    }
+
+    @Override
+    public void toWelcome() {
+        Intent intent = new Intent(activity, WelcomeActivity.class);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
     @Override

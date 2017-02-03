@@ -11,7 +11,6 @@ import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.model.Needs;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
-import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
@@ -72,17 +71,17 @@ public class MyNeedsPresenter {
     NeedsDisplayer.NeedInteractionListener needInteractionListener = new NeedsDisplayer.NeedInteractionListener() {
         @Override
         public void onNeedSelected(Need need) {
-            navigator.toChat(need);
+            navigator.toChat(need.getId());
             Bundle listItemBundle = new Bundle();
             listItemBundle.putString(Analytics.PARAM_NEED_ID, need.getId());
-            listItemBundle.putString(Analytics.PARAM_LIST_NAME, AppConstant.NEED_LIST);
-            analytics.trackListItemClick(listItemBundle);
+            listItemBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_CHAT);
+            analytics.trackEventOnClick(listItemBundle);
         }
 
-        @Override
-        public void onLoadMore(Need need) {
-
-        }
+//        @Override
+//        public void onLoadMore(Need need) {
+//
+//        }
 
         @Override
         public void onContentLoaded() {

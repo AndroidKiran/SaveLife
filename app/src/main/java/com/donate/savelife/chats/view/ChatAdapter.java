@@ -19,7 +19,6 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     private Chat chat;
     private User user;
     private final LayoutInflater inflater;
-    private MessageView messageView;
     private ChatDisplayer.ChatActionListener chatActionListener;
     private Need need;
 
@@ -57,7 +56,7 @@ class ChatAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        MessageView messageView = null;
         if (viewType == VIEW_TYPE_MESSAGE_THIS_USER) {
             messageView = (MessageView) inflater.inflate(R.layout.self_message_item_layout, parent, false);
         } else if (viewType == VIEW_TYPE_MESSAGE_OTHER_USERS) {

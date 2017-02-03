@@ -3,7 +3,6 @@ package com.donate.savelife.core.chats.presenter;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
@@ -23,6 +22,8 @@ import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
+import java.util.ArrayList;
+
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -34,13 +35,14 @@ public class ChatPresenter {
     private final ChatService chatService;
     private final ChatDisplayer chatDisplayer;
     private final Analytics analytics;
-    private final Need need;
+    private Need need;
     private final Navigator navigator;
     private final ErrorLogger errorLogger;
     private final NeedService needService;
     private final GsonService gsonService;
     private final SharedPreferenceService sharedPreferenceService;
     private final NotificationRegistrationService notificationRegistrationService;
+    private final String needId;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
     private User appOwner;
@@ -51,7 +53,7 @@ public class ChatPresenter {
             LoginService loginService,
             ChatService chatService,
             ChatDisplayer chatDisplayer,
-            Need need,
+            String needId,
             Analytics analytics,
             Navigator navigator,
             ErrorLogger errorLogger,
@@ -64,7 +66,7 @@ public class ChatPresenter {
         this.chatService = chatService;
         this.chatDisplayer = chatDisplayer;
         this.analytics = analytics;
-        this.need = need;
+        this.needId = needId;
         this.navigator = navigator;
         this.errorLogger = errorLogger;
         this.needService = needService;
@@ -78,62 +80,76 @@ public class ChatPresenter {
     public void startPresenting() {
         chatDisplayer.attach(actionListener);
         chatDisplayer.disableInteraction();
+
         subscriptions.add(
-                chatService.observeUserFor(need)
-                        .subscribe(new Action1<DatabaseResult<User>>() {
+                needService.observeNeed(needId)
+                        .subscribe(new Action1<DatabaseResult<Need>>() {
                             @Override
-                            public void call(DatabaseResult<User> userDatabaseResult) {
-                                if (userDatabaseResult.isSuccess()) {
-                                    postOwner = userDatabaseResult.getData();
-                                    chatDisplayer.setTitleLayout(need, postOwner);
+                            public void call(DatabaseResult<Need> needDatabaseResult) {
+                                if (needDatabaseResult.isSuccess()) {
+                                    need = needDatabaseResult.getData();
+
+                                    subscriptions.add(
+                                            chatService.observeUserFor(need)
+                                                    .subscribe(new Action1<DatabaseResult<User>>() {
+                                                        @Override
+                                                        public void call(DatabaseResult<User> userDatabaseResult) {
+                                                            if (userDatabaseResult.isSuccess()) {
+                                                                postOwner = userDatabaseResult.getData();
+                                                                chatDisplayer.setTitleLayout(need, postOwner);
+                                                            } else {
+                                                                errorLogger.reportError(userDatabaseResult.getFailure(), "Unable to fetch user");
+                                                            }
+                                                        }
+                                                    })
+                                    );
+
+
+                                    subscriptions.add(
+                                            needService.observerResponseCount(need)
+                                                    .subscribe(new Action1<DatabaseResult<Integer>>() {
+                                                        @Override
+                                                        public void call(DatabaseResult<Integer> integerDatabaseResult) {
+                                                            if (integerDatabaseResult.isSuccess()) {
+                                                                responseCount = (int) integerDatabaseResult.getData();
+                                                            } else {
+                                                                errorLogger.reportError(integerDatabaseResult.getFailure(), "Unable to fetch response count");
+                                                            }
+                                                        }
+                                                    })
+                                    );
+
+                                    subscriptions.add(
+                                            chatService.observeChats(need)
+                                                    .subscribe(new Action1<DatabaseResult<Chat>>() {
+                                                        @Override
+                                                        public void call(DatabaseResult<Chat> chatDatabaseResult) {
+                                                            if (chatDatabaseResult.isSuccess()) {
+                                                                chatDisplayer.display(chatDatabaseResult.getData(), appOwner, need);
+                                                            } else {
+                                                                errorLogger.reportError(chatDatabaseResult.getFailure(), "Failed to fetch chat");
+                                                                chatDisplayer.displayError();
+                                                            }
+                                                        }
+                                                    })
+
+                                    );
                                 } else {
-                                    errorLogger.reportError(userDatabaseResult.getFailure(), "Unable to fetch user");
+                                    errorLogger.reportError(needDatabaseResult.getFailure(), "Failed the get need by id");
                                 }
                             }
                         })
         );
 
-        subscriptions.add(
-                needService.observerResponseCount(need)
-                        .subscribe(new Action1<DatabaseResult<Integer>>() {
-                            @Override
-                            public void call(DatabaseResult<Integer> integerDatabaseResult) {
-                                if (integerDatabaseResult.isSuccess()) {
-                                    responseCount = (int) integerDatabaseResult.getData();
-
-                                    if (isMyPost() && responseCount > 0) {
-                                        updateTheResponseCount(0);
-                                    }
-
-                                } else {
-                                    errorLogger.reportError(integerDatabaseResult.getFailure(), "Unable to fetch response count");
-                                }
-                            }
-                        })
-        );
-
-
-        subscriptions.add(
-                chatService.observeChats(need)
-                        .subscribe(new Action1<DatabaseResult<Chat>>() {
-                            @Override
-                            public void call(DatabaseResult<Chat> chatDatabaseResult) {
-                                if (chatDatabaseResult.isSuccess()) {
-                                    chatDisplayer.display(chatDatabaseResult.getData(), appOwner, need);
-                                } else {
-                                    errorLogger.reportError(chatDatabaseResult.getFailure(), "Failed to fetch chat");
-                                    chatDisplayer.displayError();
-                                }
-                            }
-                        })
-
-        );
     }
 
 
     public void stopPresenting() {
+        if (isMyPost()) {
+            updateTheResponseCount(0);
+        }
         chatDisplayer.detach(null);
-        subscriptions.clear(); //TODO sort out checks
+        subscriptions.clear();
         subscriptions = new CompositeSubscription();
     }
 
@@ -178,8 +194,8 @@ public class ChatPresenter {
             Bundle messageSentBundle = new Bundle();
             messageSentBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
             messageSentBundle.putInt(Analytics.PARAM_MESSAGE_LENGTH, message.length());
-            messageSentBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.SEND_MESSAGE_BUTTON);
-            analytics.trackButtonClick(messageSentBundle);
+            messageSentBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_WRITE_MESSAGE);
+            analytics.trackEventOnClick(messageSentBundle);
         }
 
         @Override
@@ -208,8 +224,9 @@ public class ChatPresenter {
 
             Bundle toolbarBarBundle = new Bundle();
             toolbarBarBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
-            toolbarBarBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TOOLBAR);
-            analytics.trackButtonClick(toolbarBarBundle);
+            toolbarBarBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_BRIEF_NEED);
+
+            analytics.trackEventOnClick(toolbarBarBundle);
         }
 
         @Override
@@ -219,8 +236,8 @@ public class ChatPresenter {
             Bundle callBundle = new Bundle();
             callBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
             callBundle.putString(Analytics.PARAM_MOBILE_NUM, mobileNum);
-            callBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.CALL_BUTTON);
-            analytics.trackButtonClick(callBundle);
+            callBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_CALL_SEEKER);
+            analytics.trackEventOnClick(callBundle);
         }
 
         @Override
@@ -231,8 +248,8 @@ public class ChatPresenter {
             Bundle addressBundle = new Bundle();
             addressBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
             addressBundle.putString(Analytics.PARAM_ADDRESS, address);
-            addressBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.ADDRESS_BUTTON);
-            analytics.trackButtonClick(addressBundle);
+            addressBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_SEEKER_LOCATION);
+            analytics.trackEventOnClick(addressBundle);
         }
 
         @Override
@@ -258,8 +275,8 @@ public class ChatPresenter {
 
                 Bundle listItemBundle = new Bundle();
                 listItemBundle.putString(Analytics.PARAM_MESSAGE_ID, message.getId());
-                listItemBundle.putString(Analytics.PARAM_LIST_NAME, AppConstant.CHAT_LIST);
-                analytics.trackListItemClick(listItemBundle);
+                listItemBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_VIEW_PROFILE_FROM_CHAT);
+                analytics.trackEventOnClick(listItemBundle);
 
             }
         }
@@ -267,6 +284,7 @@ public class ChatPresenter {
 
 
     private void updateTheResponseCount(int count) {
+        count = isMyPost() ? 0 : count;
         needService.updateResponseCount(need, count)
                 .subscribe(new Action1<DatabaseResult<Integer>>() {
                     @Override
@@ -284,32 +302,44 @@ public class ChatPresenter {
 
     private void pushToNotificationQueue(Message message, Need need) {
         final Bundle notificationQueueBundle = new Bundle();
+
         FCMRemoteMsg fcmRemoteMsg = new FCMRemoteMsg();
         fcmRemoteMsg.setCollapse_key(need.getId());
         fcmRemoteMsg.setPriority("high");
+        fcmRemoteMsg.setContent_available(true);
+
         FCMRemoteMsg.Notification notification = new FCMRemoteMsg.Notification();
-        notification.setTitle(appOwner.getName());
-        notification.setBody(message.getBody());
+        notification.setBody(appOwner.getName() + " says " + message.getBody());
+
         fcmRemoteMsg.setNotification(notification);
+
+        FCMRemoteMsg.Data data = new FCMRemoteMsg.Data();
+        data.setNeed_id(need.getId());
+        data.setClick_action(AppConstant.CLICK_ACTION_CHAT);
+        fcmRemoteMsg.setData(data);
+
         notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
         notificationQueueBundle.putParcelable(AppConstant.NEED_EXTRA, need);
         subscriptions.add(
 
                 notificationRegistrationService.observeRegistrationsForNeed(need)
                         .subscribeOn(Schedulers.io())
-                        .subscribe(new Action1<DatabaseResult<String>>() {
-                            @Override
-                            public void call(DatabaseResult<String> stringDatabaseResult) {
-                                if (stringDatabaseResult.isSuccess()) {
-                                    if (!TextUtils.isEmpty(stringDatabaseResult.getData())) {
-                                        FCMRemoteMsg fcmRemoteMsg = (FCMRemoteMsg) notificationQueueBundle.getParcelable(AppConstant.NOFICATION_QUEUE_EXTRA);
-                                        fcmRemoteMsg.setRegistration_ids(stringDatabaseResult.getData());
-                                        notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
-                                        navigator.startAppCentralService(notificationQueueBundle, AppConstant.ACTION_ADD_NOTIFICATION_TO_QUEUE);
-                                    }
-                                }
-                            }
-                        })
+                        .subscribe(new Action1<DatabaseResult<ArrayList<String>>>() {
+                                       @Override
+                                       public void call(DatabaseResult<ArrayList<String>> arrayListDatabaseResult) {
+                                           if (arrayListDatabaseResult.isSuccess()) {
+                                               if (arrayListDatabaseResult.getData().size() > 0) {
+                                                   FCMRemoteMsg fcmRemoteMsg = (FCMRemoteMsg) notificationQueueBundle.getParcelable(AppConstant.NOFICATION_QUEUE_EXTRA);
+                                                   ArrayList<String> list = arrayListDatabaseResult.getData();
+                                                   fcmRemoteMsg.setRegistration_ids(list);
+                                                   notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
+                                                   navigator.startAppCentralService(notificationQueueBundle, AppConstant.ACTION_ADD_NOTIFICATION_TO_QUEUE);
+                                               }
+                                           }
+                                       }
+                                   }
+                        )
+
         );
 
 

@@ -61,7 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getErrorLogger(),
                 analytics,
                 messageExtra,
-                Dependencies.INSTANCE.getHeroService()
+                Dependencies.INSTANCE.getHeroService(),
+                Dependencies.INSTANCE.getNotificationRegistrationService()
         );
     }
 

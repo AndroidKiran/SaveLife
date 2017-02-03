@@ -9,7 +9,6 @@ import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.notifications.service.AppNotificationService;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
 import com.donate.savelife.core.user.data.model.User;
-import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
@@ -78,8 +77,8 @@ public class PreferencePresenter {
 
             Bundle aboutUsBundle = new Bundle();
             aboutUsBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            aboutUsBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.ABOUT_US_BUTTON);
-            analytics.trackButtonClick(aboutUsBundle);
+            aboutUsBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_ABOUT_US);
+            analytics.trackEventOnClick(aboutUsBundle);
         }
 
         @Override
@@ -88,8 +87,8 @@ public class PreferencePresenter {
 
             Bundle inviteBundle = new Bundle();
             inviteBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            inviteBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.INVITE_BUTTON);
-            analytics.trackButtonClick(inviteBundle);
+            inviteBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_INVITE);
+            analytics.trackEventOnClick(inviteBundle);
         }
 
         @Override
@@ -98,8 +97,8 @@ public class PreferencePresenter {
 
             Bundle rateBundle = new Bundle();
             rateBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            rateBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.RATE_BUTTON);
-            analytics.trackButtonClick(rateBundle);
+            rateBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_RATE_ON_PLAY_STORE);
+            analytics.trackEventOnClick(rateBundle);
         }
 
         @Override
@@ -108,8 +107,8 @@ public class PreferencePresenter {
 
             Bundle termsBundle = new Bundle();
             termsBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            termsBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TERMS_BUTTON);
-            analytics.trackButtonClick(termsBundle);
+            termsBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_TERMS);
+            analytics.trackEventOnClick(termsBundle);
         }
     };
 }

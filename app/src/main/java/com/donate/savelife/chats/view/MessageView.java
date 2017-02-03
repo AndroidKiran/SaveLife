@@ -73,6 +73,10 @@ public class MessageView extends LinearLayout {
     }
 
     public void display(final Message message, User user, Need need) {
+        if (message.getAuthor() == null){
+            message.setAuthor(user);
+        }
+
         Glide.with(context).load(message.getAuthor().getPhotoUrl()).thumbnail(0.8f)
                 .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
         body.setText(message.getBody());

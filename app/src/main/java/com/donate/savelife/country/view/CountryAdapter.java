@@ -76,10 +76,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
         return this.countries.size();
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 
     public void attach(CountriesDisplayer.CountryInteractionListener countryInteractionListener) {
         this.countryInteractionListener = countryInteractionListener;
@@ -96,10 +92,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
     CountryViewHolder.CountrySelectionListener countrySelectionListener = new CountryViewHolder.CountrySelectionListener() {
         @Override
         public void onCountrySelected(Country country) {
-            for (int i = 0; i < countries.size(); i++) {
-                Country country1 = countries.getCountry(i);
-                System.out.println(country1.getIsoCode() + ":" + country1.getDialingCode() + "\n");
-            }
             countryInteractionListener.onCountrySelected(country);
         }
     };

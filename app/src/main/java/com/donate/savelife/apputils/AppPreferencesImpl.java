@@ -3,6 +3,7 @@ package com.donate.savelife.apputils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.donate.savelife.SaveLifeApplication;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
 
@@ -17,10 +18,13 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     private final static String USER_DATA = "user_data";
     private final static String REG_ID = "reg_id";
     private final static String NOTIFICATION_ENABLED = "notification_enabled";
+    public static final String VERSION_DEPRECATED = "version_deprecated";
+    public static final String VERSION_DEPRECATED_CODE = "ver_dep_code";
+    public static final String VERSION_DEPRECATED_ALL_BELOW = "dep_all_below";
 
 
     public AppPreferencesImpl(Context context) {
-        prefs = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        prefs = SaveLifeApplication.getSharedPreference(context);
     }
 
     @Override
@@ -62,5 +66,21 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     public boolean isNotificationEnabled() {
         return prefs.getBoolean(NOTIFICATION_ENABLED, true);
     }
+
+    @Override
+    public boolean isVersionDeprecated() {
+        return prefs.getBoolean(VERSION_DEPRECATED, false);
+    }
+
+    @Override
+    public int getVersionDeprecatedCode() {
+        return prefs.getInt(VERSION_DEPRECATED_CODE, 0);
+    }
+
+    @Override
+    public boolean isAllVersionDeprecatedBelow() {
+        return prefs.getBoolean(VERSION_DEPRECATED_ALL_BELOW, false);
+    }
+
 
 }

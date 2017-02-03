@@ -11,7 +11,7 @@ import rx.Observable;
 
 public interface ChatDatabase {
 
-    public static final int DEFAULT_LIMIT = 10;
+    public static final int DEFAULT_LIMIT = 1000;
 
     Observable<Chat> observeChat(Need need);
 

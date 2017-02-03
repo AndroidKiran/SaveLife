@@ -39,7 +39,6 @@ public class CountryPresenter {
     }
 
     public void startPresenting(){
-        countryDisplayer.displayLoading();
         countryDisplayer.attach(countryInteractionListener);
         subscription.add(
                 countryService.getCountries()

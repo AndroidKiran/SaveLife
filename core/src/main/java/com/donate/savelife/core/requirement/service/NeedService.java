@@ -14,15 +14,15 @@ public interface NeedService {
 
     Observable<DatabaseResult<Needs>> observeNeeds(User owner);
 
-    Observable<DatabaseResult<Needs>> observeMoreNeeds(User user, Need need);
+//    Observable<DatabaseResult<Needs>> observeMoreNeeds(User user, Need need);
 
-    Observable<DatabaseResult<Needs>> observeMoreNeedsWithUsers(User user, Need need);
+//    Observable<DatabaseResult<Needs>> observeMoreNeedsWithUsers(User user, Need need);
 
     Observable<DatabaseResult<Need>> writeNeed(Need need);
 
     Observable<DatabaseResult<Users>> observeUserIdsFor();
 
-    Observable<DatabaseResult<Users>> observeMoreUserIdsFor(User user, Need need);
+//    Observable<DatabaseResult<Users>> observeMoreUserIdsFor(User user, Need need);
 
     Observable<DatabaseResult<Need>> observeNeed(String needID);
 

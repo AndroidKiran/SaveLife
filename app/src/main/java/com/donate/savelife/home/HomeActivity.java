@@ -7,18 +7,15 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.donate.savelife.CentralAppServiceIml;
+import com.donate.savelife.NavigationActivity;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.UtilBundles;
 import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.home.presenter.HomePresenter;
-import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.AppConstant;
-import com.donate.savelife.core.utils.GsonService;
-import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.home.view.HomeView;
 import com.donate.savelife.navigation.AndroidNavigator;
@@ -30,7 +27,7 @@ import com.donate.savelife.user.HerosFragment;
 /**
  * Created by ravi on 09/09/16.
  */
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends NavigationActivity {
 
     private NeedsFragment needsFragment;
     private HerosFragment herosFragment;
@@ -39,44 +36,47 @@ public class HomeActivity extends AppCompatActivity {
     private LocalBroadcastManager localBroadcastManager;
     private AppBroadcastReceiver reciever;
     private IntentFilter intentFilter;
-    private SharedPreferenceService preferenceService;
-    private GsonService gsonService;
-    private User user;
+
+    public static Intent createIntentFor(Context context) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
-        preferenceService = Dependencies.INSTANCE.getPreference();
-        gsonService = Dependencies.INSTANCE.getGsonService();
-        user = gsonService.toUser(preferenceService.getLoginUserPreference());
+        if (proceed){
 
-        if (!preferenceService.isRegistrationComplete()) {
-            initRegistration();
+            setContentView(R.layout.activity_home);
+
+            if (!sharedPreferenceService.isRegistrationComplete()) {
+                initRegistration();
+            }
+
+            HomeDisplayer homeDisplayer = (HomeDisplayer) findViewById(R.id.home);
+            HomeView homeView = ((HomeView) homeDisplayer);
+            homeView.setAppCompatActivity(this);
+            homeView.setViewPagerAdapter(getViewPagerAdapter(savedInstanceState));
+
+            homePresenter = new HomePresenter(homeDisplayer,
+                    sharedPreferenceService,
+                    gsonService,
+                    new AndroidNavigator(this),
+                    Dependencies.INSTANCE.getAnalytics(),
+                    Dependencies.INSTANCE.getErrorLogger(),
+                    Dependencies.INSTANCE.getNeedService()
+            );
+
+            intentFilter = new IntentFilter();
+            intentFilter.addAction(Config.REGISTRATION_COMPLETE);
+            intentFilter.addAction(Config.PUSH_NOTIFICATION);
+            localBroadcastManager = LocalBroadcastManager.getInstance(this);
+            reciever = new AppBroadcastReceiver();
         }
 
-        HomeDisplayer homeDisplayer = (HomeDisplayer) findViewById(R.id.home);
-        HomeView homeView = ((HomeView) homeDisplayer);
-        homeView.setAppCompatActivity(this);
-        homeView.setViewPagerAdapter(getViewPagerAdapter(savedInstanceState));
-
-        homePresenter = new HomePresenter(homeDisplayer,
-                preferenceService,
-                gsonService,
-                new AndroidNavigator(this),
-                Dependencies.INSTANCE.getAnalytics(),
-                Dependencies.INSTANCE.getErrorLogger(),
-                Dependencies.INSTANCE.getNeedService()
-        );
-
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(Config.REGISTRATION_COMPLETE);
-        intentFilter.addAction(Config.PUSH_NOTIFICATION);
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        reciever = new AppBroadcastReceiver();
     }
-
 
     private ViewPagerAdapter getViewPagerAdapter(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerAdapter.addFragment(needsFragment, getString(R.string.str_requirement_tab));
         viewPagerAdapter.addFragment(herosFragment, getString(R.string.str_heros_tab));
-        viewPagerAdapter.addFragment(preferenceFragment, "Prefernces");
+        viewPagerAdapter.addFragment(preferenceFragment, getString(R.string.str_preference_tab));
 
         return viewPagerAdapter;
     }
@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void initRegistration() {
-        String regId = preferenceService.getRegistrationId();
+        String regId = sharedPreferenceService.getRegistrationId();
         Bundle regBundle = new Bundle();
         regBundle.putString(UtilBundles.USER_EXTRA, user.getId());
         regBundle.putString(UtilBundles.REG_EXTRA, regId);

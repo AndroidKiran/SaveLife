@@ -10,6 +10,7 @@ import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.database.UserDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -50,8 +51,26 @@ public class PersistedNotificationRegistrationService implements NotificationReg
     }
 
     @Override
-    public Observable<DatabaseResult<String>> observeRegistrationsForNeed(Need need) {
+    public Observable<DatabaseResult<ArrayList<String>>> observeRegistrationsForNeed(Need need) {
         return observeRegistrations().zipWith(observeUserIdsFor(need), getRegistrationIds(need))
+                .map(new Func1<ArrayList<String>, DatabaseResult<ArrayList<String>>>() {
+                    @Override
+                    public DatabaseResult<ArrayList<String>> call(ArrayList<String> strings) {
+                        return new DatabaseResult<ArrayList<String>>(strings);
+                    }
+                })
+                .onErrorReturn(DatabaseResult.<ArrayList<String>>errorAsDatabaseResult());
+    }
+
+    @Override
+    public Observable<DatabaseResult<Users>> observeUserIdsFor(Need need) {
+        return chatDatabase.observerChatUserIdsFor(need)
+                .flatMap(getUsersFromIds());
+    }
+
+    @Override
+    public Observable<DatabaseResult<String>> observeRegIdFor(User user) {
+        return notificationRegistrationDatabase.observeRegistrationIdForUser(user)
                 .map(new Func1<String, DatabaseResult<String>>() {
                     @Override
                     public DatabaseResult<String> call(String s) {
@@ -59,12 +78,6 @@ public class PersistedNotificationRegistrationService implements NotificationReg
                     }
                 })
                 .onErrorReturn(DatabaseResult.<String>errorAsDatabaseResult());
-    }
-
-    @Override
-    public Observable<DatabaseResult<Users>> observeUserIdsFor(Need need) {
-        return chatDatabase.observerChatUserIdsFor(need)
-                .flatMap(getUsersFromIds());
     }
 
     private Func1<Registrations, DatabaseResult<Registrations>> asRegistrationDatabaseResults() {
@@ -111,13 +124,11 @@ public class PersistedNotificationRegistrationService implements NotificationReg
         };
     }
 
-    private Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, String> getRegistrationIds(final Need need) {
-        return new Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, String>() {
+    private Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, ArrayList<String>> getRegistrationIds(final Need need) {
+        return new Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, ArrayList<String>>() {
             @Override
-            public String call(DatabaseResult<Registrations> registrationsDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
-                StringBuilder regIdBuilder = new StringBuilder();
-                regIdBuilder.append("[");
-
+            public ArrayList<String> call(DatabaseResult<Registrations> registrationsDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
+                ArrayList<String> regIdList = new ArrayList<String>();
                 ListIterator<FcmRegistration> fcmRegistrationListIterator = registrationsDatabaseResult.getData().getRegistrationList().listIterator();
                 while (fcmRegistrationListIterator.hasNext()) {
                     FcmRegistration fcmRegistration = fcmRegistrationListIterator.next();
@@ -125,12 +136,11 @@ public class PersistedNotificationRegistrationService implements NotificationReg
                     while (userListIterator.hasNext()) {
                         User user = userListIterator.next();
                         if (user.getId().equals(fcmRegistration.getUserId())) {
-                            regIdBuilder.append("'" + fcmRegistration.getRegId() + "'" + ",");
+                            regIdList.add(fcmRegistration.getRegId());
                         }
                     }
                 }
-                regIdBuilder.append("]");
-                return regIdBuilder.toString();
+                return regIdList;
             }
         };
     }

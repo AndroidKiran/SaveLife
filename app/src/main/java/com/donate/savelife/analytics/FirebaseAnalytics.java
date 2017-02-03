@@ -51,18 +51,15 @@ public class FirebaseAnalytics implements Analytics {
     }
 
     @Override
-    public void trackButtonClick(Bundle bundle) {
-        firebaseAnalytics.logEvent(EVENT_BUTTON_CLICK, bundle);
+    public void trackEventOnClick(Bundle bundle) {
+        String event = bundle.getString(PARAM_EVENT_NAME);
+        bundle.remove(PARAM_EVENT_NAME);
+        firebaseAnalytics.logEvent(event, bundle);
     }
 
     @Override
     public void trackScreen(Activity activity, String screenName, String dummy) {
-        firebaseAnalytics.setCurrentScreen(activity, screenName, dummy);
-    }
-
-    @Override
-    public void trackListItemClick(Bundle bundle) {
-        firebaseAnalytics.logEvent(EVENT_ON_LIST_ITEM_CLICK, bundle);
+        firebaseAnalytics.setCurrentScreen(activity, screenName, null);
     }
 
     @Override
@@ -74,5 +71,6 @@ public class FirebaseAnalytics implements Analytics {
     public void setUserIdProperty(String uid) {
         firebaseAnalytics.setUserId(uid);
     }
+
 
 }

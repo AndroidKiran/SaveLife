@@ -23,7 +23,7 @@ class ListenToChildEventsOnSubscribe<T> implements Observable.OnSubscribe<T> {
 
     @Override
     public void call(Subscriber<? super T> subscriber) {
-        final ChildEventListener eventListener = query.addChildEventListener(new RxValueListener<>(subscriber, marshaller));
+        final ChildEventListener eventListener = query.addChildEventListener(new RxChildValueListener<>(subscriber, marshaller));
         subscriber.add(BooleanSubscription.create(new Action0() {
             @Override
             public void call() {
@@ -32,12 +32,12 @@ class ListenToChildEventsOnSubscribe<T> implements Observable.OnSubscribe<T> {
         }));
     }
 
-    private static class RxValueListener<T> implements ChildEventListener {
+    private static class RxChildValueListener<T> implements ChildEventListener {
 
         private final Subscriber<? super T> subscriber;
         private final Func1<DataSnapshot, T> marshaller;
 
-        RxValueListener(Subscriber<? super T> subscriber, Func1<DataSnapshot, T> marshaller) {
+        RxChildValueListener(Subscriber<? super T> subscriber, Func1<DataSnapshot, T> marshaller) {
             this.subscriber = subscriber;
             this.marshaller = marshaller;
         }
@@ -51,17 +51,23 @@ class ListenToChildEventsOnSubscribe<T> implements Observable.OnSubscribe<T> {
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+            if (!subscriber.isUnsubscribed()) {
+                subscriber.onNext(marshaller.call(dataSnapshot));
+            }
         }
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+            if (!subscriber.isUnsubscribed()) {
+                subscriber.onNext(marshaller.call(dataSnapshot));
+            }
         }
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            if (!subscriber.isUnsubscribed()) {
+                subscriber.onNext(marshaller.call(dataSnapshot));
+            }
         }
 
         @Override

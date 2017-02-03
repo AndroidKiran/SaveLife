@@ -3,6 +3,7 @@ package com.donate.savelife.home.view;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,10 @@ import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.ViewPagerAdapter;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
+import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
 import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.AppConstant;
+import com.donate.savelife.notifications.services.FCMNotificationService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by ravi on 09/09/16.
  */
-public class HomeView extends CoordinatorLayout implements HomeDisplayer, ConnectivityReceiver.ConnectivityReceiverListener {
+public class HomeView extends CoordinatorLayout implements HomeDisplayer, ConnectivityReceiver.ConnectivityReceiverListener, FCMNotificationService.NotificationReceiverListener {
 
 
     private final int[] tabColors;
@@ -108,6 +112,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         bottomNavigation.setOnTabSelectedListener(onTabSelectedListener);
         myRequestContainer.setOnClickListener(onClickListener);
         SaveLifeApplication.getInstance().setConnectivityListener(this);
+        SaveLifeApplication.getInstance().setNotificationListener(this);
         checkConnection();
     }
 
@@ -119,6 +124,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         bottomNavigation.setOnTabSelectedListener(null);
         myRequestContainer.setOnClickListener(null);
         SaveLifeApplication.getInstance().setConnectivityListener(null);
+        SaveLifeApplication.getInstance().setNotificationListener(null);
     }
 
     @Override
@@ -198,17 +204,17 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        showSnack();
+        showConnectionSnack();
     }
 
     private void checkConnection() {
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (!isConnected){
-            showSnack();
+            showConnectionSnack();
         }
     }
 
-    private void showSnack() {
+    private void showConnectionSnack() {
             String message = "Sorry! Not connected to internet";
             int color = Color.WHITE;
             Snackbar snackbar = Snackbar
@@ -219,4 +225,37 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
             textView.setTextColor(color);
             snackbar.show();
     }
+
+    @Override
+    public void onNotificationReceived(Bundle bundle) {
+        FCMRemoteMsg fcmRemoteMsg = bundle.getParcelable(AppConstant.FCM_REMOTE_MSG_EXTRA);
+        FCMRemoteMsg.Data data = fcmRemoteMsg.getData();
+        switch (data.getClick_action()){
+            case AppConstant.CLICK_ACTION_PROFILE:
+            case AppConstant.CLICK_ACTION_CHAT:
+                showNotificationSnack(fcmRemoteMsg);
+                break;
+        }
+    }
+
+    private void showNotificationSnack(final FCMRemoteMsg fcmRemoteMsg) {
+        FCMRemoteMsg.Notification notification = fcmRemoteMsg.getNotification();
+
+        int color = Color.WHITE;
+        Snackbar snackbar = Snackbar
+                .make(bottomNavigation, notification.getBody(), Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        snackbar.setAction("View", new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homeInteractionListener.onNotificationClicked(fcmRemoteMsg);
+            }
+        });
+
+        View sbView = snackbar.getView();
+        AppCompatTextView textView = (AppCompatTextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
 }

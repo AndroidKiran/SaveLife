@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable{
     public static final String LIFE_COUNT = "lifeCount";
+    public static final String CITY = "city";
 
     private String id;
     private String name;

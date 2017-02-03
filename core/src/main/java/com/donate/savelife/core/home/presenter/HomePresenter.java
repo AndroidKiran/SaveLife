@@ -9,12 +9,13 @@ import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.home.displayer.HomeDisplayer;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
 import com.donate.savelife.core.requirement.model.Needs;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
-import com.donate.savelife.core.utils.AppConstant;
 
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -84,8 +85,8 @@ public class HomePresenter {
             navigator.toNeed();
             Bundle toPostNeedBundle = new Bundle();
             toPostNeedBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            toPostNeedBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_POST_NEED_BUTTON);
-            analytics.trackButtonClick(toPostNeedBundle);
+            toPostNeedBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_BLOOD_REQUEST);
+            analytics.trackEventOnClick(toPostNeedBundle);
         }
 
         @Override
@@ -96,8 +97,8 @@ public class HomePresenter {
             navigator.toProfile(message);
             Bundle toProfileBundle = new Bundle();
             toProfileBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-            toProfileBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_PROFILE_BUTTON);
-            analytics.trackButtonClick(toProfileBundle);
+            toProfileBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_PROFILE);
+            analytics.trackEventOnClick(toProfileBundle);
         }
 
         @Override
@@ -121,6 +122,27 @@ public class HomePresenter {
         @Override
         public void onMyNeedClicked() {
             navigator.toMyNeeds();
+            Bundle toProfileBundle = new Bundle();
+            toProfileBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            toProfileBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_MY_NEED);
+            analytics.trackEventOnClick(toProfileBundle);
+        }
+
+        @Override
+        public void onNotificationClicked(FCMRemoteMsg fcmRemoteMsg) {
+            FCMRemoteMsg.Data data = fcmRemoteMsg.getData();
+            switch (data.getClick_action()){
+                case AppConstant.CLICK_ACTION_CHAT:
+                    navigator.toChat(data.getNeed_id());
+                    break;
+
+                case AppConstant.CLICK_ACTION_PROFILE:
+                    Message message = new Message();
+                    message.setNeedId("");
+                    message.setUserId(user.getId());
+                    navigator.toProfile(message);
+                    break;
+            }
         }
     };
 }

@@ -12,7 +12,6 @@ import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
 import com.donate.savelife.core.notifications.service.NotificationQueueService;
 import com.donate.savelife.core.notifications.service.NotificationRegistrationService;
-import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
@@ -67,7 +66,7 @@ public class CentralAppServiceIml extends IntentService {
                         break;
 
                     case AppConstant.ACTION_ADD_CHAT_NOTIFICATION_TO_QUEUE:
-                        addChatNotificationToQueue(actionBundle);
+//                        addChatNotificationToQueue(actionBundle);
                         break;
                 }
             }
@@ -119,26 +118,26 @@ public class CentralAppServiceIml extends IntentService {
 
     }
 
-    private void addChatNotificationToQueue(final Bundle bundle) {
-        Need need = bundle.getParcelable(AppConstant.NEED_EXTRA);
-        NotificationRegistrationService notificationRegistrationService = Dependencies.INSTANCE.getNotificationRegistrationService();
-        compositeSubscription.add(
-                notificationRegistrationService.observeRegistrationsForNeed(need)
-                        .subscribe(new Action1<DatabaseResult<String>>() {
-                                       @Override
-                                       public void call(DatabaseResult<String> stringDatabaseResult) {
-                                           if (stringDatabaseResult.isSuccess()) {
-                                               if (!TextUtils.isEmpty(stringDatabaseResult.getData())) {
-                                                   FCMRemoteMsg fcmRemoteMsg = (FCMRemoteMsg) bundle.getParcelable(AppConstant.NOFICATION_QUEUE_EXTRA);
-                                                   fcmRemoteMsg.setRegistration_ids(stringDatabaseResult.getData());
-                                                   bundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
-                                                   addNotificationToQueue(bundle);
-                                               }
-                                           }
-                                       }
-                                   }
-                        )
-
-        );
-    }
+//    private void addChatNotificationToQueue(final Bundle bundle) {
+//        Need need = bundle.getParcelable(AppConstant.NEED_EXTRA);
+//        NotificationRegistrationService notificationRegistrationService = Dependencies.INSTANCE.getNotificationRegistrationService();
+//        compositeSubscription.add(
+//                notificationRegistrationService.observeRegistrationsForNeed(need)
+//                        .subscribe(new Action1<DatabaseResult<String>>() {
+//                                       @Override
+//                                       public void call(DatabaseResult<String> stringDatabaseResult) {
+//                                           if (stringDatabaseResult.isSuccess()) {
+//                                               if (!TextUtils.isEmpty(stringDatabaseResult.getData())) {
+//                                                   FCMRemoteMsg fcmRemoteMsg = (FCMRemoteMsg) bundle.getParcelable(AppConstant.NOFICATION_QUEUE_EXTRA);
+//                                                   fcmRemoteMsg.setRegistration_ids(stringDatabaseResult.getData());
+//                                                   bundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
+//                                                   addNotificationToQueue(bundle);
+//                                               }
+//                                           }
+//                                       }
+//                                   }
+//                        )
+//
+//        );
+//    }
 }

@@ -37,10 +37,6 @@ public class NeedItemView extends RelativeLayout {
     private TextView postDate;
     private TextView name;
 
-    public NeedItemView(Context context) {
-        super(context);
-    }
-
     public NeedItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);

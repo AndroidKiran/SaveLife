@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.donate.savelife.core.chats.model.Message;
-import com.donate.savelife.core.requirement.model.Need;
 
 public interface Navigator {
 
@@ -20,7 +19,7 @@ public interface Navigator {
 
     void toParent();
 
-    void toChat(Need need);
+    void toChat(String needId);
 
     void toCompleteProfile();
 
@@ -36,9 +35,11 @@ public interface Navigator {
 
     void toMap(Uri geoLocation);
 
-    void toRateUs();
+    void toMarketPlace();
 
     void toMyNeeds();
+
+    void toWelcome();
 
     void startAppCentralService(Bundle bundle, String action);
 

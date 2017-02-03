@@ -8,6 +8,8 @@ import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
+import com.donate.savelife.core.notifications.service.NotificationRegistrationService;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.ProfileDisplayer;
 import com.donate.savelife.core.user.service.HeroService;
@@ -35,6 +37,7 @@ public class ProfilePresenter {
     private final HeroService heroService;
     private final User owner;
     private final Message message;
+    private final NotificationRegistrationService notificationRegistrationService;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -47,7 +50,8 @@ public class ProfilePresenter {
             ErrorLogger errorLogger,
             Analytics analytics,
             Message message,
-            HeroService heroService
+            HeroService heroService,
+            NotificationRegistrationService notificationRegistrationService
     ) {
         this.profileDisplayer = profileDisplayer;
         this.preferenceService = preferenceService;
@@ -58,6 +62,7 @@ public class ProfilePresenter {
         this.navigator = navigator;
         this.message = message;
         this.heroService = heroService;
+        this.notificationRegistrationService = notificationRegistrationService;
         this.owner = gsonService.toUser(preferenceService.getLoginUserPreference());
     }
 
@@ -110,8 +115,8 @@ public class ProfilePresenter {
             navigator.toCompleteProfile();
             Bundle toEditProfileBundle = new Bundle();
             toEditProfileBundle.putString(Analytics.PARAM_OWNER_ID, owner.getId());
-            toEditProfileBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.TO_EDIT_PROFILE_BUTTON);
-            analytics.trackButtonClick(toEditProfileBundle);
+            toEditProfileBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_COMPLETE_PROFILE);
+            analytics.trackEventOnClick(toEditProfileBundle);
         }
 
         @Override
@@ -122,9 +127,22 @@ public class ProfilePresenter {
                                 @Override
                                 public void call(DatabaseResult<User> userDatabaseResult) {
                                     if (userDatabaseResult.isSuccess()) {
-
+                                        User hero = userDatabaseResult.getData();
+                                        subscriptions.add(
+                                                notificationRegistrationService.observeRegIdFor(hero)
+                                                .subscribe(new Action1<DatabaseResult<String>>() {
+                                                    @Override
+                                                    public void call(DatabaseResult<String> stringDatabaseResult) {
+                                                        if (stringDatabaseResult.isSuccess()){
+                                                            pushToNotificationQueue(stringDatabaseResult.getData());
+                                                        } else {
+                                                            errorLogger.reportError(stringDatabaseResult.getFailure(), "Failed to get the registration id");
+                                                        }
+                                                    }
+                                                })
+                                        );
                                     } else {
-
+                                        errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to honor hero");
                                     }
                                 }
                             })
@@ -134,8 +152,8 @@ public class ProfilePresenter {
             Bundle onHonorBunlde = new Bundle();
             onHonorBunlde.putString(Analytics.PARAM_OWNER_ID, owner.getId());
             onHonorBunlde.putString(Analytics.PARAM_HERO_ID, message.getUserId());
-            onHonorBunlde.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.HONOR_BUTTON);
-            analytics.trackButtonClick(onHonorBunlde);
+            onHonorBunlde.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_HONOR_HERO);
+            analytics.trackEventOnClick(onHonorBunlde);
         }
 
         @Override
@@ -146,5 +164,26 @@ public class ProfilePresenter {
 
     private boolean isAppOwner(){
         return owner.getId().equals(message.getUserId());
+    }
+
+    private void pushToNotificationQueue(String regId) {
+        Bundle notificationQueueBundle = new Bundle();
+
+        FCMRemoteMsg fcmRemoteMsg = new FCMRemoteMsg();
+        fcmRemoteMsg.setTo(regId);
+        fcmRemoteMsg.setPriority("high");
+        fcmRemoteMsg.setContent_available(true);
+
+        FCMRemoteMsg.Notification notification = new FCMRemoteMsg.Notification();
+        notification.setBody(owner.getName() + " has Honored you as HERO");
+
+        FCMRemoteMsg.Data data = new FCMRemoteMsg.Data();
+        data.setClick_action(AppConstant.CLICK_ACTION_PROFILE);
+
+        fcmRemoteMsg.setNotification(notification);
+        fcmRemoteMsg.setData(data);
+
+        notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
+        navigator.startAppCentralService(notificationQueueBundle, AppConstant.ACTION_ADD_NOTIFICATION_TO_QUEUE);
     }
 }

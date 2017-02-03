@@ -13,7 +13,7 @@ public interface NeedsDisplayer {
 
     void display(Needs needs, User owner);
 
-    void displayMore(Needs needs, User owner);
+//    void displayMore(Needs needs, User owner);
 
     void displayLoading();
 
@@ -26,15 +26,15 @@ public interface NeedsDisplayer {
     //retrieve methods
     Needs getNeeds();
 
-    Need getlastNeedItem();
-
-    void setLastNeedItem(Need lastNeedItem);
+//    Need getlastNeedItem();
+//
+//    void setLastNeedItem(Need lastNeedItem);
 
     interface NeedInteractionListener {
 
         void onNeedSelected(Need need);
 
-        void onLoadMore(Need need);
+//        void onLoadMore(Need need);
 
         void onContentLoaded();
 

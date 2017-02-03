@@ -10,12 +10,19 @@ import com.donate.savelife.chats.database.FirebaseChatDatabase;
 import com.donate.savelife.core.Config;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
+import com.donate.savelife.core.chats.database.ChatDatabase;
 import com.donate.savelife.core.chats.service.ChatService;
 import com.donate.savelife.core.chats.service.PersistedChatService;
+import com.donate.savelife.core.country.database.CountryDatabase;
 import com.donate.savelife.core.country.service.CountryService;
 import com.donate.savelife.core.country.service.PersistedCountryService;
+import com.donate.savelife.core.launcher.database.AppStatusDatabase;
+import com.donate.savelife.core.launcher.service.PersistedAppStatusService;
+import com.donate.savelife.core.login.database.AuthDatabase;
 import com.donate.savelife.core.login.service.FirebaseLoginService;
 import com.donate.savelife.core.login.service.LoginService;
+import com.donate.savelife.core.notifications.database.NotificationQueueDatabase;
+import com.donate.savelife.core.notifications.database.NotificationRegistrationDatabase;
 import com.donate.savelife.core.notifications.service.NotificationQueueService;
 import com.donate.savelife.core.notifications.service.NotificationRegistrationService;
 import com.donate.savelife.core.notifications.service.PersistedNotificationQueueService;
@@ -24,6 +31,7 @@ import com.donate.savelife.core.requirement.database.NeedDatabase;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.requirement.service.PersistedNeedService;
 import com.donate.savelife.core.user.database.HeroDatabase;
+import com.donate.savelife.core.user.database.UserDatabase;
 import com.donate.savelife.core.user.service.HeroService;
 import com.donate.savelife.core.user.service.PersistedHeroService;
 import com.donate.savelife.core.user.service.PersistedUserService;
@@ -31,6 +39,7 @@ import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 import com.donate.savelife.country.database.FirebaseCountryDatabase;
+import com.donate.savelife.launcher.database.FirebaseAppStatusDatabase;
 import com.donate.savelife.login.database.FirebaseAuthDatabase;
 import com.donate.savelife.notifications.database.FirebaseNotificationRegistrationDatabase;
 import com.donate.savelife.notifications.database.FirebaseNotificatonQueueDatabase;
@@ -54,7 +63,7 @@ public enum Dependencies {
     private AppPreferencesImpl pref;
     private GsonServiceImpl gsonService;
     private FirebaseDatabase firebaseDatabase;
-    private FirebaseLoginService loginService;
+    private LoginService loginService;
     private UserService userService;
     private CountryService countryService;
     private NeedService needService;
@@ -63,6 +72,7 @@ public enum Dependencies {
     private NotificationRegistrationService notificationRegistrationsService;
     private FirebaseMessaging firebaseMessageInstance;
     private NotificationQueueService notificationQueueService;
+    private PersistedAppStatusService appStatusService;
 
     public void init(Context context) {
         if (needsInitialisation()) {
@@ -82,21 +92,23 @@ public enum Dependencies {
 
             errorLogger = new FirebaseErrorLogger();
 
-            FirebaseAuthDatabase authDatabase = new FirebaseAuthDatabase(firebaseAuth);
+            AuthDatabase authDatabase = new FirebaseAuthDatabase(firebaseAuth);
 
-            FirebaseUserDatabase userDatabase = new FirebaseUserDatabase(firebaseDatabase, firebaseObservableListeners);
+            UserDatabase userDatabase = new FirebaseUserDatabase(firebaseDatabase, firebaseObservableListeners);
 
             NeedDatabase needDatabase = new FirebaseNeedDatabase(firebaseDatabase, firebaseObservableListeners);
 
             HeroDatabase heroDatabase = new FirebaseHeroDatabase(firebaseDatabase, firebaseObservableListeners);
 
-            FirebaseCountryDatabase countryDatabase = new FirebaseCountryDatabase(firebaseDatabase, firebaseObservableListeners);
+            CountryDatabase countryDatabase = new FirebaseCountryDatabase(firebaseDatabase, firebaseObservableListeners);
 
-            FirebaseChatDatabase chatDatabase = new FirebaseChatDatabase(firebaseDatabase, firebaseObservableListeners);
+            ChatDatabase chatDatabase = new FirebaseChatDatabase(firebaseDatabase, firebaseObservableListeners);
 
-            FirebaseNotificationRegistrationDatabase firebaseNotificationRegistrationDatabase = new FirebaseNotificationRegistrationDatabase(firebaseDatabase, firebaseObservableListeners);
+            NotificationRegistrationDatabase firebaseNotificationRegistrationDatabase = new FirebaseNotificationRegistrationDatabase(firebaseDatabase, firebaseObservableListeners);
 
-            FirebaseNotificatonQueueDatabase firebaseNotificatonQueueDatabase = new FirebaseNotificatonQueueDatabase(firebaseDatabase, firebaseObservableListeners);
+            NotificationQueueDatabase firebaseNotificatonQueueDatabase = new FirebaseNotificatonQueueDatabase(firebaseDatabase, firebaseObservableListeners);
+
+            AppStatusDatabase appStatusDatabase = new FirebaseAppStatusDatabase(firebaseDatabase, firebaseObservableListeners);
 
             loginService = new FirebaseLoginService(authDatabase, userDatabase);
 
@@ -114,15 +126,22 @@ public enum Dependencies {
 
             notificationQueueService = new PersistedNotificationQueueService(firebaseNotificatonQueueDatabase);
 
+            appStatusService = new PersistedAppStatusService(appStatusDatabase);
+
             config = FirebaseConfig.newInstance().init(errorLogger);
+
             pref = new AppPreferencesImpl(appContext);
+
             gsonService = new GsonServiceImpl();
 
         }
     }
 
     private boolean needsInitialisation() {
-        return  analytics == null ||  errorLogger == null || loginService == null || userService == null;
+        return  analytics == null ||  errorLogger == null || loginService == null || userService == null
+                || loginService == null || countryService == null || needService == null || chatService == null
+                || heroService == null || notificationQueueService == null || notificationRegistrationsService == null
+                || appStatusService == null;
     }
 
     public Analytics getAnalytics() {
@@ -181,4 +200,7 @@ public enum Dependencies {
         return notificationQueueService;
     }
 
+    public PersistedAppStatusService getAppStatusService() {
+        return appStatusService;
+    }
 }

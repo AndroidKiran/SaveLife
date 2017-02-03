@@ -1,5 +1,6 @@
 package com.donate.savelife.core.home.displayer;
 
+import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
 import com.donate.savelife.core.user.data.model.User;
 
 /**
@@ -27,5 +28,7 @@ public interface HomeDisplayer {
         void onTabSelected(int postion);
 
         void onMyNeedClicked();
+
+        void onNotificationClicked(FCMRemoteMsg fcmRemoteMsg);
     }
 }

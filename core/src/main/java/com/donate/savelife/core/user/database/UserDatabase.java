@@ -8,8 +8,8 @@ import rx.Observable;
 
 public interface UserDatabase {
 
-    public static final String SINGLE_VALUE_EVENT_TYPE = "single_value_event";
-    public static final String VALUE_EVENT_TYPE = "value_event";
+    String SINGLE_VALUE_EVENT_TYPE = "single_value_event";
+    String VALUE_EVENT_TYPE = "value_event";
 
     Observable<Users> observeTopHeros();
 
