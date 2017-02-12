@@ -26,9 +26,10 @@
                 android:id="@+id/profile_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/white_transperent_selector"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@drawable/blood_banner" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -108,7 +109,7 @@
                                 android:layout_height="@dimen/dimen_60"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
-                                android:textColor="@color/white_neutral"
+                                android:textColor="@color/material_white"
                                 android:textSize="@dimen/font_10"
                                 app:fontTypeface="museosans700"
                                 tools:text="62" />
@@ -162,14 +163,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/dimen_10"
-                            android:background="@color/material_green"
+                            android:background="?attr/colorPrimary"
                             android:gravity="center_vertical"
                             android:paddingBottom="@dimen/dimen_10"
                             android:paddingLeft="@dimen/dimen_16"
                             android:paddingRight="@dimen/dimen_16"
                             android:paddingTop="@dimen/dimen_10"
                             android:text="@string/str_profile_info"
-                            android:textColor="@color/white_neutral"
+                            android:textColor="@color/material_white"
                             android:textSize="@dimen/font_16"
                             app:fontTypeface="museosans700" />
 
@@ -282,7 +283,7 @@
         android:layout_marginBottom="@dimen/dimen_16"
         android:layout_marginRight="@dimen/dimen_10"
         android:elevation="@dimen/dimen_4"
-        app:backgroundTint="@color/material_green"
+        app:backgroundTint="?attr/colorPrimary"
         app:fabSize="normal"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"

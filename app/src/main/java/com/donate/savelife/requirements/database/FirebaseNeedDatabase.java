@@ -23,7 +23,6 @@ public class FirebaseNeedDatabase implements NeedDatabase {
 
     public FirebaseNeedDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         needDB = firebaseDatabase.getReference("needs");
-        needDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 
@@ -93,24 +92,6 @@ public class FirebaseNeedDatabase implements NeedDatabase {
             }
         };
     }
-
-//    private Func1<DataSnapshot, Needs> toNeeds(final User user){
-//        return new Func1<DataSnapshot, Needs>() {
-//            @Override
-//            public Needs call(DataSnapshot dataSnapshot) {
-//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//                UniqueList<Need> needs = new UniqueList<Need>();
-//                for (DataSnapshot child : children){
-//                    Need need = child.getValue(Need.class);
-//                    if (!need.getUserID().equals(user.getId())){
-//                        need.setId(child.getKey());
-//                        needs.add(need);
-//                    }
-//                }
-//                return new Needs(needs);
-//            }
-//        };
-//    }
 
     private <T> Func1<DataSnapshot, T> as(final Class<T> tClass) {
         return new Func1<DataSnapshot, T>() {

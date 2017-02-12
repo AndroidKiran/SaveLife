@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:background="@drawable/green_radius"
         android:gravity="center"
-        android:textColor="@color/white_neutral"
+        android:textColor="@color/material_white"
         android:textSize="@dimen/font_30"
         app:fontTypeface="museosans700"
         tools:text="62" />

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
+import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
 
 /**
@@ -28,10 +30,14 @@ public abstract class NavigationActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        navigator = new AndroidNavigator(this);
+        sharedPreferenceService = Dependencies.INSTANCE.getPreference();
+        gsonService = Dependencies.INSTANCE.getGsonService();
+        user = gsonService.toUser(sharedPreferenceService.getLoginUserPreference());
         Intent intent = SaveLifeApplication.getInstance().getIndexIntent();
         if (intent != null){
             onNewIntent(intent);
-            proceed = false;
+            SaveLifeApplication.getInstance().setIndexIntent(null);
         }
     }
 
@@ -40,6 +46,7 @@ public abstract class NavigationActivity extends AppCompatActivity{
     protected void onNewIntent(Intent intent) {
 
         String clickAction = intent.getStringExtra(AppConstant.CLICK_ACTION_EXTRA);
+        Log.e("data value", "value ===="+clickAction);
 
         if (TextUtils.isEmpty(clickAction))
             return;
@@ -55,11 +62,10 @@ public abstract class NavigationActivity extends AppCompatActivity{
             case AppConstant.CLICK_ACTION_PROFILE:
                 Message message = new Message();
                 message.setNeedId("");
-                message.setUserId(user.getId());
+                message.setUserID(user.getId());
                 navigator.toProfile(message);
                 break;
         }
 
-        SaveLifeApplication.getInstance().setIndexIntent(null);
     }
 }

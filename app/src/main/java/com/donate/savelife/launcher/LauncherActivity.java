@@ -34,7 +34,8 @@ public class LauncherActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getPreference(),
                 Dependencies.INSTANCE.getGsonService(),
                 Dependencies.INSTANCE.getAppStatusService(),
-                (LauncherDisplayer) launcherView);
+                (LauncherDisplayer) launcherView,
+                Float.parseFloat(SaveLifeApplication.APP_VERSION));
     }
 
     @Override

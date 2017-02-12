@@ -3,13 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/material_green</item>
-        <item name="colorPrimaryDark">@color/material_dark_green</item>
-        <item name="colorAccent">@color/material_white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="titleTextColor">@color/material_white</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="android:actionMenuTextColor">@color/material_white</item>
         <item name="android:windowBackground">@color/window_background</item>
-        <item name="android:actionMenuTextColor">@color/white_neutral</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 

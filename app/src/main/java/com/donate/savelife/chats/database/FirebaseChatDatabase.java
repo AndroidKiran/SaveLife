@@ -3,6 +3,7 @@ package com.donate.savelife.chats.database;
 import com.donate.savelife.core.UniqueList;
 import com.donate.savelife.core.chats.database.ChatDatabase;
 import com.donate.savelife.core.chats.model.Chat;
+import com.donate.savelife.core.chats.model.Map;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.rx.FirebaseObservableListeners;
@@ -22,7 +23,6 @@ public class FirebaseChatDatabase implements ChatDatabase {
 
     public FirebaseChatDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         messagesDB = firebaseDatabase.getReference("messages");
-        messagesDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 
@@ -65,12 +65,19 @@ public class FirebaseChatDatabase implements ChatDatabase {
         return new Func1<DataSnapshot, Chat>() {
             @Override
             public Chat call(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 UniqueList<Message> messages = new UniqueList<Message>();
-                for (DataSnapshot child : children) {
-                    Message message = child.getValue(Message.class);
-                    message.setId(child.getKey());
-                    messages.add(message);
+                if (dataSnapshot.hasChildren()){
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    for (DataSnapshot child : children) {
+                        Message message = child.getValue(Message.class);
+                        message.setId(child.getKey());
+                        DataSnapshot mapChild = child.child("map");
+                        if (mapChild.exists()){
+                            Map map = mapChild.getValue(Map.class);
+                            message.setMap(map);
+                        }
+                        messages.add(message);
+                    }
                 }
                 return new Chat(messages);
             }
@@ -86,7 +93,7 @@ public class FirebaseChatDatabase implements ChatDatabase {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot child : children) {
                         Message message = child.getValue(Message.class);
-                        keys.add(message.getUserId());
+                        keys.add(message.getUserID());
                     }
                 }
                 return keys;

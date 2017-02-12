@@ -28,7 +28,7 @@ public class MaterialProgressDialog extends ProgressDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDefaultColor = ContextCompat.getColor(context, R.color.material_green);
+        mDefaultColor = ContextCompat.getColor(context, R.color.primary);
 
         indeterminateDrawable = new MaterialProgressDrawable(getContext(), findViewById(android.R.id.progress));
         indeterminateDrawable.setBackgroundColor(CIRCLE_BG_LIGHT);

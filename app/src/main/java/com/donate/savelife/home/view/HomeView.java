@@ -91,7 +91,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         Glide.with(getAppCompatActivity()).load(user.getPhotoUrl()).thumbnail(0.8f)
                 .crossFade().fitCenter().
         diskCacheStrategy(DiskCacheStrategy.ALL).into(profileImage);
-        Glide.with(getAppCompatActivity()).load(user.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).bitmapTransform(new BlurTransformation(getContext(), 2, 2))
+        Glide.with(getAppCompatActivity()).load(user.getPhotoUrl()).placeholder(R.drawable.blood_banner).diskCacheStrategy(DiskCacheStrategy.ALL).bitmapTransform(new BlurTransformation(getContext(), 2, 2))
                 .into(profileBackdrop);
         profileName.setText(user.getName());
     }
@@ -195,7 +195,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
                 break;
 
             case 2:
-                color = R.color.material_green;
+                color = R.color.primary;
                 break;
 
         }
@@ -244,7 +244,7 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
         int color = Color.WHITE;
         Snackbar snackbar = Snackbar
                 .make(bottomNavigation, notification.getBody(), Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.primary));
         snackbar.setAction("View", new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -23,8 +23,5 @@ public interface SharedPreferenceService {
 
     boolean isVersionDeprecated();
 
-    int getVersionDeprecatedCode();
-
-    boolean isAllVersionDeprecatedBelow();
-
+    void setVersionDeprecated(boolean deprecated);
 }

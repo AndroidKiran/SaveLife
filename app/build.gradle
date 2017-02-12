@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 
 android {
@@ -42,6 +43,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0';
 
     compile "com.google.android.gms:play-services-auth:${play_service_lib_version}"
+    compile "com.google.android.gms:play-services-places:${play_service_lib_version}"
 
     compile "com.google.firebase:firebase-core:${play_service_lib_version}"
     compile "com.google.firebase:firebase-auth:${play_service_lib_version}"

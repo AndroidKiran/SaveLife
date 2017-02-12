@@ -18,15 +18,11 @@ class MessageViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Message message, User needOwner, Need need, final OnChatSelectionListener onChatSelectionListener) {
         messageView.display(message, needOwner, need);
-        messageView.setOnClickListener(new View.OnClickListener() {
+        messageView.getUserAvatar().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onChatSelectionListener.onChatSelected(message);
+                onChatSelectionListener.onProfilePicSelected(message);
             }
         });
-    }
-
-    public interface OnChatSelectionListener {
-        void onChatSelected(Message message);
     }
 }

@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@drawable/blood_banner" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -96,9 +96,9 @@
                         app:ms_arrowSize="@dimen/dimen_16"
                         app:ms_baseColor="@android:color/darker_gray"
                         app:ms_enableFloatingLabel="true"
-                        app:ms_floatingLabelColor="@color/material_green"
+                        app:ms_floatingLabelColor="?attr/colorPrimary"
                         app:ms_floatingLabelText="@string/str_blood_group"
-                        app:ms_highlightColor="@color/material_green"
+                        app:ms_highlightColor="?attr/colorPrimary"
                         app:ms_hint="@string/str_blood_group"
                         app:ms_hintColor="@android:color/darker_gray"
                         app:ms_multiline="false"
@@ -229,7 +229,7 @@
                         android:layout_marginLeft="@dimen/dimen_16"
                         android:layout_marginRight="@dimen/dimen_16"
                         android:layout_marginTop="@dimen/dimen_16"
-                        android:background="@drawable/selector_green"
+                        android:background="@drawable/selector_primary"
                         android:gravity="center"
                         android:minHeight="@dimen/dimen_48"
                         android:text="@string/str_request"

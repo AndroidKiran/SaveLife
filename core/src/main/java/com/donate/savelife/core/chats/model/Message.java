@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.utils.CoreUtils;
 
 public class Message implements Parcelable{
 
@@ -14,21 +15,27 @@ public class Message implements Parcelable{
     private String body;
     private long timestamp;
     private String needId;
+    private String fileUrl;
+    private int contentType;
+    private Map map;
 
-    @SuppressWarnings("unused") //Used by Firebase
     public Message() {
+
     }
 
-    public Message(User author, String body) {
-        this.author = author;
-        this.body = body;
-        this.timestamp = System.currentTimeMillis(); //TODO move timestamp db side ?
-    }
-
-    public Message(String userId, String body) {
+    public Message(String userId, String message){
         this.userID = userId;
-        this.body = body;
-        this.timestamp = System.currentTimeMillis(); //TODO move timestamp db side ?
+        this.body = message;
+        this.contentType = CoreUtils.ContentType.TXT;
+        timestamp = System.currentTimeMillis();
+    }
+
+    public Message(String userId, Map map, int contentType){
+        this.userID = userId;
+        this.fileUrl = CoreUtils.local(map);
+        this.contentType = contentType;
+        this.map = map;
+        timestamp = System.currentTimeMillis();
     }
 
 
@@ -39,6 +46,27 @@ public class Message implements Parcelable{
         body = in.readString();
         timestamp = in.readLong();
         needId = in.readString();
+        fileUrl = in.readString();
+        contentType = in.readInt();
+        map = in.readParcelable(Map.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(userID);
+        dest.writeParcelable(author, flags);
+        dest.writeString(body);
+        dest.writeLong(timestamp);
+        dest.writeString(needId);
+        dest.writeString(fileUrl);
+        dest.writeInt(contentType);
+        dest.writeParcelable(map, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {
@@ -53,22 +81,6 @@ public class Message implements Parcelable{
         }
     };
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(userID);
-        parcel.writeParcelable(author, i);
-        parcel.writeString(body);
-        parcel.writeLong(timestamp);
-        parcel.writeString(needId);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,33 +88,28 @@ public class Message implements Parcelable{
 
         Message message = (Message) o;
 
-        if (timestamp != message.timestamp) return false;
-        if (id != null ? !id.equals(message.id) : message.id != null) return false;
-        if (userID != null ? !userID.equals(message.userID) : message.userID != null) return false;
-        if (author != null ? !author.equals(message.author) : message.author != null) return false;
-        return body != null ? body.equals(message.body) : message.body == null;
+        return id != null ? id.equals(message.id) : message.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userID != null ? userID.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (body != null ? body.hashCode() : 0);
-        result = 31 * result + (int) (timestamp ^ (timestamp >>> 32));
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Message{" +
                 "id='" + id + '\'' +
-                ", userId='" + userID + '\'' +
-                ", author=" + author +
-                ", body='" + body + '\'' +
-                ", timestamp=" + timestamp +
                 '}';
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public String getId() {
@@ -113,12 +120,12 @@ public class Message implements Parcelable{
         this.id = id;
     }
 
-    public String getUserId() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userID = userId;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public User getAuthor() {
@@ -152,5 +159,22 @@ public class Message implements Parcelable{
     public void setNeedId(String needId) {
         this.needId = needId;
     }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
+    }
+
 
 }

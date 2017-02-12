@@ -107,4 +107,9 @@
     <string name="str_btn_try_again_txt">TRY AGAIN</string>
     <string name="str_btn_update_txt">UPDATE NOW</string>
 
+    <!--Click Action-->
+    <string name="str_action_chat">android.intent.action.CHAT</string>
+    <string name="str_action_profile">android.intent.action.PROFILE</string>
+
+
 </resources>

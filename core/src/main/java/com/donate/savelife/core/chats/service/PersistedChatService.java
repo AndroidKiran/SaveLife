@@ -136,7 +136,7 @@ public class PersistedChatService implements ChatService {
                     ListIterator<User> userListIterator = usersDatabaseResult.getData().getUsers().listIterator();
                     while (userListIterator.hasNext()) {
                         User user = userListIterator.next();
-                        if (message.getUserId().equals(user.getId())) {
+                        if (message.getUserID().equals(user.getId())) {
                             message.setAuthor(user);
                         }
                     }

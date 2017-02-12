@@ -7,7 +7,7 @@ package com.donate.savelife.core.launcher.model;
 public class AppStatus
 {
     private String id;
-    private boolean isDeprecated;
+    private boolean versionDeprecated;
     private boolean updateAvailable;
     private boolean isError;
 
@@ -20,12 +20,12 @@ public class AppStatus
         this.id = id;
     }
 
-    public boolean isDeprecated() {
-        return isDeprecated;
+    public boolean isVersionDeprecated() {
+        return versionDeprecated;
     }
 
-    public void setDeprecated(boolean deprecated) {
-        isDeprecated = deprecated;
+    public void setVersionDeprecated(boolean versionDeprecated) {
+        this.versionDeprecated = versionDeprecated;
     }
 
     public boolean isUpdateAvailable() {

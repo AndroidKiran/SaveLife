@@ -4,15 +4,15 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/material_green"/>
+        android:color="@color/primary"/>
 
     <size
-        android:width="40dp"
-        android:height="40dp"/>
+        android:width="@dimen/dimen_40"
+        android:height="@dimen/dimen_40"/>
 
-    <padding android:bottom="10dp"
-        android:top="10dp"
-        android:left="10dp"
-        android:right="10dp"/>
+    <padding android:bottom="@dimen/dimen_10"
+        android:top="@dimen/dimen_10"
+        android:left="@dimen/dimen_10"
+        android:right="@dimen/dimen_10"/>
 
 </shape>

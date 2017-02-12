@@ -93,7 +93,7 @@ public class HomePresenter {
         public void onProfileClicked() {
             Message message = new Message();
             message.setNeedId("");
-            message.setUserId(user.getId());
+            message.setUserID(user.getId());
             navigator.toProfile(message);
             Bundle toProfileBundle = new Bundle();
             toProfileBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
@@ -121,7 +121,7 @@ public class HomePresenter {
 
         @Override
         public void onMyNeedClicked() {
-            navigator.toMyNeeds();
+            navigator.toMyNeeds(false);
             Bundle toProfileBundle = new Bundle();
             toProfileBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
             toProfileBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_MY_NEED);
@@ -139,7 +139,7 @@ public class HomePresenter {
                 case AppConstant.CLICK_ACTION_PROFILE:
                     Message message = new Message();
                     message.setNeedId("");
-                    message.setUserId(user.getId());
+                    message.setUserID(user.getId());
                     navigator.toProfile(message);
                     break;
             }

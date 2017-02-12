@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.UtilBundles;
@@ -70,12 +71,12 @@ public class MyNeedsActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-//            androidNavigator.toParent();
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            androidNavigator.toParent();
+            return true;
+        }
+        return false;
+    }
 }

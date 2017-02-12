@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="200"
+    android:exitFadeDuration="200">
+
+    <item android:drawable="@drawable/drawble_rect_semi_white_rnd" android:state_enabled="false" />
+    <item android:drawable="@drawable/drawable_rect_semi_white" android:state_pressed="true" />
+    <item android:drawable="@drawable/drawable_rect_primary" />
+
+</selector>

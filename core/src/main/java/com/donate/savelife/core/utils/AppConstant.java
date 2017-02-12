@@ -61,9 +61,9 @@ public class AppConstant {
     public static final String TOPIC = "/topics/";
 
 //    FCM CLICK ACTIONS
-    public static final String CLICK_ACTION_HOME = ".home.HomeActivity";
-    public static final String CLICK_ACTION_CHAT = ".chats.ChatActivity";
-    public static final String CLICK_ACTION_PROFILE = ".user.ProfileActivity";
+    public static final String CLICK_ACTION_HOME = "android.intent.action.HOME";
+    public static final String CLICK_ACTION_CHAT = "android.intent.action.CHAT";
+    public static final String CLICK_ACTION_PROFILE = "android.intent.action.PROFILE";
 
 
     public static final String FCM_REMOTE_MSG_EXTRA = "fcm_remote_msg";

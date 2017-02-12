@@ -112,6 +112,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         if (!TextUtils.isEmpty(url)){
             Glide.with(getContext())
                     .load(url)
+                    .placeholder(R.drawable.blood_banner)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .bitmapTransform(new BlurTransformation(getContext(), 1, 1))

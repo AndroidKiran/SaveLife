@@ -12,10 +12,15 @@ import com.donate.savelife.R;
 import com.donate.savelife.chats.view.ChatView;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
+import com.donate.savelife.core.chats.model.Map;
 import com.donate.savelife.core.chats.presenter.ChatPresenter;
+import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import static com.donate.savelife.core.utils.AppConstant.NEED_EXTRA;
 
@@ -44,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         analytics = Dependencies.INSTANCE.getAnalytics();
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             analytics.trackScreen(this, AppConstant.CHAT_SCREEN, null);
         }
 
@@ -65,12 +70,9 @@ public class ChatActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getPreference(),
                 Dependencies.INSTANCE.getNotificationRegistrationService()
         );
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
         presenter.startPresenting();
+
     }
 
     @Override
@@ -79,4 +81,19 @@ public class ChatActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Navigator.PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                if (place != null) {
+                    LatLng latLng = place.getLatLng();
+                    presenter.OnActivityResult(new Map(String.valueOf(latLng.latitude), String.valueOf(latLng.longitude)));
+                }
+            }
+
+        }
+    }
 }

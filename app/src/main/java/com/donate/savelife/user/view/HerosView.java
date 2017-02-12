@@ -99,7 +99,7 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
     @Override
     public void displayEmpty() {
         emptyViewTxt.setText(getContext().getString(R.string.str_heros_empty_state));
-        emptyViewIcon.setImageResource(R.drawable.ic_stars_24dp);
+        emptyViewIcon.setVisibility(GONE);
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 

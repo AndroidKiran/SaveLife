@@ -36,7 +36,7 @@
             android:layout_height="@dimen/dimen_36"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
-            android:src="@color/black_2"
+            android:src="@color/material_white"
             app:border_color="@color/material_red"
             app:border_width="@dimen/dimen_2" />
 

@@ -22,7 +22,6 @@ public class FirebaseUserDatabase implements UserDatabase {
 
     public FirebaseUserDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         usersDB = firebaseDatabase.getReference("users");
-        usersDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 

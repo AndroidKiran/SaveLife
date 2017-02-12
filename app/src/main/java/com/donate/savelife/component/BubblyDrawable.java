@@ -27,7 +27,7 @@ public class BubblyDrawable extends Drawable{
         this.bubbleCurveHeight = resources.getDimensionPixelSize(R.dimen.dimen_48);
         this.rect = new RectF();
         this.paint = new Paint();
-        paint.setColor(resources.getColor(R.color.white_neutral));
+        paint.setColor(resources.getColor(R.color.material_white));
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
     }

@@ -71,7 +71,7 @@ public class ProfilePresenter {
         profileDisplayer.toggleMenu(TextUtils.isEmpty(message.getNeedId()));
 
         subscriptions.add(
-                userService.observeUser(message.getUserId())
+                userService.observeUser(message.getUserID())
                 .subscribe(new Action1<DatabaseResult<User>>() {
                     @Override
                     public void call(DatabaseResult<User> userDatabaseResult) {
@@ -151,7 +151,7 @@ public class ProfilePresenter {
 
             Bundle onHonorBunlde = new Bundle();
             onHonorBunlde.putString(Analytics.PARAM_OWNER_ID, owner.getId());
-            onHonorBunlde.putString(Analytics.PARAM_HERO_ID, message.getUserId());
+            onHonorBunlde.putString(Analytics.PARAM_HERO_ID, message.getUserID());
             onHonorBunlde.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_HONOR_HERO);
             analytics.trackEventOnClick(onHonorBunlde);
         }
@@ -163,7 +163,7 @@ public class ProfilePresenter {
     };
 
     private boolean isAppOwner(){
-        return owner.getId().equals(message.getUserId());
+        return owner.getId().equals(message.getUserID());
     }
 
     private void pushToNotificationQueue(String regId) {

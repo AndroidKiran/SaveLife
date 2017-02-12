@@ -51,8 +51,8 @@ public class PersistedNotificationRegistrationService implements NotificationReg
     }
 
     @Override
-    public Observable<DatabaseResult<ArrayList<String>>> observeRegistrationsForNeed(Need need) {
-        return observeRegistrations().zipWith(observeUserIdsFor(need), getRegistrationIds(need))
+    public Observable<DatabaseResult<ArrayList<String>>> observeRegistrationsForNeed(Need need, String userId) {
+        return observeRegistrations().zipWith(observeUserIdsFor(need), getRegistrationIds(userId))
                 .map(new Func1<ArrayList<String>, DatabaseResult<ArrayList<String>>>() {
                     @Override
                     public DatabaseResult<ArrayList<String>> call(ArrayList<String> strings) {
@@ -124,7 +124,7 @@ public class PersistedNotificationRegistrationService implements NotificationReg
         };
     }
 
-    private Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, ArrayList<String>> getRegistrationIds(final Need need) {
+    private Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, ArrayList<String>> getRegistrationIds(final String userId) {
         return new Func2<DatabaseResult<Registrations>, DatabaseResult<Users>, ArrayList<String>>() {
             @Override
             public ArrayList<String> call(DatabaseResult<Registrations> registrationsDatabaseResult, DatabaseResult<Users> usersDatabaseResult) {
@@ -135,7 +135,7 @@ public class PersistedNotificationRegistrationService implements NotificationReg
                     ListIterator<User> userListIterator = usersDatabaseResult.getData().getUsers().listIterator();
                     while (userListIterator.hasNext()) {
                         User user = userListIterator.next();
-                        if (user.getId().equals(fcmRegistration.getUserId())) {
+                        if (user.getId().equals(fcmRegistration.getUserId()) && !userId.equals(fcmRegistration.getUserId())) {
                             regIdList.add(fcmRegistration.getRegId());
                         }
                     }

@@ -33,14 +33,14 @@ public class PersistedHeroService implements HeroService {
 
     @Override
     public Observable<DatabaseResult<Boolean>> observeHero(Message  message) {
-        return heroDatabase.observeHeroFrom(message.getNeedId(), message.getUserId())
+        return heroDatabase.observeHeroFrom(message.getNeedId(), message.getUserID())
                 .map(asDatabaseResultExists())
                 .onErrorReturn(DatabaseResult.<Boolean>errorAsDatabaseResult());
     }
 
     @Override
     public Observable<DatabaseResult<User>> honorHero(Message message) {
-        return heroDatabase.saveHero(message.getNeedId(), message.getUserId())
+        return heroDatabase.saveHero(message.getNeedId(), message.getUserID())
                 .map(asHeroDatabaseResult())
                 .filter(isHeroAddedSuccessfully())
                 .flatMap(getUser())

@@ -10,7 +10,7 @@
   <style name="Chat.NewMessage" />
 
   <style name="Chat.NewMessage.Layout">
-    <item name="android:background">@color/white_neutral</item>
+    <item name="android:background">@color/material_white</item>
     <item name="android:elevation">@dimen/dimen_4</item>
     <item name="android:gravity">center_vertical</item>
   </style>
@@ -36,13 +36,27 @@
     <item name="android:paddingRight">@dimen/dimen_10</item>
     <item name="android:paddingBottom">@dimen/dimen_8</item>
     <item name="android:paddingTop">@dimen/dimen_8</item>
-    <item name="android:textColor">@color/black_1</item>
+    <item name="android:textColor">@color/grey_charcoal</item>
     <item name="android:textSize">@dimen/font_14</item>
+  </style>
+
+  <style name="Chat.Message.Map">
+    <item name="android:paddingLeft">@dimen/dimen_26</item>
+    <item name="android:paddingRight">@dimen/dimen_10</item>
+    <item name="android:paddingBottom">@dimen/dimen_8</item>
+    <item name="android:paddingTop">@dimen/dimen_8</item>
+    <item name="android:scaleType">fitCenter</item>
   </style>
 
   <style name="Chat.Message.Body.Self">
     <item name="android:paddingLeft">@dimen/dimen_10</item>
     <item name="android:paddingRight">@dimen/dimen_26</item>
+  </style>
+
+  <style name="Chat.Message.Map.Self">
+    <item name="android:paddingLeft">@dimen/dimen_10</item>
+    <item name="android:paddingRight">@dimen/dimen_26</item>
+    <item name="android:scaleType">fitCenter</item>
   </style>
 
   <style name="Chat.Message.Photo">

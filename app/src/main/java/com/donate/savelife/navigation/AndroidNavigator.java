@@ -19,6 +19,9 @@ import com.donate.savelife.requirements.NeedActivity;
 import com.donate.savelife.user.CompleteProfileActivity;
 import com.donate.savelife.user.ProfileActivity;
 import com.donate.savelife.welcome.WelcomeActivity;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 
 public class AndroidNavigator implements Navigator {
@@ -35,7 +38,7 @@ public class AndroidNavigator implements Navigator {
     @Override
     public void toHome() {
         activity.startActivity(HomeActivity.createIntentFor(activity));
-        activity.finish();
+        activity.onBackPressed();
     }
 
 
@@ -69,7 +72,7 @@ public class AndroidNavigator implements Navigator {
     @Override
     public void toMain() {
         activity.startActivity(LauncherActivity.createIntentFor(activity));
-        activity.finish();
+        activity.onBackPressed();
     }
 
     @Override
@@ -118,15 +121,28 @@ public class AndroidNavigator implements Navigator {
     }
 
     @Override
-    public void toMyNeeds() {
+    public void toMyNeeds(boolean finishActivity) {
         activity.startActivity(MyNeedsActivity.createIntentFor(activity));
+        if (finishActivity){
+            activity.onBackPressed();
+        }
     }
 
     @Override
     public void toWelcome() {
         Intent intent = new Intent(activity, WelcomeActivity.class);
         activity.startActivity(intent);
-        activity.finish();
+        activity.onBackPressed();
+    }
+
+    @Override
+    public void toMapPicker() {
+        try {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            activity.startActivityForResult(builder.build(activity), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

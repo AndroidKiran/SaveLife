@@ -20,10 +20,10 @@ public class FirebaseAppStatusDatabase implements AppStatusDatabase {
     private final DatabaseReference appStatusDB;
 
     public FirebaseAppStatusDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners){
-        this.appStatusDB = firebaseDatabase.getReference("app_status");
-        appStatusDB.keepSynced(true);
+        this.appStatusDB = firebaseDatabase.getReference("version");
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
+
     @Override
     public Observable<AppStatus> observerLatestStatus() {
         return firebaseObservableListeners.listenToValueEvents(appStatusDB.orderByKey().limitToLast(1), asAppStatus());
@@ -34,9 +34,12 @@ public class FirebaseAppStatusDatabase implements AppStatusDatabase {
             @Override
             public AppStatus call(DataSnapshot dataSnapshot) {
                 AppStatus appStatus = null;
-                if (dataSnapshot.exists()){
-                    appStatus = dataSnapshot.getValue(AppStatus.class);
-                    appStatus.setId(dataSnapshot.getKey());
+                if (dataSnapshot.hasChildren()){
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    for(DataSnapshot child : children){
+                        appStatus = child.getValue(AppStatus.class);
+                        appStatus.setId(child.getKey());
+                    }
                 }
                 return appStatus;
             }

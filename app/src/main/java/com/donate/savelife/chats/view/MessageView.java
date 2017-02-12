@@ -86,17 +86,17 @@ public class MessageView extends LinearLayout {
 
         int messageColor;
         MessageBubbleDrawable.Gravity gravity;
-        if (message.getUserId().equals(user.getId())) {
+        if (message.getUserID().equals(user.getId())) {
             gravity = MessageBubbleDrawable.Gravity.END;
-            if (!message.getUserId().equals(need.getUserID())){
-                messageColor = R.color.material_green;
+            if (!message.getUserID().equals(need.getUserID())){
+                messageColor = R.color.primary;
             } else {
                 messageColor = R.color.material_red;
             }
         } else {
             gravity = MessageBubbleDrawable.Gravity.START;
-            if (!message.getUserId().equals(need.getUserID())){
-                messageColor = R.color.material_dark_green;
+            if (!message.getUserID().equals(need.getUserID())){
+                messageColor = R.color.primary_dark;
             } else {
                 messageColor = R.color.material_red;
             }
@@ -105,13 +105,15 @@ public class MessageView extends LinearLayout {
         bubbleDrawable = new MessageBubbleDrawable(getContext(), messageColor, gravity);
         picture.setBorderColorResource(messageColor);
         setTextBackground(bubbleDrawable);
-
-
     }
 
     private String formattedTimeFrom(long timestamp) {
         date.setTime(timestamp);
         return timeFormat.format(date);
+    }
+
+    public View getUserAvatar() {
+        return picture;
     }
 
 }

@@ -47,7 +47,8 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 
         } else {
 
-            translateX(icon1, pageWidthTimesPosition);
+            translateX(icon1, -pageWidthTimesPosition);
+            alphaAnim(icon1, absPosition);
 
             translateY(title1, -pageWidthTimesPosition);
             alphaAnim(title1, absPosition);
@@ -55,7 +56,8 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
             translateY(description1, pageWidthTimesPosition);
             alphaAnim(description1, absPosition);
 
-            translateX(icon2, pageWidthTimesPosition);
+            translateX(icon2, -pageWidthTimesPosition);
+            alphaAnim(icon2, absPosition);
 
             translateY(title2, -pageWidthTimesPosition);
             alphaAnim(title2, absPosition);
@@ -63,7 +65,8 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
             translateY(description2, pageWidthTimesPosition);
             alphaAnim(description2, absPosition);
 
-            translateX(icon3, pageWidthTimesPosition);
+            translateX(icon3, -pageWidthTimesPosition);
+            alphaAnim(icon3, absPosition);
 
             translateY(title3, -pageWidthTimesPosition);
             alphaAnim(title3, absPosition);
@@ -104,7 +107,7 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 
     private void translateX(View view, float pageWidthTimesPosition) {
         if (view != null)
-            view.setTranslationX(pageWidthTimesPosition / 2f);
+            view.setTranslationX(pageWidthTimesPosition / 4f);
     }
 
 }

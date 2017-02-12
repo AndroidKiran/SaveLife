@@ -35,7 +35,7 @@ import com.donate.savelife.core.user.data.model.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatView extends LinearLayout implements ChatDisplayer{
+public class ChatView extends LinearLayout implements ChatDisplayer {
     private Message lastItemMessage;
 
     private final ChatAdapter chatAdapter;
@@ -56,6 +56,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     private MultiStateView multiView;
     private TextView emptyViewTxt;
     private AppCompatImageView emptyViewIcon;
+    private AppCompatImageView mapAttachBtn;
 
     public ChatView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -89,6 +90,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         multiView = Views.findById(this, R.id.multi_view);
         emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
         emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
+        mapAttachBtn = Views.findById(this, R.id.map_attach_button);
+        mapAttachBtn.setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
 
     }
 
@@ -186,10 +189,11 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     public void attach(final ChatActionListener actionListener) {
         this.actionListener = actionListener;
         messageView.addTextChangedListener(textWatcher);
-        submitButton.setOnClickListener(submitClickListener);
+        submitButton.setOnClickListener(onClickListener);
         toolbar.setNavigationOnClickListener(navigationClickListener);
         toolbarContent.setOnClickListener(onClickListener);
         chatAdapter.attach(actionListener);
+        mapAttachBtn.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -200,6 +204,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         toolbarContent.setOnClickListener(null);
         this.actionListener = actionListener;
         chatAdapter.attach(actionListener);
+        mapAttachBtn.setOnClickListener(null);
+
     }
 
     @Override
@@ -226,7 +232,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     @Override
     public void enableInteraction() {
         submitButton.setEnabled(true);
-        submitButton.setColorFilter(getResources().getColor(R.color.material_green), PorterDuff.Mode.SRC_ATOP);
+        submitButton.setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
     }
 
     @Override
@@ -250,13 +256,6 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         }
     };
 
-    private final OnClickListener submitClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            actionListener.onSubmitMessage(messageView.getText().toString().trim());
-            messageView.setText("");
-        }
-    };
     private final OnClickListener navigationClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -265,11 +264,10 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     };
 
 
-
     private class ChatItemDecoration extends RecyclerView.ItemDecoration {
 
         private final int horizontalMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_2);
-        private final int verticalMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_4);
+        private final int verticalMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_10);
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -288,6 +286,15 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
                 case R.id.toolbar_content:
                     actionListener.onToolbarClick();
                     break;
+
+                case R.id.submit_button:
+                    actionListener.onSubmitMessage(messageView.getText().toString().trim());
+                    messageView.setText("");
+                    break;
+
+                case R.id.map_attach_button:
+                    actionListener.onMapAttachClicked();
+                    break;
             }
         }
     };
@@ -296,7 +303,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
     Paginate.Callbacks callbacks = new Paginate.Callbacks() {
         @Override
         public void onLoadMore(int direction) {
-            if (chatAdapter.getItemCount() != 0 && !isloading ) {
+            if (chatAdapter.getItemCount() != 0 && !isloading) {
                 Message messageLast = chatAdapter.getLastItem();
                 if (direction == Paginate.SCROLL_DOWN && chatAdapter.getItemCount() >= ChatDatabase.DEFAULT_LIMIT) {
                     actionListener.onLoadMore(messageLast);
@@ -313,11 +320,11 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
 
         @Override
         public boolean hasLoadedAllItems() {
-            if (chatAdapter.getItemCount() < ChatDatabase.DEFAULT_LIMIT){
+            if (chatAdapter.getItemCount() < ChatDatabase.DEFAULT_LIMIT) {
                 return true;
             }
 
-            if(lastItemMessage.getId().equals(chatAdapter.getLastItem().getId())){
+            if (lastItemMessage.getId().equals(chatAdapter.getLastItem().getId())) {
                 return true;
             }
 
@@ -333,7 +340,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer{
         TextView needMsg = (TextView) dialogView.findViewById(R.id.need_msg);
         final TextView addressTxt = (TextView) dialogView.findViewById(R.id.address_msg);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(need.getAddress() + ", " + need.getCity() + "\n");
+        stringBuilder.append(need.getAddress() + ", " + need.getCity() + ",");
         stringBuilder.append(need.getCountryName(getContext()));
         needMsg.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
         addressTxt.setText(stringBuilder.toString());

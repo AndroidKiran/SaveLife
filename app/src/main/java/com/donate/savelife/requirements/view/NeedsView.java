@@ -15,7 +15,6 @@ import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
-import com.donate.savelife.component.paginate.Paginate;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Needs;
@@ -28,11 +27,8 @@ import com.donate.savelife.core.user.data.model.User;
 public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     private final NeedsAdapter needsAdapter;
-//    private Need lastNeedItem;
     private RecyclerView recyclerView;
     private NeedInteractionListener needInteractionListener;
-    private Paginate paginate;
-    private boolean isloading;
     private MultiStateView multiView;
     private TextView emptyViewTxt;
     private AppCompatImageView emptyViewIcon;
@@ -48,7 +44,6 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
         View.inflate(getContext(), R.layout.merge_needs_view, this);
         initControls();
         setRecyclerView();
-//        setPagination(callbacks);
     }
 
     void initControls(){
@@ -68,16 +63,6 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
         recyclerView.setAdapter(needsAdapter);
     }
 
-    private void setPagination(Paginate.Callbacks callbacks) {
-        if (paginate != null) {
-            paginate.unbind();
-        }
-        paginate = Paginate.with(recyclerView, callbacks)
-                .setLoadingTriggerThreshold(3)
-                .addLoadingListItem(true)
-                .build();
-    }
-
     @Override
     public void attach(NeedInteractionListener needInteractionListener) {
         this.needInteractionListener = needInteractionListener;
@@ -90,51 +75,10 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
         needsAdapter.detach(needInteractionListener);
     }
 
-//    Paginate.Callbacks callbacks = new Paginate.Callbacks() {
-//        @Override
-//        public void onLoadMore(int direction) {
-//            if (needsAdapter.getItemCount() != 0 && !isloading ) {
-//                Need lastNeed = needsAdapter.getLastItem();
-//                if (direction == Paginate.SCROLL_UP && needsAdapter.getItemCount() >= ChatDatabase.DEFAULT_LIMIT) {
-//                    needInteractionListener.onLoadMore(lastNeed);
-//                    isloading = true;
-//                }
-//                lastNeedItem = lastNeed;
-//            }
-//        }
-//
-//        @Override
-//        public boolean isLoading() {
-//            return isloading;
-//        }
-//
-//        @Override
-//        public boolean hasLoadedAllItems() {
-//            if (needsAdapter.getItemCount() < ChatDatabase.DEFAULT_LIMIT){
-//                return true;
-//            }
-//
-//            if(lastNeedItem.getId().equals(needsAdapter.getLastItem().getId())){
-//                return true;
-//            }
-//
-//            return false;
-//        }
-//    };
-
     @Override
     public void display(Needs needs, User owner) {
-//        lastNeedItem = new Need();
-//        lastNeedItem.setId("");
         needsAdapter.setData(needs, owner);
-        isloading = false;
     }
-
-//    @Override
-//    public void displayMore(Needs needs, User owner) {
-//        needsAdapter.setMoreData(needs, owner);
-//        isloading = false;
-//    }
 
     @Override
     public void displayLoading() {
@@ -153,7 +97,7 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
 
     @Override
     public void displayEmpty() {
-        emptyViewIcon.setImageResource(R.drawable.ic_add_circle_24dp);
+        emptyViewIcon.setVisibility(GONE);
         emptyViewTxt.setText(getContext().getString(R.string.str_needs_empty_state));
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
@@ -162,14 +106,4 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     public Needs getNeeds() {
         return needsAdapter.getNeeds();
     }
-
-//    @Override
-//    public Need getlastNeedItem() {
-//        return lastNeedItem;
-//    }
-//
-//    @Override
-//    public void setLastNeedItem(Need lastNeedItem) {
-//        this.lastNeedItem = lastNeedItem;
-//    }
 }

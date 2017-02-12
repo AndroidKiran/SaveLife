@@ -93,7 +93,7 @@ public class PreferencePresenter {
 
         @Override
         public void onRateClicked() {
-            navigator.toRateUs();
+            navigator.toMarketPlace();
 
             Bundle rateBundle = new Bundle();
             rateBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());

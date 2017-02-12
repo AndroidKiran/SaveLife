@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/dimen_48"
-                android:background="?colorPrimary"
+                android:background="?attr/colorPrimary"
                 android:text="@string/str_terms_conditions"
                 android:gravity="center_vertical"
                 android:textColor="@color/material_white"

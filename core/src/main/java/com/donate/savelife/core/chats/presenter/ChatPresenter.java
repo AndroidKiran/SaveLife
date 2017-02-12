@@ -1,13 +1,16 @@
+
 package com.donate.savelife.core.chats.presenter;
 
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.chats.displayer.ChatDisplayer;
 import com.donate.savelife.core.chats.model.Chat;
+import com.donate.savelife.core.chats.model.Map;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.chats.service.ChatService;
 import com.donate.savelife.core.database.DatabaseResult;
@@ -19,6 +22,7 @@ import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.AppConstant;
+import com.donate.savelife.core.utils.CoreUtils;
 import com.donate.savelife.core.utils.GsonService;
 import com.donate.savelife.core.utils.SharedPreferenceService;
 
@@ -174,28 +178,9 @@ public class ChatPresenter {
 
         @Override
         public void onSubmitMessage(final String message) {
-            subscriptions.add(
-                    chatService.sendMessage(need, new Message(appOwner.getId(), message))
-                            .subscribe(new Action1<DatabaseResult<Message>>() {
-                                @Override
-                                public void call(DatabaseResult<Message> messageDatabaseResult) {
-                                    if (messageDatabaseResult.isSuccess()) {
-                                        chatDisplayer.scrollChat();
-                                        updateTheResponseCount(responseCount + 1);
-                                        pushToNotificationQueue(messageDatabaseResult.getData(), need);
-                                    } else {
-                                        errorLogger.reportError(messageDatabaseResult.getFailure(), "Send msg failed");
-                                    }
-                                }
-                            })
-
-            );
-
-            Bundle messageSentBundle = new Bundle();
-            messageSentBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
-            messageSentBundle.putInt(Analytics.PARAM_MESSAGE_LENGTH, message.length());
-            messageSentBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_WRITE_MESSAGE);
-            analytics.trackEventOnClick(messageSentBundle);
+            Message message1 = new Message(appOwner.getId(), message);
+            pushMessageToDb(message1);
+            pushAnalyticsForOnMessageSendClicked(message);
         }
 
         @Override
@@ -221,35 +206,20 @@ public class ChatPresenter {
         public void onToolbarClick() {
             if (postOwner != null && need != null)
                 chatDisplayer.showNeedDialog(need, postOwner);
-
-            Bundle toolbarBarBundle = new Bundle();
-            toolbarBarBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
-            toolbarBarBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_BRIEF_NEED);
-
-            analytics.trackEventOnClick(toolbarBarBundle);
+            pushAnalyticsForOnToolbarClicked();
         }
 
         @Override
         public void onCallClick(String mobileNum) {
             navigator.toDialNumber(mobileNum);
-
-            Bundle callBundle = new Bundle();
-            callBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
-            callBundle.putString(Analytics.PARAM_MOBILE_NUM, mobileNum);
-            callBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_CALL_SEEKER);
-            analytics.trackEventOnClick(callBundle);
+            pushAnalyticsForOnCallClicked(mobileNum);
         }
 
         @Override
         public void onAddressClick(String address) {
             Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
             navigator.toMap(gmmIntentUri);
-
-            Bundle addressBundle = new Bundle();
-            addressBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
-            addressBundle.putString(Analytics.PARAM_ADDRESS, address);
-            addressBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_SEEKER_LOCATION);
-            analytics.trackEventOnClick(addressBundle);
+            pushAnalyticsForOnLocationClicked(address);
         }
 
         @Override
@@ -269,16 +239,27 @@ public class ChatPresenter {
 
         @Override
         public void onChatClicked(Message message) {
+            Map map = message.getMap();
+            if (map != null){
+                Uri gmmIntentUri = Uri.parse("geo:"+map.getLatitude()+","+map.getLongitude()+"?q=");
+                navigator.toMap(gmmIntentUri);
+//                pushAnalyticsForOnLocationClicked(address);
+            }
+
+        }
+
+        @Override
+        public void onProfileClicked(Message message) {
             if (isMyPost()) {
                 message.setNeedId(need.getId());
                 navigator.toProfile(message);
-
-                Bundle listItemBundle = new Bundle();
-                listItemBundle.putString(Analytics.PARAM_MESSAGE_ID, message.getId());
-                listItemBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_VIEW_PROFILE_FROM_CHAT);
-                analytics.trackEventOnClick(listItemBundle);
-
+                pushAnalyticsForOnChatItemClicked(message);
             }
+        }
+
+        @Override
+        public void onMapAttachClicked() {
+            navigator.toMapPicker();
         }
     };
 
@@ -309,7 +290,12 @@ public class ChatPresenter {
         fcmRemoteMsg.setContent_available(true);
 
         FCMRemoteMsg.Notification notification = new FCMRemoteMsg.Notification();
-        notification.setBody(appOwner.getName() + " says " + message.getBody());
+        String body = message.getBody();
+        if (!TextUtils.isEmpty(body)){
+            notification.setBody(appOwner.getName() + " says " + body);
+        } else {
+            notification.setBody(appOwner.getName() + " sent location");
+        }
 
         fcmRemoteMsg.setNotification(notification);
 
@@ -320,9 +306,10 @@ public class ChatPresenter {
 
         notificationQueueBundle.putParcelable(AppConstant.NOFICATION_QUEUE_EXTRA, fcmRemoteMsg);
         notificationQueueBundle.putParcelable(AppConstant.NEED_EXTRA, need);
+
         subscriptions.add(
 
-                notificationRegistrationService.observeRegistrationsForNeed(need)
+                notificationRegistrationService.observeRegistrationsForNeed(need, appOwner.getId())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Action1<DatabaseResult<ArrayList<String>>>() {
                                        @Override
@@ -343,5 +330,68 @@ public class ChatPresenter {
         );
 
 
+    }
+
+
+    private void pushAnalyticsForOnMessageSendClicked(String message) {
+        Bundle messageSentBundle = new Bundle();
+        messageSentBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+        messageSentBundle.putInt(Analytics.PARAM_MESSAGE_LENGTH, message.length());
+        messageSentBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_WRITE_MESSAGE);
+        analytics.trackEventOnClick(messageSentBundle);
+    }
+
+    private void pushAnalyticsForOnToolbarClicked() {
+        Bundle toolbarBarBundle = new Bundle();
+        toolbarBarBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+        toolbarBarBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_BRIEF_NEED);
+        analytics.trackEventOnClick(toolbarBarBundle);
+    }
+
+    private void pushAnalyticsForOnCallClicked(String mobileNum){
+        Bundle callBundle = new Bundle();
+        callBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+        callBundle.putString(Analytics.PARAM_MOBILE_NUM, mobileNum);
+        callBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_CALL_SEEKER);
+        analytics.trackEventOnClick(callBundle);
+    }
+
+    private void pushAnalyticsForOnLocationClicked(String address){
+        Bundle addressBundle = new Bundle();
+        addressBundle.putString(Analytics.PARAM_OWNER_ID, appOwner.getId());
+        addressBundle.putString(Analytics.PARAM_ADDRESS, address);
+        addressBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_SEEKER_LOCATION);
+        analytics.trackEventOnClick(addressBundle);
+    }
+
+    private void pushAnalyticsForOnChatItemClicked(Message message){
+        Bundle listItemBundle = new Bundle();
+        listItemBundle.putString(Analytics.PARAM_MESSAGE_ID, message.getId());
+        listItemBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_VIEW_PROFILE_FROM_CHAT);
+        analytics.trackEventOnClick(listItemBundle);
+    }
+
+    private void pushMessageToDb(Message message) {
+        subscriptions.add(
+                chatService.sendMessage(need, message)
+                        .subscribe(new Action1<DatabaseResult<Message>>() {
+                            @Override
+                            public void call(DatabaseResult<Message> messageDatabaseResult) {
+                                if (messageDatabaseResult.isSuccess()) {
+                                    chatDisplayer.scrollChat();
+                                    updateTheResponseCount(responseCount + 1);
+                                    pushToNotificationQueue(messageDatabaseResult.getData(), need);
+                                } else {
+                                    errorLogger.reportError(messageDatabaseResult.getFailure(), "Send msg failed");
+                                }
+                            }
+                        })
+        );
+
+    }
+
+    public void OnActivityResult(Map map) {
+        Message message = new Message(appOwner.getId(), map, CoreUtils.ContentType.MAP);
+        pushMessageToDb(message);
     }
 }

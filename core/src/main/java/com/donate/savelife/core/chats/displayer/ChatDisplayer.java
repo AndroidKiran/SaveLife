@@ -71,6 +71,10 @@ public interface ChatDisplayer {
 
         void onChatClicked(Message message);
 
+        void onProfileClicked(Message message);
+
+        void onMapAttachClicked();
+
     }
 
 }

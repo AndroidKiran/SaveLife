@@ -54,7 +54,7 @@ public class LauncherView extends FrameLayout implements LauncherDisplayer {
         progressBar.setVisibility(GONE);
         statusBtn.setVisibility(VISIBLE);
         statusMsg.setVisibility(VISIBLE);
-        if (appStatus.isDeprecated()) {
+        if (appStatus.isVersionDeprecated()) {
             statusMsg.setText(context.getString(R.string.str_app_deprecated_msg));
             statusBtn.setText(context.getString(R.string.str_btn_update_txt));
         }

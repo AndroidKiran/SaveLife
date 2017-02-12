@@ -26,7 +26,6 @@ public class FirebaseCountryDatabase implements CountryDatabase {
 
     public FirebaseCountryDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         countryDB = firebaseDatabase.getReference("countries");
-        countryDB.keepSynced(true);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 

@@ -12,6 +12,8 @@ public interface Navigator {
     public static final int SEEK_NEED = 011;
     public static final int SEEK_NEED_SUCCESS = 111;
     public static final int SEEK_NEED_FAILED = 112;
+    public static final int PLACE_PICKER_REQUEST = 3;
+
 
     void toHome();
 
@@ -37,9 +39,11 @@ public interface Navigator {
 
     void toMarketPlace();
 
-    void toMyNeeds();
+    void toMyNeeds(boolean finish);
 
     void toWelcome();
+
+    void toMapPicker();
 
     void startAppCentralService(Bundle bundle, String action);
 

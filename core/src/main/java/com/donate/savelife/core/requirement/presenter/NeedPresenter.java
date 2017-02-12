@@ -88,7 +88,7 @@ public class NeedPresenter {
                             needDisplayer.dismissProgress();
                             if (needDatabaseResult.isSuccess()){
                                 pushToNotifiationQueue(need);
-                                navigator.toMyNeeds();
+                                navigator.toMyNeeds(true);
                             }
                         }
                     })

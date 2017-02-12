@@ -20,7 +20,7 @@ public interface NotificationRegistrationService {
 
     Observable<DatabaseResult<String>> writeRegistration(String uid, String registrationId);
 
-    Observable<DatabaseResult<ArrayList<String>>> observeRegistrationsForNeed(Need need);
+    Observable<DatabaseResult<ArrayList<String>>> observeRegistrationsForNeed(Need need, String userId);
 
     Observable<DatabaseResult<Users>> observeUserIdsFor(Need need);
 

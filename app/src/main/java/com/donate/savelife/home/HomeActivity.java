@@ -101,16 +101,22 @@ public class HomeActivity extends NavigationActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        homePresenter.startPresenting();
-        if (localBroadcastManager != null && reciever != null && intentFilter != null)
-            localBroadcastManager.registerReceiver(reciever, intentFilter);
+        if (homePresenter != null){
+            homePresenter.startPresenting();
+            if (localBroadcastManager != null && reciever != null && intentFilter != null)
+                localBroadcastManager.registerReceiver(reciever, intentFilter);
+        }
+
     }
 
     @Override
     protected void onPause() {
-        homePresenter.stopPresenting();
-        if (localBroadcastManager != null && reciever != null)
-            localBroadcastManager.unregisterReceiver(reciever);
+        if (homePresenter != null){
+            homePresenter.stopPresenting();
+            if (localBroadcastManager != null && reciever != null)
+                localBroadcastManager.unregisterReceiver(reciever);
+        }
+
         super.onStop();
     }
 

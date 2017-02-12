@@ -24,16 +24,18 @@ public class LauncherPresenter {
     private final GsonService gsonService;
     private final AppStatusService appStatusService;
     private final LauncherDisplayer launcherDisplayer;
+    private final float appVersion;
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     public LauncherPresenter(Navigator navigator, SharedPreferenceService preferenceService,
                              GsonService gsonService, AppStatusService appStatusService,
-                             LauncherDisplayer launcherDisplayer) {
+                             LauncherDisplayer launcherDisplayer, float appVersion) {
         this.navigator = navigator;
         this.sharedPreferenceService = preferenceService;
         this.gsonService = gsonService;
         this.appStatusService = appStatusService;
         this.launcherDisplayer = launcherDisplayer;
+        this.appVersion = appVersion;
     }
 
     public void startPresenting() {
@@ -46,14 +48,32 @@ public class LauncherPresenter {
         launcherDisplayer.detach(null);
     }
 
-    public void doInit(){
-        AppStatus appStatus = observeAppStatus();
-        if (!appStatus.isDeprecated() || !appStatus.isError()){
-            manageFirstFlow();
-        } else {
-            launcherDisplayer.display(appStatus);
-        }
+    private void doInit(){
+        compositeSubscription.add(
+                appStatusService.observeLatestStatus()
+                        .subscribe(new Action1<DatabaseResult<AppStatus>>() {
+                            @Override
+                            public void call(DatabaseResult<AppStatus> appStatusDatabaseResult) {
+                                if (appStatusDatabaseResult.isSuccess()){
+                                    AppStatus appStatus = appStatusDatabaseResult.getData();
+                                    if (appStatus.isVersionDeprecated() && Float.parseFloat(appStatus.getId()) <= appVersion ){
+                                        launcherDisplayer.display(appStatus);
+                                        sharedPreferenceService.setVersionDeprecated(true);
+                                    } else {
+                                            manageFirstFlow();
+                                    }
+                                } else {
+                                    AppStatus appStatus = new AppStatus();
+                                    appStatus.setVersionDeprecated(false);
+                                    appStatus.setError(true);
+                                    appStatus.setUpdateAvailable(false);
+                                    launcherDisplayer.display(appStatus);
+                                }
+                            }
+                        })
+        );
     }
+
 
     private void manageFirstFlow() {
 
@@ -72,30 +92,6 @@ public class LauncherPresenter {
         } else {
             navigator.toIntro();
         }
-    }
-
-    private AppStatus observeAppStatus() {
-        final AppStatus[] appStatus = {new AppStatus()};
-            compositeSubscription.add(
-                 appStatusService.observeLatestStatus()
-                    .subscribe(new Action1<DatabaseResult<AppStatus>>() {
-                        @Override
-                        public void call(DatabaseResult<AppStatus> appStatusDatabaseResult) {
-                            if (appStatusDatabaseResult.isSuccess()){
-                                appStatus[0] = appStatusDatabaseResult.getData();
-                            } else {
-                                AppStatus appStatus1 = new AppStatus();
-                                appStatus1.setId("0");
-                                appStatus1.setError(true);
-                                appStatus1.setDeprecated(false);
-                                appStatus1.setUpdateAvailable(false);
-                                appStatus[0] = appStatus1;
-                            }
-                        }
-                    })
-            );
-
-        return appStatus[0];
     }
 
     LauncherDisplayer.LauncherInteractionListener launcherInteractionListener =  new LauncherDisplayer.LauncherInteractionListener() {

@@ -33,7 +33,7 @@ public class LoginView extends FrameLayout implements LoginDisplayer, Connectivi
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.material_red));
+        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primary));
         View.inflate(getContext(), R.layout.merge_login_view, this);
         loginButton = Views.findById(this, R.id.sign_in_button);
     }

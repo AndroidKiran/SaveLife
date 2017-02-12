@@ -2,11 +2,11 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme.TextInputLayout">
-        <item name="android:textColor">@color/material_green</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@color/material_green</item>
-        <item name="colorControlHighlight">@color/material_green</item>
+        <item name="android:textColor">@color/grey_charcoal</item>
+        <item name="colorControlNormal">@color/grey_cool</item>
+        <item name="android:textColorHint">@color/grey_cool</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
@@ -14,8 +14,8 @@
 
     <style name="AppTheme.TextInputLayout.White">
         <item name="android:textColor">@color/material_white</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="colorControlNormal">@color/material_white</item>
+        <item name="android:textColorHint">@color/white_semi_transperent</item>
         <item name="colorControlActivated">@color/material_white</item>
         <item name="colorControlHighlight">@color/material_white</item>
         <item name="android:gravity">center_vertical</item>
@@ -26,11 +26,11 @@
 
 
     <style name="AppTheme.EditText" parent="AppTheme">
-        <item name="android:textColor">@color/black_1</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@color/material_green</item>
-        <item name="colorControlHighlight">@color/material_dark_green</item>
+        <item name="android:textColor">@color/grey_charcoal</item>
+        <item name="colorControlNormal">@color/grey_cool</item>
+        <item name="android:textColorHint">@color/grey_cool</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
@@ -51,9 +51,9 @@
 
 
     <style name="AppTheme.TabLayout.StandardTabs">
-        <item name="android:background">@color/material_green</item>
-        <item name="tabIndicatorColor">@color/white_neutral</item>
-        <item name="tabSelectedTextColor">@color/white_neutral</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="tabIndicatorColor">@color/material_white</item>
+        <item name="tabSelectedTextColor">@color/material_white</item>
         <item name="tabTextColor">@color/grey_pale_2</item>
     </style>
 
