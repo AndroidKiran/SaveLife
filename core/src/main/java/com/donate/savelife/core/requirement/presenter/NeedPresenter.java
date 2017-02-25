@@ -1,6 +1,7 @@
 package com.donate.savelife.core.requirement.presenter;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
@@ -26,6 +27,8 @@ import rx.subscriptions.CompositeSubscription;
 public class NeedPresenter {
 
     public static final String TAG = NeedPresenter.class.getSimpleName();
+    private static final int HANDLER_SLEEP_TIME = 1000;
+
     private final NeedDisplayer needDisplayer;
     private final Navigator navigator;
     private final ErrorLogger errorLogger;
@@ -35,6 +38,10 @@ public class NeedPresenter {
     private final GsonService gsonService;
     private final User user;
     private CompositeSubscription subscriptions = new CompositeSubscription();
+    private Runnable mRunnable;
+    private Handler mHandler;
+
+    private boolean success;
 
         public NeedPresenter(
                 NeedDisplayer needDisplayer,
@@ -62,6 +69,16 @@ public class NeedPresenter {
 
     public void pausePresenting(){
         needDisplayer.dismissCountryDialog();
+
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnable);
+            mHandler = null;
+            mRunnable = null;
+        }
+
+        if (success){
+            navigator.toParent();
+        }
     }
 
 
@@ -71,10 +88,10 @@ public class NeedPresenter {
         subscriptions = new CompositeSubscription();
     }
 
-
     public void onFragmentInteractionListener(Country country){
         needDisplayer.displayCountry(country);
     }
+
 
     NeedDisplayer.OnNeedInteractionListener onNeedInteractionListener = new NeedDisplayer.OnNeedInteractionListener() {
         @Override
@@ -83,12 +100,24 @@ public class NeedPresenter {
             subscriptions.add(
                     needService.writeNeed(need)
                     .subscribe(new Action1<DatabaseResult<Need>>() {
+
                         @Override
                         public void call(DatabaseResult<Need> needDatabaseResult) {
                             needDisplayer.dismissProgress();
                             if (needDatabaseResult.isSuccess()){
+                                success = true;
+                                needDisplayer.displaySuccessLayout();
                                 pushToNotifiationQueue(need);
-                                navigator.toMyNeeds(true);
+                                mRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        success = false;
+                                        navigator.toMyNeeds(true);
+                                    }
+                                };
+
+                                mHandler = new Handler();
+                                mHandler.postDelayed(mRunnable, HANDLER_SLEEP_TIME);
                             }
                         }
                     })

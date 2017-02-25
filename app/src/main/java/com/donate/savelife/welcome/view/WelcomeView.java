@@ -58,6 +58,6 @@ public class WelcomeView extends LinearLayout implements WelcomeDisplayer {
     public void display(final User sender) {
         final Context context = getContext();
         Glide.with(context).load(sender.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(userAvatar);
-        welcomeMessage.setText(sender.getName() + "\ninvited you to Bonfire");
+        welcomeMessage.setText(sender.getName() + "\n"+ context.getString(R.string.str_inivitation_for));
     }
 }

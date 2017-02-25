@@ -160,7 +160,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/str_contact_num"
-                                android:inputType="textNoSuggestions"
+                                android:inputType="phone"
+                                android:maxLength="10"
                                 android:textSize="@dimen/font_16"
                                 app:fontTypeface="museosans500" />
                         </android.support.design.widget.TextInputLayout>
@@ -194,7 +195,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/str_city"
-                            android:inputType="textNoSuggestions"
+                            android:inputType="textAutoComplete"
                             android:textSize="@dimen/font_16"
                             app:fontTypeface="museosans500" />
                     </android.support.design.widget.TextInputLayout>

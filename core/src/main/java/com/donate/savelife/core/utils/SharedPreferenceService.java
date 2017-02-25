@@ -24,4 +24,6 @@ public interface SharedPreferenceService {
     boolean isVersionDeprecated();
 
     void setVersionDeprecated(boolean deprecated);
+
+    void clear();
 }

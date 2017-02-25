@@ -25,7 +25,6 @@ public abstract class NavigationActivity extends AppCompatActivity{
     protected GsonService gsonService;
     protected AndroidNavigator navigator;
     protected User user;
-    protected boolean proceed = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

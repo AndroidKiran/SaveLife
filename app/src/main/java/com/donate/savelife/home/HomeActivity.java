@@ -47,34 +47,31 @@ public class HomeActivity extends NavigationActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (proceed){
+        setContentView(R.layout.activity_home);
 
-            setContentView(R.layout.activity_home);
-
-            if (!sharedPreferenceService.isRegistrationComplete()) {
-                initRegistration();
-            }
-
-            HomeDisplayer homeDisplayer = (HomeDisplayer) findViewById(R.id.home);
-            HomeView homeView = ((HomeView) homeDisplayer);
-            homeView.setAppCompatActivity(this);
-            homeView.setViewPagerAdapter(getViewPagerAdapter(savedInstanceState));
-
-            homePresenter = new HomePresenter(homeDisplayer,
-                    sharedPreferenceService,
-                    gsonService,
-                    new AndroidNavigator(this),
-                    Dependencies.INSTANCE.getAnalytics(),
-                    Dependencies.INSTANCE.getErrorLogger(),
-                    Dependencies.INSTANCE.getNeedService()
-            );
-
-            intentFilter = new IntentFilter();
-            intentFilter.addAction(Config.REGISTRATION_COMPLETE);
-            intentFilter.addAction(Config.PUSH_NOTIFICATION);
-            localBroadcastManager = LocalBroadcastManager.getInstance(this);
-            reciever = new AppBroadcastReceiver();
+        if (!sharedPreferenceService.isRegistrationComplete()) {
+            initRegistration();
         }
+
+        HomeDisplayer homeDisplayer = (HomeDisplayer) findViewById(R.id.home);
+        HomeView homeView = ((HomeView) homeDisplayer);
+        homeView.setAppCompatActivity(this);
+        homeView.setViewPagerAdapter(getViewPagerAdapter(savedInstanceState));
+
+        homePresenter = new HomePresenter(homeDisplayer,
+                sharedPreferenceService,
+                gsonService,
+                new AndroidNavigator(this),
+                Dependencies.INSTANCE.getAnalytics(),
+                Dependencies.INSTANCE.getErrorLogger(),
+                Dependencies.INSTANCE.getNeedService()
+        );
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Config.REGISTRATION_COMPLETE);
+        intentFilter.addAction(Config.PUSH_NOTIFICATION);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        reciever = new AppBroadcastReceiver();
 
     }
 
@@ -101,21 +98,16 @@ public class HomeActivity extends NavigationActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (homePresenter != null){
-            homePresenter.startPresenting();
-            if (localBroadcastManager != null && reciever != null && intentFilter != null)
-                localBroadcastManager.registerReceiver(reciever, intentFilter);
-        }
-
+        homePresenter.startPresenting();
+        if (localBroadcastManager != null && reciever != null && intentFilter != null)
+            localBroadcastManager.registerReceiver(reciever, intentFilter);
     }
 
     @Override
-    protected void onPause() {
-        if (homePresenter != null){
-            homePresenter.stopPresenting();
-            if (localBroadcastManager != null && reciever != null)
-                localBroadcastManager.unregisterReceiver(reciever);
-        }
+    protected void onStop() {
+        homePresenter.stopPresenting();
+        if (localBroadcastManager != null && reciever != null)
+            localBroadcastManager.unregisterReceiver(reciever);
 
         super.onStop();
     }

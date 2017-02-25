@@ -73,7 +73,7 @@ public class HomePresenter {
     }
 
     public void stopPresenting(){
-        homeDisplayer.detach(homeInteractionListener);
+        homeDisplayer.detach(null);
         compositeSubscription.clear();
         compositeSubscription = new CompositeSubscription();
     }

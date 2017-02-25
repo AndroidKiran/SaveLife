@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.ParcelableSpan;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -126,7 +127,7 @@ public class FontUtils {
 		}
 	}
 
-	public static class StrikeColorSpan extends CharacterStyle implements ParcelableSpan {
+	public static class StrikeColorSpan extends CharacterStyle implements ParcelableSpan, Parcelable {
 		public static final int STRIKETHROUGH_SPAN = 5;
 		public static final int FOREGROUND_COLOR_SPAN = 2;
 		private final int mColor;
@@ -138,6 +139,18 @@ public class FontUtils {
 		public StrikeColorSpan(Parcel src) {
 			mColor = src.readInt();
 		}
+
+		public static final Creator<StrikeColorSpan> CREATOR = new Creator<StrikeColorSpan>() {
+			@Override
+			public StrikeColorSpan createFromParcel(Parcel in) {
+				return new StrikeColorSpan(in);
+			}
+
+			@Override
+			public StrikeColorSpan[] newArray(int size) {
+				return new StrikeColorSpan[size];
+			}
+		};
 
 		@Override
 		public int getSpanTypeId() {
@@ -162,13 +175,42 @@ public class FontUtils {
 	}
 
 
-	public static class CustomTypefaceSpan extends android.text.style.TypefaceSpan {
-		private final Typeface newType;
+	public static class CustomTypefaceSpan extends android.text.style.TypefaceSpan implements Parcelable{
+		private Typeface newType = null;
 
 		public CustomTypefaceSpan(String family, Typeface type) {
 			super(family);
 			newType = type;
 		}
+
+		public CustomTypefaceSpan() {
+			super("span");
+		}
+
+		protected CustomTypefaceSpan(Parcel in) {
+			super("span");
+		}
+
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+		}
+
+		@Override
+		public int describeContents() {
+			return 0;
+		}
+
+		public static final Creator<CustomTypefaceSpan> CREATOR = new Creator<CustomTypefaceSpan>() {
+			@Override
+			public CustomTypefaceSpan createFromParcel(Parcel in) {
+				return new CustomTypefaceSpan(in);
+			}
+
+			@Override
+			public CustomTypefaceSpan[] newArray(int size) {
+				return new CustomTypefaceSpan[size];
+			}
+		};
 
 		@Override
 		public void updateDrawState(TextPaint ds) {

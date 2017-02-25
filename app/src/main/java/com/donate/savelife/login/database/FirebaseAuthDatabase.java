@@ -62,6 +62,11 @@ public class FirebaseAuthDatabase implements AuthDatabase {
         });
     }
 
+    @Override
+    public void signOut() {
+        firebaseAuth.signOut();
+    }
+
     private Authentication authenticationFrom(FirebaseUser currentUser) {
         Uri photoUrl = currentUser.getPhotoUrl();
         String email = currentUser.getEmail();

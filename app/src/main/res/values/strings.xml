@@ -9,6 +9,7 @@
     <string name="str_boarding_footer_type_one">Footer 1</string>
     <string name="str_boarding_footer_type_two">Footer 2</string>
     <string name="str_boarding_footer_type_three">Footer 3</string>
+    <string name="str_inivitation_for">invited you to be a SAVIOUR</string>
 
 
     <!--Login-->
@@ -37,8 +38,10 @@
 
     <!--Home-->
     <string name="str_requirement_tab">Needs</string>
-    <string name="str_heros_tab">Heros</string>
+    <string name="str_heros_tab">Heroes</string>
     <string name="str_preference_tab">Preference</string>
+    <string name="str_i_am_donor">I Am a Donor</string>
+    <string name="str_my_request">My Requests</string>
 
     <!--Post request-->
     <string name="str_address">Street address</string>
@@ -54,6 +57,7 @@
     <string name="str_save_life">Save a life</string>
     <string name="str_send_invite">Send invite</string>
     <string name="str_check_out_app">Check out Save a Life!\n%s</string>
+    <string name="str_need_success_msg">Request successfully posted</string>
 
     <!--App invite-->
     <string name="dynamicLinkDomain">https://u8qcq.app.goo.gl/jTpt</string>
@@ -65,6 +69,7 @@
     <string name="str_wat_address" formatted="false">%1s,%2s</string>
     <string name="str_msg1">Saved</string>
     <string name="str_edit">Edit</string>
+    <string name="str_lives">Lives</string>
 
     <!--Perferences-->
     <string name="str_reminder_settings">Reminder setting</string>
@@ -79,6 +84,7 @@
     <string name="str_terms_conditions">Terms and Conditions</string>
     <string name="str_version">"Version "</string>
     <string name="str_about">About Us</string>
+    <string name="str_log_out">Log Out</string>
 
     <!--Terms & Condition-->
     <string name="str_terms_content">sdhjshdjhsjhshdjdsh sdjlhjsdhjsd dsjlhjlsdhjds dsjlhljsdh \n sdsdhshllsdhj
@@ -90,7 +96,7 @@
     <string name="str_title1">Be a Blood Donor</string>
     <string name="str_description1">Extend hands, Let together craft a better world</string>
     <string name="str_title2">No worries</string>
-    <string name="str_description2">Real life heros are out there, Let seek for help</string>
+    <string name="str_description2">Real life heroes are out there, Let seek for help</string>
     <string name="str_title3">Connect</string>
     <string name="str_description3">Be a part of Noble cause, Sign in</string>
     <string name="str_complete_on_boarding">Please complete the onboarding</string>
@@ -99,11 +105,11 @@
     <string name="str_chat_empty_state">Say something..!</string>
 
     <!--Heros-->
-    <string name="str_heros_empty_state">Couldnt find any Heros</string>
+    <string name="str_heros_empty_state">Couldnt find any Heroes</string>
 
     <!--Launcher-->
     <string name="str_app_deprecated_msg">Version is deprecated ,please update</string>
-    <string name="str_app_error_msg">Something went wrong, please try agin</string>
+    <string name="str_app_error_msg">Something went wrong, please try again</string>
     <string name="str_btn_try_again_txt">TRY AGAIN</string>
     <string name="str_btn_update_txt">UPDATE NOW</string>
 

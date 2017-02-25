@@ -75,6 +75,11 @@ public class FirebaseLoginService implements LoginService {
                 });
     }
 
+    @Override
+    public void signOut() {
+        authDatabase.signOut();
+    }
+
     private Func1<User, DatabaseResult<User>> toUserDatabaseResult(){
         return new Func1<User, DatabaseResult<User>>() {
             @Override

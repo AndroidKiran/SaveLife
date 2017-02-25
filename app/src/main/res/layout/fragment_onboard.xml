@@ -25,7 +25,6 @@
         android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:padding="@dimen/dimen_10"
-        tools:background="@drawable/common_plus_signin_btn_text_dark_focused"
         tools:srcCompat="@drawable/common_plus_signin_btn_text_dark_focused"/>
 
     <com.donate.savelife.component.text.TextView

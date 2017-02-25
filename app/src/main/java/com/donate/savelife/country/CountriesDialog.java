@@ -21,7 +21,6 @@ import com.donate.savelife.firebase.Dependencies;
  */
 
 public class CountriesDialog extends DialogFragment {
-//    public final String TAG = "Countries Dialog";
 
     private CountryPresenter countryPresenter;
     private OnFragmentInteractionListener fragmentInteractionListener;

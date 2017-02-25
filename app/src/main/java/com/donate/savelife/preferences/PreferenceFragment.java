@@ -77,7 +77,8 @@ public class PreferenceFragment extends Fragment {
                 gsonService,
                 preference,
                 firebaseDynamicLinkFactory,
-                (AppNotificationService) appNotificationSerive);
+                (AppNotificationService) appNotificationSerive,
+                Dependencies.INSTANCE.getLoginService());
     }
 
     @Override

@@ -33,6 +33,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
     private View termsCondition;
     private AlertDialog aboutDialog;
     private TextView notificationCity;
+    private View logOut;
 
     public PreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,6 +55,8 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         rateUs = Views.findById(this, R.id.play_store_rate);
         termsCondition = Views.findById(this, R.id.terms_conditions);
         notificationCity = Views.findById(this, R.id.notification_city);
+        logOut = Views.findById(this, R.id.logout);
+
     }
 
     @Override
@@ -64,6 +67,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         invite.setOnClickListener(onClickListener);
         rateUs.setOnClickListener(onClickListener);
         termsCondition.setOnClickListener(onClickListener);
+        logOut.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -74,6 +78,7 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
         invite.setOnClickListener(null);
         rateUs.setOnClickListener(null);
         termsCondition.setOnClickListener(null);
+        logOut.setOnClickListener(null);
     }
 
     @Override
@@ -126,7 +131,10 @@ public class PreferenceView extends LinearLayout implements PreferenceDisplayer 
                 case R.id.terms_conditions:
                     preferenceInteractionListener.onTermsClicked();
                     break;
-            }
+
+                case R.id.logout:
+                    preferenceInteractionListener.onLogoutPressed();
+                    break;            }
         }
     };
 

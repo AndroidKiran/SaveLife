@@ -80,6 +80,12 @@
                 android:text="@string/str_terms_conditions"
                 app:fontTypeface="museosans500" />
 
+            <com.donate.savelife.component.text.TextView
+                android:id="@+id/logout"
+                style="@style/Preference.Actionable.HeaderTxt.withSelector"
+                android:text="@string/str_log_out"
+                app:fontTypeface="museosans500" />
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

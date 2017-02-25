@@ -118,10 +118,10 @@ public class HomeView extends CoordinatorLayout implements HomeDisplayer, Connec
 
     @Override
     public void detach(HomeInteractionListener homeInteractionListener) {
-        this.homeInteractionListener = null;
+        this.homeInteractionListener = homeInteractionListener;
         fabButton.setOnClickListener(null);
         titleContainer.setOnClickListener(null);
-        bottomNavigation.setOnTabSelectedListener(null);
+        bottomNavigation.removeOnTabSelectedListener();
         myRequestContainer.setOnClickListener(null);
         SaveLifeApplication.getInstance().setConnectivityListener(null);
         SaveLifeApplication.getInstance().setNotificationListener(null);

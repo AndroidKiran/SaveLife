@@ -77,6 +77,10 @@ public class AppPreferencesImpl implements SharedPreferenceService {
         prefs.edit().putBoolean(VERSION_DEPRECATED, deprecated).apply();
     }
 
+    @Override
+    public void clear() {
+        prefs.edit().clear().apply();
+    }
 
 
 }

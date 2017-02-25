@@ -11,4 +11,6 @@ public interface AuthDatabase {
 
     Observable<Authentication> loginWithGoogle(String idToken);
 
+    void signOut();
+
 }

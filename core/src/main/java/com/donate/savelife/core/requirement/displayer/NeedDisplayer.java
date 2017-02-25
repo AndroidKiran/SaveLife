@@ -26,6 +26,8 @@ public interface NeedDisplayer {
 
     void displayUser(User user);
 
+    void displaySuccessLayout();
+
     interface OnNeedInteractionListener {
 
         void onNeedPost(Need need);

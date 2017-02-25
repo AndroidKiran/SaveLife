@@ -57,6 +57,7 @@ public class NeedView extends CoordinatorLayout implements NeedDisplayer {
     private EditText adderssEditText;
     private TextView errAddress;
     private User user;
+    private View successLayout;
 
     public NeedView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -103,6 +104,8 @@ public class NeedView extends CoordinatorLayout implements NeedDisplayer {
 
         btnComplete = Views.findById(this, R.id.btn_request);
         profilePic = Views.findById(this, R.id.profile_pic);
+
+        successLayout = Views.findById(this, R.id.success_layout);
 
     }
 
@@ -219,6 +222,11 @@ public class NeedView extends CoordinatorLayout implements NeedDisplayer {
     @Override
     public void displayUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public void displaySuccessLayout() {
+        successLayout.setVisibility(VISIBLE);
     }
 
 

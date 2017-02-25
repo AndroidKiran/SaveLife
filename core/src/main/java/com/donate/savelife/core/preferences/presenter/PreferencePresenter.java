@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.link.LinkFactory;
+import com.donate.savelife.core.login.service.LoginService;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.notifications.service.AppNotificationService;
 import com.donate.savelife.core.preferences.displayer.PreferenceDisplayer;
@@ -27,15 +28,13 @@ public class PreferencePresenter {
     private final GsonService gsonService;
     private final SharedPreferenceService preferenceService;
     private final AppNotificationService appNotificationService;
+    private final LoginService loginService;
 
-    public PreferencePresenter(PreferenceDisplayer preferenceDisplayer,
-                               Navigator navigator,
-                               ErrorLogger errorLogger,
-                               Analytics analytics,
-                               GsonService gsonService,
-                               SharedPreferenceService preferenceService,
-                               LinkFactory linkFactory,
-                               AppNotificationService appNotificationService){
+    public PreferencePresenter(PreferenceDisplayer preferenceDisplayer, Navigator navigator,
+                               ErrorLogger errorLogger, Analytics analytics,
+                               GsonService gsonService, SharedPreferenceService preferenceService,
+                               LinkFactory linkFactory, AppNotificationService appNotificationService,
+                               LoginService loginService){
         this.preferenceDisplayer = preferenceDisplayer;
         this.navigator = navigator;
         this.errorLogger = errorLogger;
@@ -45,6 +44,7 @@ public class PreferencePresenter {
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         this.linkFactory = linkFactory;
         this.appNotificationService = appNotificationService;
+        this.loginService = loginService;
     }
 
     public void startPresenting(){
@@ -65,10 +65,11 @@ public class PreferencePresenter {
         public void onNotificationModifyClicked(boolean toggle) {
             appNotificationService.toggleNotificationStatus(toggle);
 
-            //            Bundle aboutUsBundle = new Bundle();
-//            aboutUsBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
-//            aboutUsBundle.putString(Analytics.PARAM_BUTTON_NAME, AppConstant.ABOUT_US_BUTTON);
-//            analytics.trackButtonClick(aboutUsBundle);
+            Bundle notificationSettingBundle = new Bundle();
+            notificationSettingBundle.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            notificationSettingBundle.putBoolean(Analytics.PARAM_NOTIFICATION_ENABLED, toggle);
+            notificationSettingBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_TOGGLE_NOTIFICATION);
+            analytics.trackEventOnClick(notificationSettingBundle);
         }
 
         @Override
@@ -110,5 +111,22 @@ public class PreferencePresenter {
             termsBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_TERMS);
             analytics.trackEventOnClick(termsBundle);
         }
+
+        @Override
+        public void onLogoutPressed() {
+            signOut();
+
+            Bundle logOut = new Bundle();
+            logOut.putString(Analytics.PARAM_OWNER_ID, user.getId());
+            logOut.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_LOG_OUT);
+            analytics.trackEventOnClick(logOut);
+        }
     };
+
+
+    private void signOut(){
+        loginService.signOut();
+        preferenceService.clear();
+        navigator.toMain();
+    }
 }

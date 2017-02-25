@@ -83,7 +83,6 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                         android:textColor="@color/material_white"
                         app:fontTypeface="museosans500" />
-                    ​
 
                     <com.donate.savelife.component.text.TextView
                         android:id="@+id/msg_title"
@@ -93,7 +92,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/dimen_4"
                         android:layout_marginTop="@dimen/dimen_4"
-                        android:text="I am a DONOR"
+                        android:text="@string/str_i_am_donor"
                         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                         android:textColor="@color/material_white"
                         app:fontTypeface="museosans500" />
@@ -118,7 +117,7 @@
                 <com.donate.savelife.component.text.TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Requests"
+                    android:text="@string/str_my_request"
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:layout_centerVertical="true"

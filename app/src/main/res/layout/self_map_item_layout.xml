@@ -4,5 +4,6 @@
     android:layout_height="wrap_content"
     android:gravity="right"
     android:paddingRight="@dimen/dimen_16"
+    android:paddingLeft="@dimen/dimen_16"
     android:background="@drawable/selector_list_item_transperent"
     android:layout="@layout/merge_self_map_item_view" />

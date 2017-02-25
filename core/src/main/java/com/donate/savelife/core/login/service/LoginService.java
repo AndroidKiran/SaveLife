@@ -11,4 +11,6 @@ public interface LoginService {
 
     void loginWithGoogle(String idToken);
 
+    void signOut();
+
 }

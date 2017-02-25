@@ -32,5 +32,7 @@ public interface PreferenceDisplayer {
 
         void onTermsClicked();
 
+        void onLogoutPressed();
+
     }
 }

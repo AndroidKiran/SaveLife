@@ -2,24 +2,56 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
+
+        <LinearLayout
+            android:id="@+id/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:buttonSize="standard" />
+            android:minHeight="@dimen/dimen_256"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/material_white"
+                android:textSize="20sp" />
+
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:buttonSize="standard" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/title3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/dimen_110"
-            android:layout_marginLeft="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_marginLeft="@dimen/dimen_16"
+            android:layout_below="@+id/sign_in"
             android:text="@string/str_title3"
             android:textColor="@color/material_white"
             android:textSize="26sp" />
@@ -29,15 +61,14 @@
             android:id="@+id/description3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/dimen_72"
-            android:layout_marginLeft="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginLeft="@dimen/dimen_16"
+            android:layout_marginRight="@dimen/dimen_16"
+            android:layout_below="@+id/title3"
             android:maxEms="18"
             android:text="@string/str_description3"
             android:textColor="@color/material_white"
             android:textSize="@dimen/font_18" />
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </merge>

@@ -39,7 +39,7 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 
         View icon1 = page.findViewById(R.id.icon1);
         View icon2 = page.findViewById(R.id.icon2);
-        View icon3 = page.findViewById(R.id.sign_in_button);
+        View icon3 = page.findViewById(R.id.sign_in);
 
 
         if (position <= -1.0f || position >= 1.0f) {
@@ -73,24 +73,7 @@ public class IntroPageTransformer implements ViewPager.PageTransformer {
 
             translateY(description3, pageWidthTimesPosition);
             alphaAnim(description3, absPosition);
-//
-//
-//            alphaAnim(title1, absPosition);
-//
-//            translateY(description1, -pageWidthTimesPosition);
-//            alphaAnim(description1, absPosition);
-//
-//            translateX(tv, -pageWidthTimesPosition);
-
-
-            if (position < 0) {
-
-            } else {
-
-            }
         }
-
-
     }
 
     public void alphaAnim(View view, float absPosition) {

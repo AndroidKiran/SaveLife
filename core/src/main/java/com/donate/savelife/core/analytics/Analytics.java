@@ -37,6 +37,9 @@ public interface Analytics {
     String PARAM_HONOR_HERO = "honor_hero_event";
     String PARAM_SKIP_INTRO = "skip_intro_event";
     String PARAM_OPEN_MY_NEED = "open_my_need_event";
+    String PARAM_NOTIFICATION_ENABLED = "notification_enabled";
+    String PARAM_TOGGLE_NOTIFICATION = "toggle_notification";
+    String PARAM_LOG_OUT = "log_out";
 
 
     void trackSignInStarted(String method);
