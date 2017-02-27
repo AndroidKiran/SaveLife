@@ -18,13 +18,13 @@ import com.donate.savelife.navigation.AndroidNavigator;
  * Created by ravi on 20/11/16.
  */
 
-public class HerosFragment extends Fragment {
+public class HeroesFragment extends Fragment {
 
     public static final String TAG = UtilBundles.HEROS_SCREEN;
     private HeroPresenter presenter;
 
-    public static HerosFragment newInstance(Bundle bundle) {
-        HerosFragment instance = new HerosFragment();
+    public static HeroesFragment newInstance(Bundle bundle) {
+        HeroesFragment instance = new HeroesFragment();
         instance.setArguments(bundle);
         return instance;
     }
@@ -39,7 +39,7 @@ public class HerosFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.heros_view, container, false);
+        return inflater.inflate(R.layout.heroes_view, container, false);
     }
 
     @Override

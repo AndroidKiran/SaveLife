@@ -28,7 +28,7 @@ import java.util.Locale;
  */
 
 public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
-
+    private final int LIFE_INCREMENT_VALUE = 1;
     private Toolbar toolbar;
     private AppCompatImageView profileBackDrop;
     private TextView bloodGroupText;
@@ -183,7 +183,7 @@ public class ProfileView extends CoordinatorLayout implements ProfileDisplayer {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.fab_button:
-                    profileInteractionListener.onHonorClick();
+                    profileInteractionListener.onHonorClick(LIFE_INCREMENT_VALUE);
                     break;
             }
         }

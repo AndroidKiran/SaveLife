@@ -64,7 +64,7 @@ public class PersistedNotificationRegistrationService implements NotificationReg
 
     @Override
     public Observable<DatabaseResult<Users>> observeUserIdsFor(Need need) {
-        return chatDatabase.observerChatUserIdsFor(need)
+        return chatDatabase.observerChatUsersFor(need)
                 .flatMap(getUsersFromIds());
     }
 

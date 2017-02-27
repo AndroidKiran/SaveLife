@@ -21,6 +21,6 @@ public interface UserDatabase {
 
     Observable<User> updateUser(User user);
 
-    Observable<User> updateTheLifeCount(User user);
+    Observable<User> updateTheLifeCount(User user, int value);
 
 }

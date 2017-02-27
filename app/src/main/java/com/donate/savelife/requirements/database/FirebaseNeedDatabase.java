@@ -42,7 +42,7 @@ public class FirebaseNeedDatabase implements NeedDatabase {
 //    }
 //
 //    @Override
-//    public Observable<List<String>> observerMoreUserIdsFor(User user, Need need) {
+//    public Observable<List<String>> observerMoreUsersFor(User user, Need need) {
 //        return firebaseObservableListeners.listenToValueEvents(needDB.orderByKey().endAt(need.getId()).limitToLast(DEFAULT_LIMIT), getKeys());
 //    }
 

@@ -1,7 +1,7 @@
 package com.donate.savelife.user.database;
 
 import com.donate.savelife.core.UniqueList;
-import com.donate.savelife.core.user.data.model.Heros;
+import com.donate.savelife.core.user.data.model.Heroes;
 import com.donate.savelife.core.user.database.HeroDatabase;
 import com.donate.savelife.rx.FirebaseObservableListeners;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +25,13 @@ public class FirebaseHeroDatabase implements HeroDatabase {
 
     public FirebaseHeroDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         this.firebaseDatabase = firebaseDatabase;
-        heroDB = firebaseDatabase.getReference("heros");
+        heroDB = firebaseDatabase.getReference("heroes");
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 
     @Override
-    public Observable<Heros> observeHeros(String needID) {
-        return firebaseObservableListeners.listenToSingleValueEvents(heroDB.child(needID), toHeros());
+    public Observable<Heroes> observeHeros(String needID) {
+        return firebaseObservableListeners.listenToSingleValueEvents(heroDB.child(needID), toHeroes());
     }
 
     @Override
@@ -44,17 +44,16 @@ public class FirebaseHeroDatabase implements HeroDatabase {
         return firebaseObservableListeners.setValue(userID, heroDB.child(needId).child(userID), userID);
     }
 
-    private Func1<DataSnapshot, Heros> toHeros() {
-        return new Func1<DataSnapshot, Heros>() {
+    private Func1<DataSnapshot, Heroes> toHeroes() {
+        return new Func1<DataSnapshot, Heroes>() {
             @Override
-            public Heros call(DataSnapshot dataSnapshot) {
+            public Heroes call(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                List<String> heros = new UniqueList<String>();
+                List<String> heroes = new UniqueList<String>();
                 for (DataSnapshot child : children) {
-                    String heroID = child.getValue(String.class);
-                    heros.add(heroID);
+                    heroes.add(child.getKey());
                 }
-                return new Heros(heros);
+                return new Heroes(heroes);
             }
         };
     }

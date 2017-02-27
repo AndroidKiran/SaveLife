@@ -18,6 +18,8 @@ public interface ChatDisplayer {
 
     void displayMore(Chat chat, User user, Need need);
 
+    void displayHeroes(boolean enable);
+
     void enableInteraction();
 
     void disableInteraction();

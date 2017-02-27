@@ -21,6 +21,7 @@ import com.donate.savelife.core.notifications.service.NotificationRegistrationSe
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
+import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.utils.AppConstant;
 import com.donate.savelife.core.utils.CoreUtils;
 import com.donate.savelife.core.utils.GsonService;
@@ -137,6 +138,21 @@ public class ChatPresenter {
                                                         }
                                                     })
 
+                                    );
+
+
+                                    subscriptions.add(
+                                            chatService.observeHeroes(need)
+                                            .subscribe(new Action1<DatabaseResult<Users>>() {
+                                                @Override
+                                                public void call(DatabaseResult<Users> usersDatabaseResult) {
+                                                    if (usersDatabaseResult.isSuccess()){
+                                                        chatDisplayer.displayHeroes(true);
+                                                    } else {
+                                                        chatDisplayer.displayHeroes(false);
+                                                    }
+                                                }
+                                            })
                                     );
                                 } else {
                                     errorLogger.reportError(needDatabaseResult.getFailure(), "Failed the get need by id");

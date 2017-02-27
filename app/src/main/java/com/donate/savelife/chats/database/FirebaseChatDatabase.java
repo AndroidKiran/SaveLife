@@ -42,18 +42,18 @@ public class FirebaseChatDatabase implements ChatDatabase {
     }
 
     @Override
-    public Observable<List<String>> observerUserIdsFor(Need need) {
-        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need).limitToLast(DEFAULT_LIMIT), getKeys());
+    public Observable<List<String>> observerUsersFor(Need need) {
+        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need).limitToLast(DEFAULT_LIMIT), getUserIds());
     }
 
     @Override
-    public Observable<List<String>> observerMoreUserIdsFor(Need need, Message message) {
-        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need).orderByKey().endAt(message.getId()).limitToLast(DEFAULT_LIMIT), getKeys());
+    public Observable<List<String>> observerMoreUsersFor(Need need, Message message) {
+        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need).orderByKey().endAt(message.getId()).limitToLast(DEFAULT_LIMIT), getUserIds());
     }
 
     @Override
-    public Observable<List<String>> observerChatUserIdsFor(Need need) {
-        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need), getKeys());
+    public Observable<List<String>> observerChatUsersFor(Need need) {
+        return firebaseObservableListeners.listenToValueEvents(messagesInChannel(need), getUserIds());
     }
 
 
@@ -84,7 +84,7 @@ public class FirebaseChatDatabase implements ChatDatabase {
         };
     }
 
-    private static Func1<DataSnapshot, List<String>> getKeys() {
+    private static Func1<DataSnapshot, List<String>> getUserIds() {
         return new Func1<DataSnapshot, List<String>>() {
             @Override
             public List<String> call(DataSnapshot dataSnapshot) {

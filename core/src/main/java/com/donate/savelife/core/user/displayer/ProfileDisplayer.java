@@ -30,7 +30,7 @@ public interface ProfileDisplayer {
 
         void onEditClick();
 
-        void onHonorClick();
+        void onHonorClick(int value);
 
         void onNavigateClick();
     }

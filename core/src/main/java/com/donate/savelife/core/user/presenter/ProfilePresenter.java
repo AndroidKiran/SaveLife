@@ -120,9 +120,9 @@ public class ProfilePresenter {
         }
 
         @Override
-        public void onHonorClick() {
+        public void onHonorClick(int value) {
             subscriptions.add(
-                    heroService.honorHero(message)
+                    heroService.honorHero(message, value)
                             .subscribe(new Action1<DatabaseResult<User>>() {
                                 @Override
                                 public void call(DatabaseResult<User> userDatabaseResult) {

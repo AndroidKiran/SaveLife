@@ -48,7 +48,6 @@ dependencies {
     compile "com.google.firebase:firebase-core:${play_service_lib_version}"
     compile "com.google.firebase:firebase-auth:${play_service_lib_version}"
     compile "com.google.firebase:firebase-database:${play_service_lib_version}"
-    compile "com.google.firebase:firebase-config:${play_service_lib_version}"
     compile "com.google.firebase:firebase-crash:${play_service_lib_version}"
     compile "com.google.firebase:firebase-invites:${play_service_lib_version}"
     compile "com.google.firebase:firebase-messaging:${play_service_lib_version}"

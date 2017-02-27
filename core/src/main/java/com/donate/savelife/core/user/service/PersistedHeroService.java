@@ -2,7 +2,7 @@ package com.donate.savelife.core.user.service;
 
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
-import com.donate.savelife.core.user.data.model.Heros;
+import com.donate.savelife.core.user.data.model.Heroes;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.database.HeroDatabase;
 import com.donate.savelife.core.user.database.UserDatabase;
@@ -25,10 +25,10 @@ public class PersistedHeroService implements HeroService {
     }
 
     @Override
-    public Observable<DatabaseResult<Heros>> observerHeros(String needID) {
+    public Observable<DatabaseResult<Heroes>> observerHeroes(String needID) {
         return heroDatabase.observeHeros(needID)
                 .map(asHerosDatabaseResult())
-                .onErrorReturn(DatabaseResult.<Heros>errorAsDatabaseResult());
+                .onErrorReturn(DatabaseResult.<Heroes>errorAsDatabaseResult());
     }
 
     @Override
@@ -39,21 +39,21 @@ public class PersistedHeroService implements HeroService {
     }
 
     @Override
-    public Observable<DatabaseResult<User>> honorHero(Message message) {
+    public Observable<DatabaseResult<User>> honorHero(Message message, int value) {
         return heroDatabase.saveHero(message.getNeedId(), message.getUserID())
                 .map(asHeroDatabaseResult())
                 .filter(isHeroAddedSuccessfully())
                 .flatMap(getUser())
                 .filter(isUserFetchSuccessfully())
-                .flatMap(updateCount())
+                .flatMap(updateCount(value))
                 .onErrorReturn(DatabaseResult.<User>errorAsDatabaseResult());
     }
 
-    private Func1<Heros, DatabaseResult<Heros>> asHerosDatabaseResult() {
-        return new Func1<Heros, DatabaseResult<Heros>>() {
+    private Func1<Heroes, DatabaseResult<Heroes>> asHerosDatabaseResult() {
+        return new Func1<Heroes, DatabaseResult<Heroes>>() {
             @Override
-            public DatabaseResult<Heros> call(Heros heros) {
-                return new DatabaseResult<Heros>(heros);
+            public DatabaseResult<Heroes> call(Heroes heroes) {
+                return new DatabaseResult<Heroes>(heroes);
             }
         };
     }
@@ -117,20 +117,20 @@ public class PersistedHeroService implements HeroService {
         };
     }
 
-    private  Func1<DatabaseResult<User>, Observable<DatabaseResult<User>>> updateCount(){
+    private  Func1<DatabaseResult<User>, Observable<DatabaseResult<User>>> updateCount(final int value){
         return new Func1<DatabaseResult<User>,Observable<DatabaseResult<User>>>() {
             @Override
             public Observable<DatabaseResult<User>> call(DatabaseResult<User> userDatabaseResult) {
-                return userDatabase.updateTheLifeCount(userDatabaseResult.getData())
+                return userDatabase.updateTheLifeCount(userDatabaseResult.getData(), value)
                         .map(asUserDatabaseResult());
             }
         };
     }
 
-    private Func1<DatabaseResult<Heros>, Boolean> isHeroHonored(){
-        return new Func1<DatabaseResult<Heros>, Boolean>() {
+    private Func1<DatabaseResult<Heroes>, Boolean> isHeroHonored(){
+        return new Func1<DatabaseResult<Heroes>, Boolean>() {
             @Override
-            public Boolean call(DatabaseResult<Heros> herosDatabaseResult) {
+            public Boolean call(DatabaseResult<Heroes> herosDatabaseResult) {
                 return herosDatabaseResult.isSuccess() ? true : false;
             }
         };

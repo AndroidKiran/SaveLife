@@ -1,6 +1,6 @@
 package com.donate.savelife.core.user.database;
 
-import com.donate.savelife.core.user.data.model.Heros;
+import com.donate.savelife.core.user.data.model.Heroes;
 
 import rx.Observable;
 
@@ -10,7 +10,7 @@ import rx.Observable;
 
 public interface HeroDatabase {
 
-    Observable<Heros> observeHeros(String needID);
+    Observable<Heroes> observeHeros(String needID);
 
     Observable<Boolean> observeHeroFrom(String needID, String userID);
 

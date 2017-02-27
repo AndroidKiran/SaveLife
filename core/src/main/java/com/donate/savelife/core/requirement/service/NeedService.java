@@ -22,7 +22,7 @@ public interface NeedService {
 
     Observable<DatabaseResult<Users>> observeUserIdsFor();
 
-//    Observable<DatabaseResult<Users>> observeMoreUserIdsFor(User user, Need need);
+//    Observable<DatabaseResult<Users>> observeMoreUsersFor(User user, Need need);
 
     Observable<DatabaseResult<Need>> observeNeed(String needID);
 

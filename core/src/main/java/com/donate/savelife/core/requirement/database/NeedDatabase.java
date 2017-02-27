@@ -17,7 +17,7 @@ public interface NeedDatabase {
 
 //    Observable<Needs> observeMoreNeeds(User user, Need need);
 
-//    Observable<List<String>> observerMoreUserIdsFor(User user, Need need);
+//    Observable<List<String>> observerMoreUsersFor(User user, Need need);
 
     Observable<Need> writeNewNeed(Need need);
 

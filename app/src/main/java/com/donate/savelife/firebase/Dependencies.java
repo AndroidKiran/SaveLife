@@ -118,7 +118,7 @@ public enum Dependencies {
 
             needService = new PersistedNeedService(needDatabase, userDatabase);
 
-            chatService = new PersistedChatService(chatDatabase, userDatabase);
+            chatService = new PersistedChatService(chatDatabase, userDatabase, heroDatabase);
 
             heroService = new PersistedHeroService(heroDatabase, userDatabase);
 

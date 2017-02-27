@@ -11,12 +11,14 @@ import com.donate.savelife.R;
 import com.donate.savelife.chats.ChatActivity;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.home.HomeActivity;
 import com.donate.savelife.intro.IntroActivity;
 import com.donate.savelife.launcher.LauncherActivity;
 import com.donate.savelife.requirements.MyNeedsActivity;
 import com.donate.savelife.requirements.NeedActivity;
 import com.donate.savelife.user.CompleteProfileActivity;
+import com.donate.savelife.user.HonorHeroesActivity;
 import com.donate.savelife.user.ProfileActivity;
 import com.donate.savelife.welcome.WelcomeActivity;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -143,6 +145,11 @@ public class AndroidNavigator implements Navigator {
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void toHonor(Users users, String needId) {
+        activity.startActivity(HonorHeroesActivity.createIntentFor(activity, needId, users));
     }
 
     @Override

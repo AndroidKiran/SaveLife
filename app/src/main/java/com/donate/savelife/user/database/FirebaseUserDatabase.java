@@ -52,8 +52,8 @@ public class FirebaseUserDatabase implements UserDatabase {
     }
 
     @Override
-    public Observable<User> updateTheLifeCount(User user) {
-        return firebaseObservableListeners.setValue(user.getLifeCount() + 1, usersDB.child(user.getId()).child(User.LIFE_COUNT), user);
+    public Observable<User> updateTheLifeCount(User user, int value) {
+        return firebaseObservableListeners.setValue(user.getLifeCount() + value, usersDB.child(user.getId()).child(User.LIFE_COUNT), user);
     }
 
     @Override

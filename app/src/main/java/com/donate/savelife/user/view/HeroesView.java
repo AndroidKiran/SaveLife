@@ -23,18 +23,18 @@ import com.donate.savelife.core.user.displayer.HerosDisplayer;
  * Created by ravi on 22/11/16.
  */
 
-public class HerosView extends LinearLayout implements HerosDisplayer {
+public class HeroesView extends LinearLayout implements HerosDisplayer {
 
-    private final HerosAdapter herosAdapter;
+    private final HeroesAdapter heroesAdapter;
     private RecyclerView recyclerView;
     private MultiStateView multiView;
     private HeroInteractionListener heroInteractionListener;
     private TextView emptyViewTxt;
     private AppCompatImageView emptyViewIcon;
 
-    public HerosView(Context context, AttributeSet attrs) {
+    public HeroesView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        herosAdapter = new HerosAdapter(LayoutInflater.from(context));
+        heroesAdapter = new HeroesAdapter(LayoutInflater.from(context));
     }
 
     @Override
@@ -59,25 +59,25 @@ public class HerosView extends LinearLayout implements HerosDisplayer {
         recyclerView.addItemDecoration(dividerItemDecoration);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(herosAdapter);
+        recyclerView.setAdapter(heroesAdapter);
     }
 
     @Override
     public void attach(HeroInteractionListener heroInteractionListener) {
         this.heroInteractionListener = heroInteractionListener;
-        herosAdapter.attach(heroInteractionListener);
+        heroesAdapter.attach(heroInteractionListener);
     }
 
     @Override
     public void detach(HeroInteractionListener heroInteractionListener) {
         this.heroInteractionListener = heroInteractionListener;
-        herosAdapter.detach(heroInteractionListener);
+        heroesAdapter.detach(heroInteractionListener);
     }
 
 
     @Override
     public void display(Users users) {
-        herosAdapter.setData(users);
+        heroesAdapter.setData(users);
     }
 
 

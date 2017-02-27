@@ -6,8 +6,10 @@ import com.donate.savelife.core.chats.model.Chat;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.requirement.model.Need;
+import com.donate.savelife.core.user.data.model.Heroes;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.data.model.Users;
+import com.donate.savelife.core.user.database.HeroDatabase;
 import com.donate.savelife.core.user.database.UserDatabase;
 
 import java.util.Collections;
@@ -22,22 +24,24 @@ public class PersistedChatService implements ChatService {
 
     private final ChatDatabase chatDatabase;
     private final UserDatabase userDatabase;
+    private final HeroDatabase heroDatabase;
 
-    public PersistedChatService(ChatDatabase chatDatabase, UserDatabase userDatabase) {
+    public PersistedChatService(ChatDatabase chatDatabase, UserDatabase userDatabase, HeroDatabase heroDatabase) {
         this.chatDatabase = chatDatabase;
         this.userDatabase = userDatabase;
+        this.heroDatabase = heroDatabase;
     }
 
     @Override
     public Observable<DatabaseResult<Chat>> observeChats(Need need) {
-        return Observable.combineLatest(observeChat(need), observeUserIdsFor(need), mergeChat())
+        return Observable.combineLatest(observeChat(need), observeUsersFor(need), mergeChat())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Chat>errorAsDatabaseResult());
     }
 
     @Override
     public Observable<DatabaseResult<Chat>> observeMoreChats(Need need, Message message) {
-        return Observable.combineLatest(observeMoreChat(need, message), observeMoreUserIdsFor(need, message), mergeChat())
+        return Observable.combineLatest(observeMoreChat(need, message), observeMoreUsersFor(need, message), mergeChat())
                 .map(asReverseDatabaseResult())
                 .onErrorReturn(DatabaseResult.<Chat>errorAsDatabaseResult());
     }
@@ -64,40 +68,47 @@ public class PersistedChatService implements ChatService {
     }
 
     @Override
-    public Observable<DatabaseResult<Users>> observeUserIdsFor(Need need) {
-        return chatDatabase.observerUserIdsFor(need)
+    public Observable<DatabaseResult<Users>> observeUsersFor(Need need) {
+        return chatDatabase.observerUsersFor(need)
                 .flatMap(getUsersFromIds());
     }
 
     @Override
-    public Observable<DatabaseResult<Users>> observeMoreUserIdsFor(Need need, Message message) {
-        return chatDatabase.observerMoreUserIdsFor(need, message)
+    public Observable<DatabaseResult<Users>> observeMoreUsersFor(Need need, Message message) {
+        return chatDatabase.observerMoreUsersFor(need, message)
                 .flatMap(getUsersFromIds());
     }
 
     @Override
     public Observable<DatabaseResult<User>> observeUserFor(Need need) {
         return userDatabase.readUserFrom(UserDatabase.SINGLE_VALUE_EVENT_TYPE, need.getUserID())
-                .map(aUsersDatabaseResult());
+                .map(aUserDatabaseResult());
     }
 
-    private Func1<Chat, DatabaseResult<Chat>> asDatabaseResult() {
-        return new Func1<Chat, DatabaseResult<Chat>>() {
-            @Override
-            public DatabaseResult<Chat> call(Chat chat) {
-                return new DatabaseResult<Chat>(chat);
-            }
-        };
+    @Override
+    public Observable<DatabaseResult<Users>> observerChatUsersFor(Need need) {
+        return chatDatabase.observerChatUsersFor(need)
+                .flatMap(getUsersFromIds());
     }
 
-    private Func1<Chat, DatabaseResult<Chat>> asReverseDatabaseResult() {
-        return new Func1<Chat, DatabaseResult<Chat>>() {
-            @Override
-            public DatabaseResult<Chat> call(Chat chat) {
-                return new DatabaseResult<Chat>(reverse(chat));
-            }
-        };
+    @Override
+    public Observable<DatabaseResult<Users>> observeHeroes(Need need) {
+        return Observable.combineLatest(observerChatUsersFor(need), observeHeroesFor(need), mergeHeroes())
+                .onErrorReturn(DatabaseResult.<Users>errorAsDatabaseResult());
     }
+
+    @Override
+    public Observable<DatabaseResult<Heroes>> observeHeroesFor(Need need) {
+        return heroDatabase.observeHeros(need.getId())
+                .map(new Func1<Heroes, DatabaseResult<Heroes>>() {
+                    @Override
+                    public DatabaseResult<Heroes> call(Heroes heroes) {
+                        return new DatabaseResult<Heroes>(heroes);
+                    }
+                })
+                .onErrorReturn(DatabaseResult.<Heroes>errorAsDatabaseResult());
+    }
+
 
 
     private Func1<List<String>, Observable<DatabaseResult<Users>>> getUsersFromIds() {
@@ -146,18 +157,41 @@ public class PersistedChatService implements ChatService {
         };
     }
 
-    public Chat reverse(Chat chat) {
-        UniqueList<Message> reverseList = new UniqueList<Message>();
-        reverseList.addAll(chat.getMessages());
-        Collections.reverse(reverseList);
-        return new Chat(reverseList);
+    private Func2<DatabaseResult<Users>, DatabaseResult<Heroes>, DatabaseResult<Users>> mergeHeroes(){
+        return new Func2<DatabaseResult<Users>, DatabaseResult<Heroes>, DatabaseResult<Users>>() {
+            @Override
+            public DatabaseResult<Users> call(DatabaseResult<Users> usersDatabaseResult, DatabaseResult<Heroes> heroesDatabaseResult) {
+                ListIterator<User> userListIterator = usersDatabaseResult.getData().getUsers().listIterator();
+                while (userListIterator.hasNext()){
+                    User user = userListIterator.next();
+                    ListIterator<String> stringListIterator = heroesDatabaseResult.getData().getHeroes().listIterator();
+                    while (stringListIterator.hasNext()){
+                        String userId = stringListIterator.next();
+                        if (userId.equals(user.getId())){
+                            userListIterator.remove();
+                        }
+                    }
+                }
+                return usersDatabaseResult;
+            }
+        };
     }
 
-    private Func1<User, DatabaseResult<User>> aUsersDatabaseResult() {
+
+    private Func1<User, DatabaseResult<User>> aUserDatabaseResult() {
         return new Func1<User, DatabaseResult<User>>() {
             @Override
             public DatabaseResult<User> call(User user) {
                 return new DatabaseResult<User>(user);
+            }
+        };
+    }
+
+    private Func1<Users, DatabaseResult<Users>> asUsersDatabaseResult(){
+        return new Func1<Users, DatabaseResult<Users>>() {
+            @Override
+            public DatabaseResult<Users> call(Users users) {
+                return new DatabaseResult<Users>(users);
             }
         };
     }
@@ -169,5 +203,30 @@ public class PersistedChatService implements ChatService {
                 return new DatabaseResult<Message>(message);
             }
         };
+    }
+
+    private Func1<Chat, DatabaseResult<Chat>> asDatabaseResult() {
+        return new Func1<Chat, DatabaseResult<Chat>>() {
+            @Override
+            public DatabaseResult<Chat> call(Chat chat) {
+                return new DatabaseResult<Chat>(chat);
+            }
+        };
+    }
+
+    private Func1<Chat, DatabaseResult<Chat>> asReverseDatabaseResult() {
+        return new Func1<Chat, DatabaseResult<Chat>>() {
+            @Override
+            public DatabaseResult<Chat> call(Chat chat) {
+                return new DatabaseResult<Chat>(reverse(chat));
+            }
+        };
+    }
+
+    public Chat reverse(Chat chat) {
+        UniqueList<Message> reverseList = new UniqueList<Message>();
+        reverseList.addAll(chat.getMessages());
+        Collections.reverse(reverseList);
+        return new Chat(reverseList);
     }
 }

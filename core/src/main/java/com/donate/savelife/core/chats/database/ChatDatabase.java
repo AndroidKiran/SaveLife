@@ -19,11 +19,11 @@ public interface ChatDatabase {
 
     Observable<Message> sendMessage(Need need, Message message);
 
-    Observable<List<String>> observerUserIdsFor(Need need);
+    Observable<List<String>> observerUsersFor(Need need);
 
-    Observable<List<String>> observerMoreUserIdsFor(Need need, Message message);
+    Observable<List<String>> observerMoreUsersFor(Need need, Message message);
 
-    Observable<List<String>> observerChatUserIdsFor(Need need);
+    Observable<List<String>> observerChatUsersFor(Need need);
 
 
 }

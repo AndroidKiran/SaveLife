@@ -22,7 +22,7 @@ import com.donate.savelife.navigation.AndroidNavigator;
 import com.donate.savelife.notifications.Config;
 import com.donate.savelife.preferences.PreferenceFragment;
 import com.donate.savelife.requirements.NeedsFragment;
-import com.donate.savelife.user.HerosFragment;
+import com.donate.savelife.user.HeroesFragment;
 
 /**
  * Created by ravi on 09/09/16.
@@ -30,7 +30,7 @@ import com.donate.savelife.user.HerosFragment;
 public class HomeActivity extends NavigationActivity {
 
     private NeedsFragment needsFragment;
-    private HerosFragment herosFragment;
+    private HeroesFragment heroesFragment;
     private HomePresenter homePresenter;
     private PreferenceFragment preferenceFragment;
     private LocalBroadcastManager localBroadcastManager;
@@ -78,18 +78,18 @@ public class HomeActivity extends NavigationActivity {
     private ViewPagerAdapter getViewPagerAdapter(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             needsFragment = NeedsFragment.newInstance(null);
-            herosFragment = HerosFragment.newInstance(null);
+            heroesFragment = HeroesFragment.newInstance(null);
             preferenceFragment = PreferenceFragment.newInstance(null);
 
         } else {
             needsFragment = (NeedsFragment) getSupportFragmentManager().getFragment(savedInstanceState, NeedsFragment.TAG);
-            herosFragment = (HerosFragment) getSupportFragmentManager().getFragment(savedInstanceState, HerosFragment.TAG);
+            heroesFragment = (HeroesFragment) getSupportFragmentManager().getFragment(savedInstanceState, HeroesFragment.TAG);
             preferenceFragment = (PreferenceFragment) getSupportFragmentManager().getFragment(savedInstanceState, PreferenceFragment.TAG);
 
         }
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerAdapter.addFragment(needsFragment, getString(R.string.str_requirement_tab));
-        viewPagerAdapter.addFragment(herosFragment, getString(R.string.str_heros_tab));
+        viewPagerAdapter.addFragment(heroesFragment, getString(R.string.str_heros_tab));
         viewPagerAdapter.addFragment(preferenceFragment, getString(R.string.str_preference_tab));
 
         return viewPagerAdapter;
@@ -118,8 +118,8 @@ public class HomeActivity extends NavigationActivity {
         if (needsFragment != null && needsFragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, NeedsFragment.TAG, needsFragment);
         }
-        if (herosFragment != null && herosFragment.isAdded()) {
-            getSupportFragmentManager().putFragment(outState, HerosFragment.TAG, herosFragment);
+        if (heroesFragment != null && heroesFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, HeroesFragment.TAG, heroesFragment);
         }
         if (preferenceFragment != null && preferenceFragment.isAdded()) {
             getSupportFragmentManager().putFragment(outState, PreferenceFragment.TAG, preferenceFragment);

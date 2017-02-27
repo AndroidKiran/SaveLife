@@ -14,17 +14,17 @@ import java.util.ArrayList;
 /**
  * Created by ravi on 04/09/16.
  */
-public class HerosAdapter extends RecyclerView.Adapter<HeroViewHolder>{
+public class HeroesAdapter extends RecyclerView.Adapter<HeroViewHolder>{
 
     private final LayoutInflater inflater;
     private Users users;
     private HeroItemView heroItemView;
     private HerosDisplayer.HeroInteractionListener heroInteractionListener;
 
-    public HerosAdapter(LayoutInflater inflater) {
+    public HeroesAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
-        setHasStableIds(true);
         users = new Users(new ArrayList<User>());
+        setHasStableIds(true);
     }
 
     public void setData(Users users){
@@ -40,7 +40,7 @@ public class HerosAdapter extends RecyclerView.Adapter<HeroViewHolder>{
 
     @Override
     public HeroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        heroItemView = (HeroItemView) inflater.inflate(R.layout.hero_item, parent, false);
+        heroItemView = (HeroItemView) inflater.inflate(R.layout.honor_item, parent, false);
         return new HeroViewHolder(heroItemView);
     }
 

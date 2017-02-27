@@ -228,6 +228,11 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         isloading = false;
     }
 
+    @Override
+    public void displayHeroes(boolean enable) {
+
+    }
+
 
     @Override
     public void enableInteraction() {

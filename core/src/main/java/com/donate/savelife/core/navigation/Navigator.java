@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.donate.savelife.core.chats.model.Message;
+import com.donate.savelife.core.user.data.model.Users;
 
 public interface Navigator {
 
@@ -44,6 +45,8 @@ public interface Navigator {
     void toWelcome();
 
     void toMapPicker();
+
+    void toHonor(Users users, String needId);
 
     void startAppCentralService(Bundle bundle, String action);
 
