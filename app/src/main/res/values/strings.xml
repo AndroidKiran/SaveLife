@@ -106,6 +106,9 @@
 
     <!--Heros-->
     <string name="str_heros_empty_state">Couldnt find any Heroes</string>
+    <string name="action_honor">Honor</string>
+    <string name="str_honor_hero_heading">Every Blood Donor is a HERO</string>
+    <string name="str_honor_hero_sub_heading">Please take some time and HONOR them</string>
 
     <!--Launcher-->
     <string name="str_app_deprecated_msg">Version is deprecated ,please update</string>

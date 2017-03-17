@@ -140,14 +140,20 @@ public class ChatPresenter {
 
                                     );
 
+                                    if (isMyPost()){
 
+                                    }
                                     subscriptions.add(
                                             chatService.observeHeroes(need)
                                             .subscribe(new Action1<DatabaseResult<Users>>() {
                                                 @Override
                                                 public void call(DatabaseResult<Users> usersDatabaseResult) {
                                                     if (usersDatabaseResult.isSuccess()){
-                                                        chatDisplayer.displayHeroes(true);
+                                                        chatDisplayer.displayHeroes(usersDatabaseResult.getData().size() > 0 ? true : false);
+                                                        if (sharedPreferenceService.isFirstTimeHeroesDialog()){
+                                                            navigator.toHonor(needId);
+                                                            sharedPreferenceService.setFirstTimeHeroesDialog(false);
+                                                        }
                                                     } else {
                                                         chatDisplayer.displayHeroes(false);
                                                     }
@@ -276,6 +282,11 @@ public class ChatPresenter {
         @Override
         public void onMapAttachClicked() {
             navigator.toMapPicker();
+        }
+
+        @Override
+        public void onHonorClicked() {
+            navigator.toHonor(needId);
         }
     };
 

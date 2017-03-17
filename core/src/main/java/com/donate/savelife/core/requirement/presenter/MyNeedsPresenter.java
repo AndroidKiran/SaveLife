@@ -8,7 +8,6 @@ import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
-import com.donate.savelife.core.requirement.model.Needs;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.GsonService;
@@ -43,18 +42,18 @@ public class MyNeedsPresenter {
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
     }
 
-    public void startPresenting(){
+    public void startPresenting() {
         needsDisplayer.attach(needInteractionListener);
         compositeSubscription.add(
-                needService.observeNeedsFor(user)
-                        .subscribe(new Action1<DatabaseResult<Needs>>() {
+                needService.observeMyNeeds(user)
+                        .subscribe(new Action1<DatabaseResult<Need>>() {
                             @Override
-                            public void call(DatabaseResult<Needs> needsDatabaseResult) {
-                                if (needsDatabaseResult.isSuccess()) {
-                                    needsDisplayer.display(needsDatabaseResult.getData(), user);
+                            public void call(DatabaseResult<Need> needDatabaseResult) {
+                                if (needDatabaseResult.isSuccess()) {
+                                    needsDisplayer.display(needDatabaseResult.getData(), user);
                                 } else {
                                     needsDisplayer.displayEmpty();
-                                    errorLogger.reportError(needsDatabaseResult.getFailure(), "Initial fetch needs failed");
+                                    errorLogger.reportError(needDatabaseResult.getFailure(), "Initial fetch needs failed");
                                 }
                             }
                         })
@@ -77,11 +76,6 @@ public class MyNeedsPresenter {
             listItemBundle.putString(Analytics.PARAM_EVENT_NAME, Analytics.PARAM_OPEN_CHAT);
             analytics.trackEventOnClick(listItemBundle);
         }
-
-//        @Override
-//        public void onLoadMore(Need need) {
-//
-//        }
 
         @Override
         public void onContentLoaded() {

@@ -17,7 +17,7 @@ import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
-import com.donate.savelife.core.requirement.model.Needs;
+import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
 
 /**
@@ -76,8 +76,8 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
     }
 
     @Override
-    public void display(Needs needs, User owner) {
-        needsAdapter.setData(needs, owner);
+    public void display(Need need, User owner) {
+        needsAdapter.setData(need, owner);
     }
 
     @Override
@@ -102,8 +102,4 @@ public class NeedsView extends LinearLayout implements NeedsDisplayer {
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
 
-    @Override
-    public Needs getNeeds() {
-        return needsAdapter.getNeeds();
-    }
 }

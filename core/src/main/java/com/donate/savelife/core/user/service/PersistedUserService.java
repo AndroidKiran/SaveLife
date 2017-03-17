@@ -43,8 +43,8 @@ public class PersistedUserService implements UserService {
     }
 
     @Override
-    public Observable<DatabaseResult<User>> updateTheLifeCount(User user) {
-        return userDatabase.updateTheLifeCount(user)
+    public Observable<DatabaseResult<User>> updateTheLifeCount(User user, int value) {
+        return userDatabase.updateTheLifeCount(user, value)
                 .map(asUserDatabaseResult());
     }
 

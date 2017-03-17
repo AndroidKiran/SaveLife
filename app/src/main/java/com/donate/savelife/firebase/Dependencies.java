@@ -7,7 +7,6 @@ import com.donate.savelife.analytics.FirebaseErrorLogger;
 import com.donate.savelife.apputils.AppPreferencesImpl;
 import com.donate.savelife.apputils.GsonServiceImpl;
 import com.donate.savelife.chats.database.FirebaseChatDatabase;
-import com.donate.savelife.core.Config;
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.chats.database.ChatDatabase;
@@ -59,7 +58,6 @@ public enum Dependencies {
     private Analytics analytics;
     private ErrorLogger errorLogger;
 
-    private Config config;
     private AppPreferencesImpl pref;
     private GsonServiceImpl gsonService;
     private FirebaseDatabase firebaseDatabase;
@@ -128,8 +126,6 @@ public enum Dependencies {
 
             appStatusService = new PersistedAppStatusService(appStatusDatabase);
 
-            config = FirebaseConfig.newInstance().init(errorLogger);
-
             pref = new AppPreferencesImpl(appContext);
 
             gsonService = new GsonServiceImpl();
@@ -150,10 +146,6 @@ public enum Dependencies {
 
     public ErrorLogger getErrorLogger() {
         return errorLogger;
-    }
-
-    public Config getConfig() {
-        return config;
     }
 
     public SharedPreferenceService getPreference(){

@@ -25,5 +25,9 @@ public interface SharedPreferenceService {
 
     void setVersionDeprecated(boolean deprecated);
 
+    boolean isFirstTimeHeroesDialog();
+
+    void setFirstTimeHeroesDialog(boolean firstTime);
+
     void clear();
 }

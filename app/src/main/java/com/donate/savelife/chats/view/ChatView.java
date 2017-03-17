@@ -10,9 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,6 +80,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
     private void initToolbar() {
         toolbar = Views.findById(this, R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.inflateMenu(R.menu.menu_honor);
     }
 
     private void initControl() {
@@ -92,6 +96,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
         mapAttachBtn = Views.findById(this, R.id.map_attach_button);
         mapAttachBtn.setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.SRC_ATOP);
+
 
     }
 
@@ -192,6 +197,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         submitButton.setOnClickListener(onClickListener);
         toolbar.setNavigationOnClickListener(navigationClickListener);
         toolbarContent.setOnClickListener(onClickListener);
+        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
         chatAdapter.attach(actionListener);
         mapAttachBtn.setOnClickListener(onClickListener);
     }
@@ -202,6 +208,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         messageView.removeTextChangedListener(null);
         toolbar.setOnMenuItemClickListener(null);
         toolbarContent.setOnClickListener(null);
+        toolbar.setOnMenuItemClickListener(null);
         this.actionListener = actionListener;
         chatAdapter.attach(actionListener);
         mapAttachBtn.setOnClickListener(null);
@@ -230,7 +237,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
 
     @Override
     public void displayHeroes(boolean enable) {
-
+        toolbar.getMenu().findItem(R.id.action_honor).setVisible(enable);
     }
 
 
@@ -293,7 +300,8 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
                     break;
 
                 case R.id.submit_button:
-                    actionListener.onSubmitMessage(messageView.getText().toString().trim());
+                    String msg = String.valueOf(Html.toHtml(new SpannableString(messageView.getText().toString().trim())));
+                    actionListener.onSubmitMessage(msg);
                     messageView.setText("");
                     break;
 
@@ -333,6 +341,18 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
                 return true;
             }
 
+            return false;
+        }
+    };
+
+    private final Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.action_honor:
+                    actionListener.onHonorClicked();
+                    break;
+            }
             return false;
         }
     };

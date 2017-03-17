@@ -25,4 +25,7 @@ public class FirebaseObservableListeners {
         return Observable.create(new SetValueOnSubscribe<>(value, databaseReference, returnValue));
     }
 
+    public <T> Observable<T> listenToChildEvents(Query query, Func1<DataSnapshot, T> marshaller) {
+        return Observable.create(new ListenToChildEventsOnSubscribe<T>(query, marshaller));
+    }
 }

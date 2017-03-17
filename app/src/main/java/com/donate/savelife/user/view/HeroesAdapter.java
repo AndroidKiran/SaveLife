@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.donate.savelife.R;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.data.model.Users;
-import com.donate.savelife.core.user.displayer.HerosDisplayer;
+import com.donate.savelife.core.user.displayer.HeroesDisplayer;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroViewHolder>{
     private final LayoutInflater inflater;
     private Users users;
     private HeroItemView heroItemView;
-    private HerosDisplayer.HeroInteractionListener heroInteractionListener;
+    private HeroesDisplayer.HeroInteractionListener heroInteractionListener;
 
     public HeroesAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
@@ -30,7 +30,7 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroViewHolder>{
     public void setData(Users users){
         if (users.size() > 0){
             this.users = users;
-            notifyItemRangeInserted(getItemCount(), users.size());
+            this.notifyDataSetChanged();
             heroInteractionListener.onContentLoaded();
         } else {
             heroInteractionListener.onEmpty();
@@ -40,7 +40,7 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroViewHolder>{
 
     @Override
     public HeroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        heroItemView = (HeroItemView) inflater.inflate(R.layout.honor_item, parent, false);
+        heroItemView = (HeroItemView) inflater.inflate(R.layout.hero_item, parent, false);
         return new HeroViewHolder(heroItemView);
     }
 
@@ -57,11 +57,11 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroViewHolder>{
         return users.size();
     }
 
-    public void attach(HerosDisplayer.HeroInteractionListener heroInteractionListener) {
+    public void attach(HeroesDisplayer.HeroInteractionListener heroInteractionListener) {
         this.heroInteractionListener = heroInteractionListener;
     }
 
-    public void detach(HerosDisplayer.HeroInteractionListener heroInteractionListener) {
+    public void detach(HeroesDisplayer.HeroInteractionListener heroInteractionListener) {
         this.heroInteractionListener = heroInteractionListener;
     }
 }

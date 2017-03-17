@@ -15,12 +15,11 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     private final static String PREFS_FILE = "app_prefs";
     private SharedPreferences prefs;
 
-    private final static String USER_DATA = "user_data";
-    private final static String REG_ID = "reg_id";
-    private final static String NOTIFICATION_ENABLED = "notification_enabled";
+    private static final  String USER_DATA = "user_data";
+    private static final  String REG_ID = "reg_id";
+    private static final  String NOTIFICATION_ENABLED = "notification_enabled";
     public static final String VERSION_DEPRECATED = "version_deprecated";
-    public static final String VERSION_DEPRECATED_CODE = "ver_dep_code";
-    public static final String VERSION_DEPRECATED_ALL_BELOW = "dep_all_below";
+    public static final String FIRST_TIME_HEROES_DIALOG = "first_time_heroes_dialog";
 
 
     public AppPreferencesImpl(Context context) {
@@ -75,6 +74,16 @@ public class AppPreferencesImpl implements SharedPreferenceService {
     @Override
     public void setVersionDeprecated(boolean deprecated) {
         prefs.edit().putBoolean(VERSION_DEPRECATED, deprecated).apply();
+    }
+
+    @Override
+    public boolean isFirstTimeHeroesDialog() {
+        return prefs.getBoolean(FIRST_TIME_HEROES_DIALOG, true);
+    }
+
+    @Override
+    public void setFirstTimeHeroesDialog(boolean firstTime) {
+        prefs.edit().putBoolean(FIRST_TIME_HEROES_DIALOG, firstTime).apply();
     }
 
     @Override

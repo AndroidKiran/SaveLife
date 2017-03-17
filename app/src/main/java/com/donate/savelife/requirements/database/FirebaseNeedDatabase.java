@@ -10,8 +10,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -27,24 +25,9 @@ public class FirebaseNeedDatabase implements NeedDatabase {
     }
 
     @Override
-    public Observable<Needs> observeNeeds(User owner) {
-        return firebaseObservableListeners.listenToValueEvents(needDB.orderByChild(User.CITY).equalTo(owner.getCity()).limitToLast(DEFAULT_LIMIT), toNeeds());
+    public Observable<Need> observeNeeds(User owner) {
+        return firebaseObservableListeners.listenToChildEvents(needDB.orderByChild(User.CITY).equalTo(owner.getCity()), asNeed());
     }
-
-    @Override
-    public Observable<List<String>> observerUserIdsFor() {
-        return firebaseObservableListeners.listenToValueEvents(needDB.limitToLast(DEFAULT_LIMIT), getKeys());
-    }
-
-//    @Override
-//    public Observable<Needs> observeMoreNeeds(User user, Need need) {
-//        return firebaseObservableListeners.listenToValueEvents(needDB.orderByKey().endAt(need.getId()).limitToLast(DEFAULT_LIMIT), toNeeds());
-//    }
-//
-//    @Override
-//    public Observable<List<String>> observerMoreUsersFor(User user, Need need) {
-//        return firebaseObservableListeners.listenToValueEvents(needDB.orderByKey().endAt(need.getId()).limitToLast(DEFAULT_LIMIT), getKeys());
-//    }
 
     @Override
     public Observable<Need> writeNewNeed(Need need) {
@@ -57,8 +40,8 @@ public class FirebaseNeedDatabase implements NeedDatabase {
     }
 
     @Override
-    public Observable<Needs> observeNeedsFor(User user) {
-        return firebaseObservableListeners.listenToValueEvents(needDB.orderByChild(Need.USER_ID).equalTo(user.getId()).limitToLast(DEFAULT_LIMIT), toNeeds());
+    public Observable<Need> observeMyNeeds(User user) {
+        return firebaseObservableListeners.listenToChildEvents(needDB.orderByChild(Need.USER_ID).equalTo(user.getId()), asNeed());
     }
 
     @Override
@@ -102,7 +85,7 @@ public class FirebaseNeedDatabase implements NeedDatabase {
         };
     }
 
-    private static Func1<DataSnapshot, Need> asNeed(){
+    private Func1<DataSnapshot, Need> asNeed(){
         return new Func1<DataSnapshot, Need>() {
             @Override
             public Need call(DataSnapshot dataSnapshot) {
@@ -112,23 +95,6 @@ public class FirebaseNeedDatabase implements NeedDatabase {
                     need.setId(dataSnapshot.getKey());
                 }
                 return need;
-            }
-        };
-    }
-
-    private static Func1<DataSnapshot, List<String>> getKeys() {
-        return new Func1<DataSnapshot, List<String>>() {
-            @Override
-            public List<String> call(DataSnapshot dataSnapshot) {
-                UniqueList<String> keys = new UniqueList<String>();
-                if (dataSnapshot.hasChildren()) {
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                    for (DataSnapshot child : children) {
-                        Need need = child.getValue(Need.class);
-                        keys.add(need.getUserID());
-                    }
-                }
-                return keys;
             }
         };
     }

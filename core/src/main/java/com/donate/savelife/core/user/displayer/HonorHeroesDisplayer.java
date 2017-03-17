@@ -17,8 +17,12 @@ public interface HonorHeroesDisplayer {
 
     Users getUsers();
 
+    void onHeroHonoredSuccessfully(User user);
+
     interface HonorHeroesInteractionListener {
 
         void onHeroesHonored(User user, int value);
+
+        void dismissHonorDialog();
     }
 }

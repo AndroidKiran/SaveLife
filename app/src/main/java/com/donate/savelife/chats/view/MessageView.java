@@ -2,6 +2,9 @@ package com.donate.savelife.chats.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -79,7 +82,7 @@ public class MessageView extends LinearLayout {
 
         Glide.with(context).load(message.getAuthor().getPhotoUrl()).thumbnail(0.8f)
                 .crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
-        body.setText(message.getBody());
+        body.setText(fromHtml(message.getBody()));
         time.setText(formattedTimeFrom(message.getTimestamp()));
         name.setText(message.getAuthor().getName());
         MessageBubbleDrawable bubbleDrawable = null;
@@ -114,6 +117,14 @@ public class MessageView extends LinearLayout {
 
     public View getUserAvatar() {
         return picture;
+    }
+
+    public static Spanned fromHtml(String source) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(source);
+        }
     }
 
 }

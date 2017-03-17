@@ -5,7 +5,7 @@ import com.donate.savelife.core.analytics.ErrorLogger;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.Users;
-import com.donate.savelife.core.user.displayer.HerosDisplayer;
+import com.donate.savelife.core.user.displayer.HeroesDisplayer;
 import com.donate.savelife.core.user.service.UserService;
 
 import rx.functions.Action1;
@@ -17,7 +17,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class HeroPresenter {
 
-    private final HerosDisplayer herosDisplayer;
+    private final HeroesDisplayer heroesDisplayer;
     private final UserService userService;
     private final Navigator navigator;
     private final ErrorLogger errorLogger;
@@ -25,13 +25,13 @@ public class HeroPresenter {
     CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     public HeroPresenter(
-            HerosDisplayer herosDisplayer,
+            HeroesDisplayer heroesDisplayer,
             UserService userService,
             Navigator navigator,
             ErrorLogger errorLogger,
             Analytics analytics
     ) {
-        this.herosDisplayer = herosDisplayer;
+        this.heroesDisplayer = heroesDisplayer;
         this.userService = userService;
         this.navigator = navigator;
         this.errorLogger = errorLogger;
@@ -39,14 +39,14 @@ public class HeroPresenter {
     }
 
     public void startPresenting(){
-        herosDisplayer.attach(heroInteractionListener);
+        heroesDisplayer.attach(heroInteractionListener);
         compositeSubscription.add(
                 userService.getTopHeros()
                 .subscribe(new Action1<DatabaseResult<Users>>() {
                     @Override
                     public void call(DatabaseResult<Users> usersDatabaseResult) {
                         if (usersDatabaseResult.isSuccess()){
-                            herosDisplayer.display(usersDatabaseResult.getData());
+                            heroesDisplayer.display(usersDatabaseResult.getData());
                         } else {
                             errorLogger.reportError(usersDatabaseResult.getFailure(), "Failed to fetch the heros");
                         }
@@ -56,26 +56,25 @@ public class HeroPresenter {
     }
 
     public void stopPresenting(){
-        this.heroInteractionListener = null;
-        herosDisplayer.detach(heroInteractionListener);
+        heroesDisplayer.detach(null);
         compositeSubscription.clear();
         compositeSubscription = new CompositeSubscription();
     }
 
-    HerosDisplayer.HeroInteractionListener heroInteractionListener = new HerosDisplayer.HeroInteractionListener() {
+    HeroesDisplayer.HeroInteractionListener heroInteractionListener = new HeroesDisplayer.HeroInteractionListener() {
         @Override
         public void onContentLoaded() {
-            herosDisplayer.displayContent();
+            heroesDisplayer.displayContent();
         }
 
         @Override
         public void onError() {
-            herosDisplayer.displayError();
+            heroesDisplayer.displayError();
         }
 
         @Override
         public void onEmpty() {
-            herosDisplayer.displayEmpty();
+            heroesDisplayer.displayEmpty();
         }
     };
 }

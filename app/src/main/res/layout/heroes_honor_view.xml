@@ -2,5 +2,5 @@
 <com.donate.savelife.user.view.HeroesHonorView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/heroes_honor_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/dimen_400"
     android:layout="@layout/merge_heroes_honor_view" />

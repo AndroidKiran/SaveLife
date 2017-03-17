@@ -13,6 +13,7 @@ import android.view.View;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
+import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.displayer.HonorHeroesDisplayer;
 
@@ -70,6 +71,14 @@ public class HeroesHonorView extends CoordinatorLayout implements HonorHeroesDis
     @Override
     public Users getUsers() {
         return heroesHonorAdapter.getUsers();
+    }
+
+    @Override
+    public void onHeroHonoredSuccessfully(User user) {
+        heroesHonorAdapter.remove(user);
+        if (heroesHonorAdapter.getItemCount() == 0){
+            honorHeroesInteractionListener.dismissHonorDialog();
+        }
     }
 
 }

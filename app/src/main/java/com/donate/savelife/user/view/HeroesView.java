@@ -17,13 +17,13 @@ import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.user.data.model.Users;
-import com.donate.savelife.core.user.displayer.HerosDisplayer;
+import com.donate.savelife.core.user.displayer.HeroesDisplayer;
 
 /**
  * Created by ravi on 22/11/16.
  */
 
-public class HeroesView extends LinearLayout implements HerosDisplayer {
+public class HeroesView extends LinearLayout implements HeroesDisplayer {
 
     private final HeroesAdapter heroesAdapter;
     private RecyclerView recyclerView;

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="@dimen/dimen_72">
+<inset xmlns:android="http://schemas.android.com/apk/res/android">
     <shape android:shape="line">
         <stroke
             android:width="@dimen/dimen_1"
             android:color="@color/background_grey" />
-        <size android:height="@dimen/dimen_1.5" />
+        <size android:height="@dimen/dimen_1" />
     </shape>
 
 </inset>

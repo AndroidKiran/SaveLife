@@ -3,26 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/hero_avatar"
-        android:id="@+id/hero"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/hero_avatar"
+        android:layout_width="@dimen/dimen_36"
+        android:layout_height="@dimen/dimen_36"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_6"
+        android:layout_marginRight="@dimen/dimen_6"
+        android:src="@color/accent"
+        app:border_color="@color/material_gold"
+        app:border_width="@dimen/dimen_2" />
+
+    <com.donate.savelife.component.text.TextView
+        android:id="@+id/honor_hero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_primary"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:textAlignment="center"
+        android:minHeight="@dimen/dimen_48"
+        android:padding="@dimen/dimen_5"
+        android:text="@string/action_honor"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/font_12"
+        app:fontTypeface="museosans500"
+        tools:text="Honor" />
+
 
     <LinearLayout
         android:id="@+id/hero_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/hero"
-        android:orientation="vertical">
+        android:layout_toLeftOf="@+id/honor_hero"
+        android:layout_toRightOf="@id/hero_avatar"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/dimen_5">
 
         <com.donate.savelife.component.text.TextView
             android:id="@+id/hero_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:lines="1"
             android:maxLines="1"
-            android:paddingBottom="@dimen/dimen_5"
-            android:paddingTop="@dimen/dimen_5"
             android:textColor="@color/grey_charcoal"
             android:textSize="@dimen/font_16"
             app:fontTypeface="museosans500"
@@ -33,8 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="3"
-            android:paddingBottom="@dimen/dimen_5"
+            android:lines="1"
+            android:maxLines="1"
             android:textColor="@color/grey_cool"
             android:textSize="@dimen/font_14"
             app:fontTypeface="museosans500"

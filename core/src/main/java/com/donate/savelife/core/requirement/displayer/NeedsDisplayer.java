@@ -2,7 +2,6 @@ package com.donate.savelife.core.requirement.displayer;
 
 
 import com.donate.savelife.core.requirement.model.Need;
-import com.donate.savelife.core.requirement.model.Needs;
 import com.donate.savelife.core.user.data.model.User;
 
 public interface NeedsDisplayer {
@@ -11,9 +10,7 @@ public interface NeedsDisplayer {
 
     void detach(NeedInteractionListener needInteractionListener);
 
-    void display(Needs needs, User owner);
-
-//    void displayMore(Needs needs, User owner);
+    void display(Need need, User owner);
 
     void displayLoading();
 
@@ -23,18 +20,9 @@ public interface NeedsDisplayer {
 
     void displayEmpty();
 
-    //retrieve methods
-    Needs getNeeds();
-
-//    Need getlastNeedItem();
-//
-//    void setLastNeedItem(Need lastNeedItem);
-
     interface NeedInteractionListener {
 
         void onNeedSelected(Need need);
-
-//        void onLoadMore(Need need);
 
         void onContentLoaded();
 

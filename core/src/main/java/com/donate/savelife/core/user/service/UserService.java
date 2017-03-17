@@ -14,6 +14,6 @@ public interface UserService {
 
     Observable<DatabaseResult<User>> updateUser(User user);
 
-    Observable<DatabaseResult<User>> updateTheLifeCount(User user);
+    Observable<DatabaseResult<User>> updateTheLifeCount(User user, int value);
 
 }

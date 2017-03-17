@@ -12,9 +12,11 @@ import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.database.HeroDatabase;
 import com.donate.savelife.core.user.database.UserDatabase;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.Callable;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -98,8 +100,23 @@ public class PersistedChatService implements ChatService {
     }
 
     @Override
-    public Observable<DatabaseResult<Heroes>> observeHeroesFor(Need need) {
-        return heroDatabase.observeHeros(need.getId())
+    public Observable<DatabaseResult<Heroes>> observeHeroesFor(final Need need) {
+        return heroDatabase.observeNeedExists(need.getId())
+                .flatMap(new Func1<Boolean, Observable<Heroes>>() {
+                    @Override
+                    public Observable<Heroes> call(Boolean aBoolean) {
+                        if (aBoolean){
+                            return heroDatabase.observeHeros(need.getId());
+                        }
+                        return Observable.fromCallable(new Callable<Heroes>() {
+                            @Override
+                            public Heroes call() throws Exception {
+                                List<String> heroList = new ArrayList<String>();
+                                return new Heroes(heroList);
+                            }
+                        });
+                    }
+                })
                 .map(new Func1<Heroes, DatabaseResult<Heroes>>() {
                     @Override
                     public DatabaseResult<Heroes> call(Heroes heroes) {

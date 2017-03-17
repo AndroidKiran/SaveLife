@@ -8,7 +8,6 @@ import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.requirement.displayer.NeedsDisplayer;
 import com.donate.savelife.core.requirement.model.Need;
-import com.donate.savelife.core.requirement.model.Needs;
 import com.donate.savelife.core.requirement.service.NeedService;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.utils.GsonService;
@@ -48,10 +47,10 @@ public class NeedsPresenter {
         needsDisplayer.attach(needInteractionListener);
 
         compositeSubscription.add(
-                needService.observeNeedsWithUsers(user)
-                        .subscribe(new Action1<DatabaseResult<Needs>>() {
+                needService.observeNeeds(user)
+                        .subscribe(new Action1<DatabaseResult<Need>>() {
                             @Override
-                            public void call(DatabaseResult<Needs> needsDatabaseResult) {
+                            public void call(DatabaseResult<Need> needsDatabaseResult) {
                                 if (needsDatabaseResult.isSuccess()) {
                                     needsDisplayer.display(needsDatabaseResult.getData(), user);
                                 } else {
@@ -81,22 +80,6 @@ public class NeedsPresenter {
 
         }
 
-//        @Override
-//        public void onLoadMore(Need need) {
-//            compositeSubscription.add(
-//                    needService.observeMoreNeedsWithUsers(user, need)
-//                            .subscribe(new Action1<DatabaseResult<Needs>>() {
-//                                @Override
-//                                public void call(DatabaseResult<Needs> needsDatabaseResult) {
-//                                    if (needsDatabaseResult.isSuccess()) {
-//                                        needsDisplayer.displayMore(needsDatabaseResult.getData(), user);
-//                                    } else {
-//                                        errorLogger.reportError(needsDatabaseResult.getFailure(), "load more fetch needs failed");
-//                                    }
-//                                }
-//                            })
-//            );
-//        }
 
         @Override
         public void onContentLoaded() {

@@ -30,8 +30,6 @@ public class HonorHeroViewHolder extends RecyclerView.ViewHolder {
 
 
     interface HonorSelectionListener {
-
         void onHeroHonored(User user);
-
     }
 }

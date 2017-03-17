@@ -10,11 +10,12 @@ import com.donate.savelife.core.user.data.model.Users;
 import com.donate.savelife.core.user.displayer.HonorHeroesDisplayer;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Created by ravi on 04/09/16.
  */
-public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder>{
+public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder> {
     private final int LIFE_INCREAMENT_VALUE = 1;
     private final LayoutInflater inflater;
     private Users users;
@@ -27,16 +28,27 @@ public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder
         setHasStableIds(true);
     }
 
-    public void setData(Users users){
-        if (users.size() > 0){
+    public void setData(Users users) {
+        if (users.size() > 0) {
             this.users = users;
             notifyItemRangeInserted(getItemCount(), users.size());
         }
     }
 
+    public void remove(User user) {
+        ListIterator<User> userListIterator = users.getUsers().listIterator();
+        while (userListIterator.hasNext()) {
+            User user1 = userListIterator.next();
+            if (user1.equals(user)) {
+                remove(user);
+                break;
+            }
+        }
+    }
+
     @Override
     public HonorHeroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        HonorHeroItemView = (HonorHeroItemView) inflater.inflate(R.layout.hero_item, parent, false);
+        HonorHeroItemView = (HonorHeroItemView) inflater.inflate(R.layout.honor_item, parent, false);
         return new HonorHeroViewHolder(HonorHeroItemView);
     }
 
@@ -47,13 +59,13 @@ public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder
 
     @Override
     public int getItemCount() {
-        if (users == null){
+        if (users == null) {
             return 0;
         }
         return users.size();
     }
 
-    public  Users getUsers(){
+    public Users getUsers() {
         return users;
     }
 
@@ -69,9 +81,7 @@ public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder
     private final HonorHeroViewHolder.HonorSelectionListener honorSelectionListener = new HonorHeroViewHolder.HonorSelectionListener() {
         @Override
         public void onHeroHonored(User user) {
-            if (users.remove(user)){
-                honorHeroesInteractionListener.onHeroesHonored(user, LIFE_INCREAMENT_VALUE);
-            }
+            honorHeroesInteractionListener.onHeroesHonored(user, LIFE_INCREAMENT_VALUE);
         }
     };
 }

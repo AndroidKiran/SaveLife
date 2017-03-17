@@ -36,12 +36,17 @@ public class FirebaseHeroDatabase implements HeroDatabase {
 
     @Override
     public Observable<Boolean> observeHeroFrom(String needID, String userID) {
-        return firebaseObservableListeners.listenToValueEvents(heroDB, asHero(needID, userID));
+        return firebaseObservableListeners.listenToValueEvents(heroDB, isHeroExists(needID, userID));
     }
 
     @Override
     public Observable<String> saveHero(String needId, String userID) {
         return firebaseObservableListeners.setValue(userID, heroDB.child(needId).child(userID), userID);
+    }
+
+    @Override
+    public Observable<Boolean> observeNeedExists(String needID) {
+        return firebaseObservableListeners.listenToSingleValueEvents(heroDB, isNeedExists(needID));
     }
 
     private Func1<DataSnapshot, Heroes> toHeroes() {
@@ -58,7 +63,7 @@ public class FirebaseHeroDatabase implements HeroDatabase {
         };
     }
 
-    private Func1<DataSnapshot, Boolean> asHero(final String needID, final String userID) {
+    private Func1<DataSnapshot, Boolean> isHeroExists(final String needID, final String userID) {
         return new Func1<DataSnapshot, Boolean>() {
             @Override
             public Boolean call(DataSnapshot dataSnapshot) {
@@ -69,6 +74,21 @@ public class FirebaseHeroDatabase implements HeroDatabase {
                         if (userSnapshot.exists()) {
                             return true;
                         }
+                    }
+                }
+                return false;
+            }
+        };
+    }
+
+    private Func1<DataSnapshot, Boolean> isNeedExists(final String needID) {
+        return new Func1<DataSnapshot, Boolean>() {
+            @Override
+            public Boolean call(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    DataSnapshot needSnapshot = dataSnapshot.child(needID);
+                    if (needSnapshot.exists()) {
+                        return true;
                     }
                 }
                 return false;

@@ -49,6 +49,7 @@ public class HomePresenter {
         this.analytics = analytics;
         this.errorLogger = errorLogger;
         this.needService = needService;
+
         this.user = gsonService.toUser(preferenceService.getLoginUserPreference());
         homeDisplayer.setUpViewPager();
         homeDisplayer.setProfile(user);

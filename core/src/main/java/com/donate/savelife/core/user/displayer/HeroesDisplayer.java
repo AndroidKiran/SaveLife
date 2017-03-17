@@ -1,9 +1,8 @@
 package com.donate.savelife.core.user.displayer;
 
-
 import com.donate.savelife.core.user.data.model.Users;
 
-public interface HerosDisplayer {
+public interface HeroesDisplayer {
 
     void attach(HeroInteractionListener heroInteractionListener);
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.UtilBundles;
-import com.donate.savelife.core.user.displayer.HerosDisplayer;
+import com.donate.savelife.core.user.displayer.HeroesDisplayer;
 import com.donate.savelife.core.user.presenter.HeroPresenter;
 import com.donate.savelife.firebase.Dependencies;
 import com.donate.savelife.navigation.AndroidNavigator;
@@ -45,8 +45,8 @@ public class HeroesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HerosDisplayer herosDisplayer = (HerosDisplayer) view.findViewById(R.id.heros_view);
-        presenter = new HeroPresenter(herosDisplayer, Dependencies.INSTANCE.getUserService(),
+        HeroesDisplayer heroesDisplayer = (HeroesDisplayer) view.findViewById(R.id.heros_view);
+        presenter = new HeroPresenter(heroesDisplayer, Dependencies.INSTANCE.getUserService(),
                 new AndroidNavigator(getActivity()),
                 Dependencies.INSTANCE.getErrorLogger(),
                 Dependencies.INSTANCE.getAnalytics());
@@ -61,7 +61,7 @@ public class HeroesFragment extends Fragment {
 
     @Override
     public void onStop() {
-        super.onStop();
         presenter.startPresenting();
+        super.onStop();
     }
 }

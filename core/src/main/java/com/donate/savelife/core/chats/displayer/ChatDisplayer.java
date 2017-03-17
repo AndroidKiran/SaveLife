@@ -77,6 +77,8 @@ public interface ChatDisplayer {
 
         void onMapAttachClicked();
 
+        void onHonorClicked();
+
     }
 
 }

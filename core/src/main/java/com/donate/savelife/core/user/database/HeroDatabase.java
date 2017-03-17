@@ -15,4 +15,6 @@ public interface HeroDatabase {
     Observable<Boolean> observeHeroFrom(String needID, String userID);
 
     Observable<String> saveHero(String needId, String userID);
+
+    Observable<Boolean> observeNeedExists(String needID);
 }
