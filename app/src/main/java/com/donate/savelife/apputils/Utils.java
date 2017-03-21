@@ -11,6 +11,7 @@ import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -99,6 +100,18 @@ public class Utils {
         } else {
             throw new IllegalArgumentException("Unsupported drawable type");
         }
+    }
+
+    public static String htmlToPlain(String html) {
+        if (!TextUtils.isEmpty(html)) {
+            if (html.contains("<p dir=")) {
+                int firstTagEndIndex = html.indexOf(">");
+                int lastTagStartIndex = html.lastIndexOf("<");
+                return html.substring(firstTagEndIndex + 1, lastTagStartIndex);
+            }
+            return html;
+        }
+        return "";
     }
 
 }

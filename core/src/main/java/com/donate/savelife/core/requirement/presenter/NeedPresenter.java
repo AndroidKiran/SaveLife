@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.notifications.database.FCMRemoteMsg;
@@ -68,7 +68,7 @@ public class NeedPresenter {
     }
 
     public void pausePresenting(){
-        needDisplayer.dismissCountryDialog();
+        needDisplayer.dismissCityDialog();
 
         if (mHandler != null) {
             mHandler.removeCallbacks(mRunnable);
@@ -88,8 +88,8 @@ public class NeedPresenter {
         subscriptions = new CompositeSubscription();
     }
 
-    public void onFragmentInteractionListener(Country country){
-        needDisplayer.displayCountry(country);
+    public void onFragmentInteractionListener(City city){
+        needDisplayer.displayCity(city);
     }
 
 

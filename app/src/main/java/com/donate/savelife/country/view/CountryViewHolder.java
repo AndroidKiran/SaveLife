@@ -12,16 +12,16 @@ import com.donate.savelife.core.country.model.Country;
 
 public class CountryViewHolder extends RecyclerView.ViewHolder {
 
-    public CountryView countryView;
+    public CountryItemView countryItemView;
 
-    public CountryViewHolder(CountryView itemView) {
+    public CountryViewHolder(CountryItemView itemView) {
         super(itemView);
-        this.countryView = itemView;
+        this.countryItemView = itemView;
     }
 
     public void bind(final Country country, final CountrySelectionListener countrySelectionListener){
-        countryView.display(country);
-        countryView.setOnClickListener(new View.OnClickListener() {
+        countryItemView.display(country);
+        countryItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 countrySelectionListener.onCountrySelected(country);

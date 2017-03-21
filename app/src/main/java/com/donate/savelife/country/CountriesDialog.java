@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.donate.savelife.R;
-import com.donate.savelife.core.country.OnFragmentInteractionListener;
+import com.donate.savelife.core.country.OnCountryInteractionListener;
+import com.donate.savelife.core.country.displayer.CountryDisplayer;
 import com.donate.savelife.core.country.presenter.CountryPresenter;
-import com.donate.savelife.country.view.CountriesView;
 import com.donate.savelife.firebase.Dependencies;
 
 
@@ -23,7 +23,7 @@ import com.donate.savelife.firebase.Dependencies;
 public class CountriesDialog extends DialogFragment {
 
     private CountryPresenter countryPresenter;
-    private OnFragmentInteractionListener fragmentInteractionListener;
+    private OnCountryInteractionListener fragmentInteractionListener;
 
     public static CountriesDialog newInstance(FragmentManager fragmentManager){
         CountriesDialog countriesDialog = new CountriesDialog();
@@ -42,14 +42,14 @@ public class CountriesDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_countries, container, false);
+        return inflater.inflate(R.layout.countries_view, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CountriesView countriesView = (CountriesView) view.findViewById(R.id.countries_view);
+        CountryDisplayer countriesView = (CountryDisplayer) view.findViewById(R.id.countries_view);
 
         countryPresenter = new CountryPresenter(Dependencies.INSTANCE.getCountryService(),
                 countriesView,
@@ -62,7 +62,7 @@ public class CountriesDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentInteractionListener = (OnFragmentInteractionListener) context;
+        fragmentInteractionListener = (OnCountryInteractionListener) context;
     }
 
     @Override

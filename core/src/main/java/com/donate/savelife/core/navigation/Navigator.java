@@ -47,6 +47,8 @@ public interface Navigator {
 
     void toHonor(String needId);
 
+    void toAddCity();
+
     void startAppCentralService(Bundle bundle, String action);
 
     Activity getActivity();

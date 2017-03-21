@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
@@ -65,7 +65,7 @@ public class CompleteProfilePresenter {
     }
 
     public void onPause(){
-        completeProfileDisplayer.dismissCountryDialog();
+        completeProfileDisplayer.dismissCityDialog();
     }
 
 
@@ -77,8 +77,8 @@ public class CompleteProfilePresenter {
     }
 
 
-    public void onFragmentInteractionListener(Country country){
-        completeProfileDisplayer.displayCountry(country);
+    public void onFragmentInteractionListener(City city){
+        completeProfileDisplayer.displayCity(city);
     }
 
     CompleteProfileDisplayer.OnCompleteListener onCompleteListener = new CompleteProfileDisplayer.OnCompleteListener() {

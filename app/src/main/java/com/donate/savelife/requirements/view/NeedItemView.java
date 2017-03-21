@@ -68,7 +68,7 @@ public class NeedItemView extends RelativeLayout {
     public void display(final Need need, User user){
         name.setText(need.getUser().getName());
         bloodGroup.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
-        requirementAddress.setText(String.format(getResources().getString(R.string.str_address_msg), need.getAddress(), need.getCity(),need.getCountryName(getContext())));
+        requirementAddress.setText(need.getAddress().trim()+","+need.getCity());
         postDate.setText(formattedTimeFrom(need.getTimeStamp()));
         responseCount.setVisibility(need.getUserID().equals(user.getId()) && need.getResponseCount() != 0 ? VISIBLE : GONE);
         responseCount.setText(String.valueOf(need.getResponseCount()));

@@ -145,6 +145,13 @@
             android:theme="@style/AppTheme.Dialog"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
+        <activity
+            android:name=".country.CountryActivity"
+            android:configChanges="keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <activity-alias
             android:name=".LauncherAlias"
             android:targetActivity=".launcher.LauncherActivity"

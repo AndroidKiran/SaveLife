@@ -195,4 +195,8 @@ public enum Dependencies {
     public PersistedAppStatusService getAppStatusService() {
         return appStatusService;
     }
+
+    public FirebaseDatabase getFirebaseDatabase(){
+        return firebaseDatabase;
+    }
 }

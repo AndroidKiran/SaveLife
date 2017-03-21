@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.donate.savelife.R;
 import com.donate.savelife.core.analytics.Analytics;
-import com.donate.savelife.core.country.OnFragmentInteractionListener;
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.OnCityInteractionListener;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
 import com.donate.savelife.core.user.presenter.CompleteProfilePresenter;
@@ -25,7 +25,7 @@ import com.donate.savelife.user.view.CompleteProfileView;
  * Created by ravi on 19/11/16.
  */
 
-public class CompleteProfileActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+public class CompleteProfileActivity extends AppCompatActivity implements OnCityInteractionListener {
 
     private CompleteProfilePresenter presenter;
     private User user;
@@ -76,9 +76,11 @@ public class CompleteProfileActivity extends AppCompatActivity implements OnFrag
         super.onStop();
     }
 
+
     @Override
-    public void onFragmentInteraction(Country country) {
-        presenter.onFragmentInteractionListener(country);
+    public void onCityInteraction(City city) {
+        presenter.onFragmentInteractionListener(city);
+
     }
 
     @Override
@@ -90,4 +92,6 @@ public class CompleteProfileActivity extends AppCompatActivity implements OnFrag
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }

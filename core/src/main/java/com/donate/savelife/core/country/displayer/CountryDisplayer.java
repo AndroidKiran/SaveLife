@@ -8,7 +8,7 @@ import com.donate.savelife.core.country.model.Country;
  * Created by ravi on 30/09/16.
  */
 
-public interface CountriesDisplayer {
+public interface CountryDisplayer {
 
     void attach(CountryInteractionListener countryInteractionListener);
 

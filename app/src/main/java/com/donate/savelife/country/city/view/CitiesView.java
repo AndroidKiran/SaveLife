@@ -1,4 +1,4 @@
-package com.donate.savelife.country.view;
+package com.donate.savelife.country.city.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -6,8 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,41 +15,38 @@ import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.DividerItemDecoration;
 import com.donate.savelife.component.MultiStateView;
-import com.donate.savelife.component.text.ClearableEditText;
 import com.donate.savelife.component.text.TextView;
-import com.donate.savelife.core.country.displayer.CountriesDisplayer;
-import com.donate.savelife.core.country.model.Countries;
+import com.donate.savelife.core.country.displayer.CityDisplayer;
+import com.donate.savelife.core.country.model.Cities;
 
 /**
  * Created by ravi on 01/10/16.
  */
 
-public class CountriesView extends LinearLayout implements CountriesDisplayer {
+public class CitiesView extends LinearLayout implements CityDisplayer {
 
-    private CountryAdapter countryAdapter;
+    private final CityAdapter cityAdapter;
     private RecyclerView recyclerView;
-    private CountryInteractionListener countryInteractionListener;
-    private ClearableEditText searchView;
     private MultiStateView multiView;
     private TextView emptyViewTxt;
     private AppCompatImageView emptyViewIcon;
+    private CityInteractionListener cityInteractionListener;
 
-    public CountriesView(Context context, AttributeSet attrs) {
+    public CitiesView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        countryAdapter = new CountryAdapter(LayoutInflater.from(getContext()), getContext());
+        cityAdapter = new CityAdapter(LayoutInflater.from(getContext()), getContext());
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_countries_view, this);
+        View.inflate(getContext(), R.layout.merge_cities_view, this);
         initControls();
         setRecyclerView();
         setAdpater();
     }
 
     private void initControls(){
-        searchView = Views.findById(this, R.id.search_view);
         multiView = Views.findById(this,R.id.multi_view);
         emptyViewTxt = (TextView) multiView.findViewById(R.id.txt_empty);
         emptyViewIcon = (AppCompatImageView) multiView.findViewById(R.id.img_empty);
@@ -69,27 +64,25 @@ public class CountriesView extends LinearLayout implements CountriesDisplayer {
     }
 
     public void setAdpater(){
-        recyclerView.setAdapter(countryAdapter);
+        recyclerView.setAdapter(cityAdapter);
     }
 
 
     @Override
-    public void attach(CountryInteractionListener countryInteractionListener) {
-        this.countryInteractionListener = countryInteractionListener;
-        countryAdapter.attach(countryInteractionListener);
-        searchView.addTextChangedListener(textWatcher);
+    public void attach(CityInteractionListener cityInteractionListener) {
+        this.cityInteractionListener = cityInteractionListener;
+        cityAdapter.attach(cityInteractionListener);
     }
 
     @Override
-    public void detach(CountryInteractionListener countryInteractionListener) {
-        this.countryInteractionListener = null;
-        countryAdapter.detach(countryInteractionListener);
-        searchView.addTextChangedListener(null);
+    public void detach(CityInteractionListener cityInteractionListener) {
+        this.cityInteractionListener = null;
+        cityAdapter.detach(cityInteractionListener);
     }
 
     @Override
-    public void display(Countries countries) {
-        countryAdapter.setData(countries);
+    public void display(Cities cities) {
+        cityAdapter.setData(cities);
     }
 
     @Override
@@ -109,25 +102,8 @@ public class CountriesView extends LinearLayout implements CountriesDisplayer {
 
     @Override
     public void displayEmpty() {
-        emptyViewTxt.setText(getContext().getString(R.string.str_empty_country));
+        emptyViewTxt.setText(getContext().getString(R.string.str_no_city_found));
         emptyViewIcon.setImageResource(R.drawable.ic_assistant_photo_24dp);
         multiView.setViewState(MultiStateView.VIEW_STATE_EMPTY);
     }
-
-
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            countryAdapter.onCountryFilter(editable.toString());
-        }
-    };
 }

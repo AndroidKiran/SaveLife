@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:background="@drawable/selector_list_item_white"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/country_flag"
         android:layout_width="@dimen/dimen_40"
         android:layout_height="@dimen/dimen_40"
-        android:layout_marginLeft="@dimen/dimen_16"
-        android:layout_marginRight="@dimen/dimen_16"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitCenter" />
+        app:border_color="@color/material_white"
+        app:border_width="@dimen/dimen_2" />
+
 
     <com.donate.savelife.component.text.TextView
         android:id="@+id/country_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/country_flag"
+        android:layout_centerVertical="true"
         android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_vertical"
         android:maxLines="1"
-        android:paddingBottom="@dimen/dimen_5"
-        android:paddingTop="@dimen/dimen_5"
         android:textColor="@color/grey_charcoal"
         android:textSize="@dimen/font_16"
         app:fontTypeface="museosans500"
         tools:text="India" />
 
-</LinearLayout>
+</merge>

@@ -167,6 +167,7 @@
                             app:theme="@style/AppTheme.TextInputLayout">
 
                             <com.donate.savelife.component.text.EditText
+                                android:id="@+id/city_et"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/str_city"
@@ -189,39 +190,6 @@
                             android:visibility="gone"
                             app:fontTypeface="museosans500"
                             tools:text="Please provide city name" />
-
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            app:theme="@style/AppTheme.TextInputLayout">
-
-                            <com.donate.savelife.component.text.EditText
-                                android:id="@+id/country_et"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/str_country"
-                                android:inputType="textNoSuggestions"
-                                android:textSize="@dimen/font_16"
-                                app:fontTypeface="museosans500" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <com.donate.savelife.component.text.TextView
-                            android:id="@+id/err_country"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="@dimen/dimen_16"
-                            android:paddingRight="@dimen/dimen_16"
-                            android:text="@string/err_country"
-                            android:textColor="@android:color/holo_red_dark"
-                            android:textSize="@dimen/font_12"
-                            android:visibility="gone"
-                            app:fontTypeface="museosans500"
-                            tools:text="Please select the country" />
 
 
                         <android.support.v7.widget.AppCompatButton

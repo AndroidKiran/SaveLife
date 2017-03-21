@@ -7,9 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,15 +22,12 @@ import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BlurTransformation;
 import com.donate.savelife.component.materialcomponent.MaterialProgressDialog;
 import com.donate.savelife.component.text.TextView;
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.displayer.CompleteProfileDisplayer;
-import com.donate.savelife.country.CountriesDialog;
+import com.donate.savelife.country.city.CityDialog;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
-
-import static com.donate.savelife.R.id.blood_group_spinner;
-import static com.donate.savelife.R.id.city;
 
 /**
  * Created by ravi on 19/11/16.
@@ -55,12 +50,9 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     private OnCompleteListener onCompleteListener;
     private AppCompatImageView profilePic;
     private User user;
-    private TextInputLayout mobileExtTextInputLayout;
-    private EditText mobileExtNumEditText;
     private AppCompatActivity activity;
     private MaterialProgressDialog materialProgressDialog;
-    private CountriesDialog countriesDialog;
-    private Country country;
+    private CityDialog cityDialog;
 
     public CompleteProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -88,23 +80,21 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     }
 
     void initControls() {
-        mobileExtTextInputLayout = Views.findById(this, R.id.country);
-        mobileExtNumEditText = mobileExtTextInputLayout.getEditText();
 
-        mobileTextInputLayout = Views.findById(this, R.id.mobile_num);
-        mobileNumEditText = mobileTextInputLayout.getEditText();
-        errMobileNumber = Views.findById(this, R.id.err_country);
+        this.mobileTextInputLayout = Views.findById(this, R.id.mobile_num);
+        this.mobileNumEditText = mobileTextInputLayout.getEditText();
+        this.errMobileNumber = Views.findById(this, R.id.err_mobile);
 
-        cityTextInputLayout = Views.findById(this, city);
-        cityEditText = cityTextInputLayout.getEditText();
-        errCity = Views.findById(this, R.id.err_city);
+        this.cityTextInputLayout = Views.findById(this, R.id.city);
+        this.cityEditText = Views.findById(this,R.id.city_et);
+        this.errCity = Views.findById(this, R.id.err_city);
 
-        bloodGroupSpinner = Views.findById(this, blood_group_spinner);
+        this.bloodGroupSpinner = Views.findById(this, R.id.blood_group_spinner);
         bloodGroupSpinner.setSelection(0);
-        errBloodGroup = Views.findById(this, R.id.err_blood_group);
+        this.errBloodGroup = Views.findById(this, R.id.err_blood_group);
 
-        btnComplete = Views.findById(this, R.id.btn_complete);
-        profilePic = Views.findById(this, R.id.profile_pic);
+        this.btnComplete = Views.findById(this, R.id.btn_complete);
+        this.profilePic = Views.findById(this, R.id.profile_pic);
 
     }
 
@@ -127,7 +117,7 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
         }
 
         String mobileNum = mobileNumEditText.getText().toString();
-        String mobileExt = mobileExtNumEditText.getText().toString();
+        String mobileExt = "IN";
         if (TextUtils.isEmpty(mobileNum) || TextUtils.isEmpty(mobileExt)){
             errMobileNumber.setVisibility(VISIBLE);
             valid = false;
@@ -159,23 +149,19 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     public void attach(OnCompleteListener onCompleteListener) {
         this.onCompleteListener = onCompleteListener;
         btnComplete.setOnClickListener(onClickListener);
-        mobileExtNumEditText.setOnClickListener(onClickListener);
+        cityEditText.setOnClickListener(onClickListener);
         mobileNumEditText.requestFocus();
-        mobileExtNumEditText.setOnFocusChangeListener(onFocusChangeListener);
-        mobileExtNumEditText.setKeyListener(null);
+        cityEditText.setOnFocusChangeListener(onFocusChangeListener);
+        cityEditText.setKeyListener(null);
         toolbar.setNavigationOnClickListener(onNavigationClicklistener);
-        cityEditText.addTextChangedListener(textWatcher);
-        mobileNumEditText.addTextChangedListener(textWatcher);
     }
 
     @Override
     public void detach(OnCompleteListener onCompleteListener) {
         this.onCompleteListener = onCompleteListener;
-        mobileNumEditText.addTextChangedListener(null);
-        cityEditText.addTextChangedListener(null);
         btnComplete.setOnClickListener(null);
-        mobileExtNumEditText.setOnClickListener(null);
-        mobileExtNumEditText.setOnFocusChangeListener(null);
+        cityEditText.setOnClickListener(null);
+        cityEditText.setOnFocusChangeListener(null);
         toolbar.setNavigationOnClickListener(null);
     }
 
@@ -208,11 +194,6 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
             }
         }
 
-        String countryCode = user.getCountry();
-        if (!TextUtils.isEmpty(countryCode)){
-            mobileExtNumEditText.setText(countryCode);
-        }
-
         String mobileNum = user.getMobileNum();
         if (!TextUtils.isEmpty(mobileNum)){
             mobileNumEditText.setText(mobileNum);
@@ -226,10 +207,9 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     }
 
     @Override
-    public void displayCountry(Country country) {
-        dismissCountryDialog();
-        this.country = country;
-        mobileExtNumEditText.setText(country.getIsoCode());
+    public void displayCity(City city) {
+        dismissCityDialog();
+        cityEditText.setText(city.getName());
     }
 
     @Override
@@ -246,14 +226,14 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
     }
 
     @Override
-    public void showCountryDialog() {
-        countriesDialog = CountriesDialog.newInstance(activity.getSupportFragmentManager());
+    public void showCityDialog() {
+        cityDialog = CityDialog.newInstance(activity.getSupportFragmentManager());
     }
 
     @Override
-    public void dismissCountryDialog() {
-        if (countriesDialog != null){
-            countriesDialog.dismiss();
+    public void dismissCityDialog() {
+        if (cityDialog != null){
+            cityDialog.dismiss();
         }
     }
 
@@ -268,8 +248,8 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
                     }
                     break;
 
-                case R.id.country_et:
-                    showCountryDialog();
+                case R.id.city_et:
+                    showCityDialog();
                     break;
             }
         }
@@ -289,37 +269,13 @@ public class CompleteProfileView extends CoordinatorLayout implements CompletePr
         @Override
         public void onFocusChange(View view, boolean b) {
             switch (view.getId()){
-                case R.id.country_et:
+                case R.id.city_et:
                     if (b){
-                        showCountryDialog();
+                        showCityDialog();
                     }
                     break;
             }
         }
     };
-
-
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            int length = editable.length();
-            if (cityEditText.isFocused()){
-                if (length > 0){
-                    errCity.setVisibility(GONE);
-                }
-            }
-        }
-    };
-
 
 }

@@ -2,6 +2,7 @@ package com.donate.savelife.core.country.service;
 
 
 import com.donate.savelife.core.country.database.CountryDatabase;
+import com.donate.savelife.core.country.model.Cities;
 import com.donate.savelife.core.country.model.Countries;
 import com.donate.savelife.core.database.DatabaseResult;
 
@@ -30,5 +31,17 @@ public class PersistedCountryService implements CountryService {
                     }
                 })
                 .onErrorReturn(DatabaseResult.<Countries>errorAsDatabaseResult());
+    }
+
+    @Override
+    public Observable<DatabaseResult<Cities>> observeCities(String countryCode) {
+        return countryDatabase.observeCities(countryCode)
+                .map(new Func1<Cities, DatabaseResult<Cities>>() {
+                    @Override
+                    public DatabaseResult<Cities> call(Cities cities) {
+                        return new DatabaseResult<Cities>(cities);
+                    }
+                })
+                .onErrorReturn(DatabaseResult.<Cities>errorAsDatabaseResult());
     }
 }

@@ -1,6 +1,6 @@
 package com.donate.savelife.core.user.displayer;
 
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.user.data.model.User;
 
 /**
@@ -15,15 +15,15 @@ public interface CompleteProfileDisplayer {
 
     void display(User user);
 
-    void displayCountry(Country country);
+    void displayCity(City city);
 
     void showProgress();
 
     void dismissProgress();
 
-    void showCountryDialog();
+    void showCityDialog();
 
-    void dismissCountryDialog();
+    void dismissCityDialog();
 
     interface OnCompleteListener {
 

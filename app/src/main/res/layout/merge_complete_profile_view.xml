@@ -129,34 +129,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/country"
-                            android:layout_width="@dimen/dimen_100"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            app:theme="@style/AppTheme.TextInputLayout">
-
-                            <com.donate.savelife.component.text.EditText
-                                android:id="@+id/country_et"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/str_ext"
-                                android:inputType="textNoSuggestions"
-                                android:textSize="@dimen/font_16"
-                                app:fontTypeface="museosans500" />
-                        </android.support.design.widget.TextInputLayout>
-
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/mobile_num"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_10"
-                            android:layout_toRightOf="@id/country"
                             android:layout_weight="1"
                             app:theme="@style/AppTheme.TextInputLayout">
 
                             <com.donate.savelife.component.text.EditText
+                                android:id="@+id/mobile_et"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/str_contact_num"
@@ -169,7 +151,7 @@
                     </LinearLayout>
 
                     <com.donate.savelife.component.text.TextView
-                        android:id="@+id/err_country"
+                        android:id="@+id/err_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -192,6 +174,7 @@
                         app:theme="@style/AppTheme.TextInputLayout">
 
                         <com.donate.savelife.component.text.EditText
+                            android:id="@+id/city_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/str_city"

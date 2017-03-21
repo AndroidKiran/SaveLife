@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.donate.savelife.component.text.TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_20"
+        android:padding="@dimen/dimen_20"
+        android:background="?attr/colorPrimary"
+        android:text="@string/str_choose_city"
+        android:textColor="@color/material_white"
+        app:fontTypeface="museosans500" />
+
+    <include layout="@layout/multiview"/>
+
+</merge>

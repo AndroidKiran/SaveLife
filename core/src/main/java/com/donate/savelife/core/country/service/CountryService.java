@@ -1,6 +1,7 @@
 package com.donate.savelife.core.country.service;
 
 
+import com.donate.savelife.core.country.model.Cities;
 import com.donate.savelife.core.country.model.Countries;
 import com.donate.savelife.core.database.DatabaseResult;
 
@@ -11,5 +12,9 @@ import rx.Observable;
  */
 
 public interface CountryService {
+
     Observable<DatabaseResult<Countries>> getCountries();
+
+    Observable<DatabaseResult<Cities>> observeCities(String countryCode);
+
 }

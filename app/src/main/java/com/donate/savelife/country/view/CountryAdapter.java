@@ -9,7 +9,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.donate.savelife.R;
-import com.donate.savelife.core.country.displayer.CountriesDisplayer;
+import com.donate.savelife.core.country.displayer.CountryDisplayer;
 import com.donate.savelife.core.country.model.Countries;
 import com.donate.savelife.core.country.model.Country;
 
@@ -26,7 +26,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
     private final Context context;
     private Countries countriesFilterList;
     private Countries countries;
-    private CountriesDisplayer.CountryInteractionListener countryInteractionListener;
+    private CountryDisplayer.CountryInteractionListener countryInteractionListener;
     private CountryFilter countryFilter;
 
     public CountryAdapter(LayoutInflater inflater, Context context) {
@@ -62,8 +62,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
 
     @Override
     public CountryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CountryView countryView = (CountryView) inflater.inflate(R.layout.country_item_layout, parent, false);
-        return new CountryViewHolder(countryView);
+        CountryItemView countryItemView = (CountryItemView) inflater.inflate(R.layout.country_item_layout, parent, false);
+        return new CountryViewHolder(countryItemView);
     }
 
     @Override
@@ -77,11 +77,11 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryViewHolder> impl
     }
 
 
-    public void attach(CountriesDisplayer.CountryInteractionListener countryInteractionListener) {
+    public void attach(CountryDisplayer.CountryInteractionListener countryInteractionListener) {
         this.countryInteractionListener = countryInteractionListener;
     }
 
-    public void detach(CountriesDisplayer.CountryInteractionListener countryInteractionListener) {
+    public void detach(CountryDisplayer.CountryInteractionListener countryInteractionListener) {
         this.countryInteractionListener = countryInteractionListener;
     }
 

@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.DialogUtils;
+import com.donate.savelife.apputils.Utils;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.MultiStateView;
 import com.donate.savelife.component.paginate.Paginate;
@@ -300,7 +301,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
                     break;
 
                 case R.id.submit_button:
-                    String msg = String.valueOf(Html.toHtml(new SpannableString(messageView.getText().toString().trim())));
+                    String msg = Utils.htmlToPlain(String.valueOf(Html.toHtml(new SpannableString(messageView.getText().toString().trim()))));
                     actionListener.onSubmitMessage(msg);
                     messageView.setText("");
                     break;

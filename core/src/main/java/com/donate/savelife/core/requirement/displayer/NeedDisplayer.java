@@ -1,6 +1,6 @@
 package com.donate.savelife.core.requirement.displayer;
 
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.requirement.model.Need;
 import com.donate.savelife.core.user.data.model.User;
 
@@ -14,15 +14,15 @@ public interface NeedDisplayer {
 
     void detach(OnNeedInteractionListener onNeedInteractionListener);
 
-    void displayCountry(Country country);
+    void displayCity(City city);
 
     void showProgress();
 
     void dismissProgress();
 
-    void showCountryDialog();
+    void showCityDialog();
 
-    void dismissCountryDialog();
+    void dismissCityDialog();
 
     void displayUser(User user);
 

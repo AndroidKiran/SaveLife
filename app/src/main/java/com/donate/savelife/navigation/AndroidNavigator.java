@@ -11,6 +11,7 @@ import com.donate.savelife.R;
 import com.donate.savelife.chats.ChatActivity;
 import com.donate.savelife.core.chats.model.Message;
 import com.donate.savelife.core.navigation.Navigator;
+import com.donate.savelife.country.CountryActivity;
 import com.donate.savelife.home.HomeActivity;
 import com.donate.savelife.intro.IntroActivity;
 import com.donate.savelife.launcher.LauncherActivity;
@@ -149,6 +150,12 @@ public class AndroidNavigator implements Navigator {
     @Override
     public void toHonor(String needId) {
         activity.startActivity(HonorHeroesActivity.createIntentFor(activity, needId));
+    }
+
+    @Override
+    public void toAddCity() {
+        Intent intent = new Intent(activity, CountryActivity.class);
+        activity.startActivity(intent);
     }
 
     @Override

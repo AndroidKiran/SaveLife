@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.donate.savelife.R;
-import com.donate.savelife.core.country.OnFragmentInteractionListener;
-import com.donate.savelife.core.country.model.Country;
+import com.donate.savelife.core.country.OnCityInteractionListener;
+import com.donate.savelife.core.country.model.City;
 import com.donate.savelife.core.requirement.displayer.NeedDisplayer;
 import com.donate.savelife.core.requirement.presenter.NeedPresenter;
 import com.donate.savelife.firebase.Dependencies;
@@ -19,7 +19,7 @@ import com.donate.savelife.requirements.view.NeedView;
  * Created by ravi on 19/11/16.
  */
 
-public class NeedActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+public class NeedActivity extends AppCompatActivity implements OnCityInteractionListener {
 
     private NeedPresenter presenter;
 
@@ -67,8 +67,8 @@ public class NeedActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void onFragmentInteraction(Country country) {
-        presenter.onFragmentInteractionListener(country);
+    public void onCityInteraction(City city) {
+        presenter.onFragmentInteractionListener(city);
     }
 
     @Override

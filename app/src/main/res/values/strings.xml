@@ -35,6 +35,8 @@
     <string name="str_search">Search for country</string>
     <string name="fab_behavior">com.donate.savelife.component.FabBehavior</string>
     <string name="str_empty_country">No country found</string>
+    <string name="str_choose_city">Choose a City</string>
+    <string name="str_no_city_found">No city match</string>
 
     <!--Home-->
     <string name="str_requirement_tab">Needs</string>
@@ -52,7 +54,6 @@
 
     <!--Needs-->
     <string name="str_blood_required_msg">%1$s blood required on urgent basis</string>
-    <string name="str_address_msg" formatted="false">%1s, %2s, %3s</string>
     <string name="str_needs_empty_state">Currently don\'t have any needs..!</string>
     <string name="str_save_life">Save a life</string>
     <string name="str_send_invite">Send invite</string>
@@ -119,6 +120,8 @@
     <!--Click Action-->
     <string name="str_action_chat">android.intent.action.CHAT</string>
     <string name="str_action_profile">android.intent.action.PROFILE</string>
+
+    <!---->
 
 
 </resources>
