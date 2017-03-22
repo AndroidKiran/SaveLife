@@ -6,13 +6,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.donate.savelife.R;
 import com.donate.savelife.apputils.Views;
 import com.donate.savelife.component.BubblyDrawable;
+import com.donate.savelife.component.CircleCropImageTransformation;
+import com.donate.savelife.component.text.TextView;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.welcome.displayer.WelcomeDisplayer;
 
@@ -57,7 +58,9 @@ public class WelcomeView extends LinearLayout implements WelcomeDisplayer {
     @Override
     public void display(final User sender) {
         final Context context = getContext();
-        Glide.with(context).load(sender.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(userAvatar);
-        welcomeMessage.setText(sender.getName() + "\n"+ context.getString(R.string.str_inivitation_for));
+        Glide.with(context).load(sender.getPhotoUrl()).error(R.drawable.ic_person_black_24dp)
+                .transform(new CircleCropImageTransformation(context))
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(userAvatar);
+        welcomeMessage.setText(sender.getName() + " " + context.getString(R.string.str_inivitation_for));
     }
 }

@@ -15,7 +15,7 @@
         android:padding="@dimen/dimen_20"
         android:layout_gravity="center_horizontal|top"
         android:gravity="center_horizontal"
-        app:fontTypeface="museosans500"
+        app:fontTypeface="roboto_bold"
         tools:text="Smaple"/>
 
     <android.support.v7.widget.AppCompatImageView
@@ -36,7 +36,7 @@
         android:layout_gravity="center_horizontal|bottom"
         android:gravity="center_horizontal"
         android:padding="@dimen/dimen_10"
-        app:fontTypeface="museosans500"
+        app:fontTypeface="roboto_regular"
         tools:text="Smaple"/>
 
 

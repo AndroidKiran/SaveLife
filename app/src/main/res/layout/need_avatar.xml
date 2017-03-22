@@ -11,7 +11,7 @@
         android:layout_width="@dimen/dimen_44"
         android:layout_height="@dimen/dimen_44"
         android:layout_gravity="center"
-        android:src="@color/accent"
+        android:src="@mipmap/ic_launcher"
         app:border_color="@color/material_red"
         app:border_width="@dimen/dimen_2" />
 

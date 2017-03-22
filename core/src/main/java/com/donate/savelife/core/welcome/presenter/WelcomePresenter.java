@@ -3,13 +3,11 @@ package com.donate.savelife.core.welcome.presenter;
 
 import com.donate.savelife.core.analytics.Analytics;
 import com.donate.savelife.core.analytics.ErrorLogger;
-import com.donate.savelife.core.database.DatabaseResult;
 import com.donate.savelife.core.navigation.Navigator;
 import com.donate.savelife.core.user.data.model.User;
 import com.donate.savelife.core.user.service.UserService;
 import com.donate.savelife.core.welcome.displayer.WelcomeDisplayer;
 
-import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class WelcomePresenter {
@@ -18,38 +16,32 @@ public class WelcomePresenter {
     private final WelcomeDisplayer welcomeDisplayer;
     private final Navigator navigator;
     private final Analytics analytics;
-    private final String senderId;
     private final ErrorLogger errorLogger;
+    private final String senderName;
+    private final String senderPhoto;
+    private final String sender;
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
-    public WelcomePresenter(UserService userService, WelcomeDisplayer welcomeDisplayer, Navigator navigator, Analytics analytics, String senderId, ErrorLogger errorLogger) {
+    public WelcomePresenter(UserService userService, WelcomeDisplayer welcomeDisplayer, Navigator navigator, Analytics analytics, String senderName, String sender, String senderPhoto, ErrorLogger errorLogger) {
         this.userService = userService;
         this.welcomeDisplayer = welcomeDisplayer;
         this.navigator = navigator;
         this.analytics = analytics;
-        this.senderId = senderId;
+        this.sender = sender;
+        this.senderName = senderName;
+        this.senderPhoto = senderPhoto;
         this.errorLogger = errorLogger;
     }
 
     public void startPresenting() {
         welcomeDisplayer.attach(interactionListener);
-        subscriptions.add(
-                userService.observeUser(senderId)
-                        .subscribe(new Action1<DatabaseResult<User>>() {
-                            @Override
-                            public void call(DatabaseResult<User> userDatabaseResult) {
-                                if (userDatabaseResult.isSuccess()){
-                                    welcomeDisplayer.display(userDatabaseResult.getData());
-                                } else {
-                                    errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to get user details");
-                                }
-                            }
-                        })
-
-        );
-
-        analytics.trackInvitationOpened(senderId);
+        User user = new User();
+        user.setId(sender);
+        user.setName(senderName);
+        user.setPhotoUrl(senderPhoto);
+        welcomeDisplayer.display(user);
+        analytics.trackInvitationOpened(sender);
     }
 
     public void stopPresenting() {
@@ -62,8 +54,7 @@ public class WelcomePresenter {
         @Override
         public void onGetStartedClicked() {
             navigator.toMain();
-
-            analytics.trackInvitationAccepted(senderId);
+            analytics.trackInvitationAccepted(sender);
         }
     };
 }

@@ -9,7 +9,7 @@
     <string name="str_boarding_footer_type_one">Footer 1</string>
     <string name="str_boarding_footer_type_two">Footer 2</string>
     <string name="str_boarding_footer_type_three">Footer 3</string>
-    <string name="str_inivitation_for">invited you to be a SAVIOUR</string>
+    <string name="str_inivitation_for">invited you to SAVE LIFE</string>
 
 
     <!--Login-->
@@ -54,7 +54,7 @@
 
     <!--Needs-->
     <string name="str_blood_required_msg">%1$s blood required on urgent basis</string>
-    <string name="str_needs_empty_state">Currently don\'t have any needs..!</string>
+    <string name="str_needs_empty_state">No active requests available..</string>
     <string name="str_save_life">Save a life</string>
     <string name="str_send_invite">Send invite</string>
     <string name="str_check_out_app">Check out Save a Life!\n%s</string>
@@ -66,7 +66,7 @@
 
     <!--Profile-->
     <string name="str_wat_blood_group">%1s blood group donor</string>
-    <string name="str_profile_info">Profile Information</string>
+    <string name="str_profile_info">Basic Information</string>
     <string name="str_wat_address" formatted="false">%1s,%2s</string>
     <string name="str_msg1">Saved</string>
     <string name="str_edit">Edit</string>
@@ -74,8 +74,8 @@
 
     <!--Perferences-->
     <string name="str_reminder_settings">Reminder setting</string>
-    <string name="str_pop_notification">Pop notification</string>
-    <string name="str_general_settings">General setting</string>
+    <string name="str_pop_notification">Request notifications</string>
+    <string name="str_general_settings">General</string>
     <string name="str_about_us">About us</string>
     <string name="str_invite">Invite friends and family</string>
 
@@ -85,7 +85,7 @@
     <string name="str_terms_conditions">Terms and Conditions</string>
     <string name="str_version">"Version "</string>
     <string name="str_about">About Us</string>
-    <string name="str_log_out">Log Out</string>
+    <string name="str_log_out">Logout</string>
 
     <!--Terms & Condition-->
     <string name="str_terms_content">sdhjshdjhsjhshdjdsh sdjlhjsdhjsd dsjlhjlsdhjds dsjlhljsdh \n sdsdhshllsdhj
@@ -100,16 +100,18 @@
     <string name="str_description2">Real life heroes are out there, Let seek for help</string>
     <string name="str_title3">Connect</string>
     <string name="str_description3">Be a part of Noble cause, Sign in</string>
-    <string name="str_complete_on_boarding">Please complete the onboarding</string>
+    <string name="str_complete_on_boarding">Please complete the on-boarding</string>
 
     <!--Chat-->
     <string name="str_chat_empty_state">Say something..!</string>
+    <string name="str_write_msg">Write message</string>
 
     <!--Heros-->
-    <string name="str_heros_empty_state">Couldnt find any Heroes</string>
+    <string name="str_heros_empty_state">Heroes will rise..</string>
     <string name="action_honor">Honor</string>
     <string name="str_honor_hero_heading">Every Blood Donor is a HERO</string>
     <string name="str_honor_hero_sub_heading">Please take some time and HONOR them</string>
+    <string name="str_honor_hero_thanks">You have honored all the heroes\nThank you </string>
 
     <!--Launcher-->
     <string name="str_app_deprecated_msg">Version is deprecated ,please update</string>
@@ -121,7 +123,7 @@
     <string name="str_action_chat">android.intent.action.CHAT</string>
     <string name="str_action_profile">android.intent.action.PROFILE</string>
 
-    <!---->
-
+    <!--Welcome-->
+    <string name="str_proceed">Proceed</string>
 
 </resources>

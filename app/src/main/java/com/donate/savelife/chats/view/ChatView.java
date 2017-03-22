@@ -141,12 +141,6 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         needDialog.show();
     }
 
-    @Override
-    public void dismissNeedDialog() {
-        if (needDialog != null && needDialog.isShowing()) {
-            needDialog.dismiss();
-        }
-    }
 
     @Override
     public void displayLoading() {
@@ -366,8 +360,7 @@ public class ChatView extends LinearLayout implements ChatDisplayer {
         TextView needMsg = (TextView) dialogView.findViewById(R.id.need_msg);
         final TextView addressTxt = (TextView) dialogView.findViewById(R.id.address_msg);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(need.getAddress() + ", " + need.getCity() + ",");
-        stringBuilder.append(need.getCountryName(getContext()));
+        stringBuilder.append(need.getAddress() + ", " + need.getCity() + ", " + need.getCountryName(getContext()));
         needMsg.setText(String.format(getResources().getString(R.string.str_blood_required_msg), need.getBloodGroup()));
         addressTxt.setText(stringBuilder.toString());
         Glide.with(getContext()).load(user.getPhotoUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.8f)

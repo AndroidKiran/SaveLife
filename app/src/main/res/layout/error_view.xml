@@ -14,6 +14,6 @@
         android:gravity="center"
         android:textColor="@color/cardview_dark_background"
         android:textSize="@dimen/font_16"
-        app:fontTypeface="museosans700" />
+        app:fontTypeface="roboto_light" />
 
 </LinearLayout>

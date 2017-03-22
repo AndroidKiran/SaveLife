@@ -44,7 +44,7 @@
                         android:layout_marginBottom="@dimen/dimen_6"
                         android:textColor="@color/grey_charcoal"
                         android:textSize="@dimen/font_16"
-                        app:fontTypeface="museosans700" />
+                        app:fontTypeface="roboto_bold" />
 
                     <com.donate.savelife.component.text.TextView
                         android:id="@+id/address_msg"
@@ -55,7 +55,7 @@
                         android:paddingRight="@dimen/dimen_16"
                         android:textColor="@color/grey_charcoal"
                         android:textSize="@dimen/font_16"
-                        app:fontTypeface="museosans500" />
+                        app:fontTypeface="roboto_regular" />
 
                 </LinearLayout>
 

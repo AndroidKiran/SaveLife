@@ -52,7 +52,7 @@ public class PersistedNeedService implements NeedService {
         return new Func1<Need, DatabaseResult<Need>>() {
             @Override
             public DatabaseResult<Need> call(Need need) {
-                if (isDurationValid(need) && !user.getId().equals(need.getId())) {
+                if (isDurationValid(need) && !user.getId().equals(need.getUserID())) {
                     return new DatabaseResult<Need>(need);
                 } else {
                     return new DatabaseResult<Need>(new Throwable());
@@ -105,6 +105,17 @@ public class PersistedNeedService implements NeedService {
         return needDatabase.observeLatestNeedsFor(user)
                 .map(asNeedsDatabaseResult(user))
                 .onErrorReturn(DatabaseResult.<Needs>errorAsDatabaseResult());
+    }
+
+
+    public Observable<DatabaseResult<String>> observeNeedIds(User user) {
+       return needDatabase.observeMyNeeds(user)
+               .map(new Func1<Need, DatabaseResult<String>>() {
+                   @Override
+                   public DatabaseResult<String> call(Need need) {
+                       return null;
+                   }
+               });
     }
 
 

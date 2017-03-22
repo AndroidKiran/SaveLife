@@ -20,7 +20,7 @@
             <com.donate.savelife.component.text.TextView
                 style="@style/Preference.HeaderTxt"
                 android:text="@string/str_reminder_settings"
-                app:fontTypeface="museosans700" />
+                app:fontTypeface="roboto_bold" />
 
             <RelativeLayout
                 style="@style/Preference.Actionable.Container"
@@ -31,13 +31,13 @@
                     android:id="@+id/notification_header"
                     style="@style/Preference.Actionable.HeaderTxt"
                     android:text="@string/str_pop_notification"
-                    app:fontTypeface="museosans500" />
+                    app:fontTypeface="roboto_regular" />
 
                 <com.donate.savelife.component.text.TextView
                     android:id="@+id/notification_city"
                     style="@style/Preference.Actionable.SubTxt"
                     android:layout_below="@id/notification_header"
-                    app:fontTypeface="museosans500" />
+                    app:fontTypeface="roboto_regular" />
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/notification_switch"
@@ -52,39 +52,39 @@
             <com.donate.savelife.component.text.TextView
                 style="@style/Preference.HeaderTxt"
                 android:text="@string/str_general_settings"
-                app:fontTypeface="museosans700" />
+                app:fontTypeface="roboto_bold" />
 
 
             <com.donate.savelife.component.text.TextView
                 android:id="@+id/about_us"
                 style="@style/Preference.Actionable.HeaderTxt.withSelector"
                 android:text="@string/str_about_us"
-                app:fontTypeface="museosans500" />
+                app:fontTypeface="roboto_regular" />
 
 
             <com.donate.savelife.component.text.TextView
                 android:id="@+id/invite"
                 style="@style/Preference.Actionable.HeaderTxt.withSelector"
                 android:text="@string/str_invite"
-                app:fontTypeface="museosans500" />
+                app:fontTypeface="roboto_regular" />
 
             <com.donate.savelife.component.text.TextView
                 android:id="@+id/play_store_rate"
                 style="@style/Preference.Actionable.HeaderTxt.withSelector"
                 android:text="@string/str_rate_us"
-                app:fontTypeface="museosans500" />
+                app:fontTypeface="roboto_regular" />
 
             <com.donate.savelife.component.text.TextView
                 android:id="@+id/terms_conditions"
                 style="@style/Preference.Actionable.HeaderTxt.withSelector"
                 android:text="@string/str_terms_conditions"
-                app:fontTypeface="museosans500" />
+                app:fontTypeface="roboto_regular" />
 
             <com.donate.savelife.component.text.TextView
                 android:id="@+id/logout"
                 style="@style/Preference.Actionable.HeaderTxt.withSelector"
                 android:text="@string/str_log_out"
-                app:fontTypeface="museosans500" />
+                app:fontTypeface="roboto_regular" />
 
         </LinearLayout>
 

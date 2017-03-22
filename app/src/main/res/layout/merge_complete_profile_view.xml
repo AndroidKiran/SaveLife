@@ -84,7 +84,7 @@
                         android:text="@string/str_complete_profile_msg"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/font_16"
-                        app:fontTypeface="museosans700" />
+                        app:fontTypeface="roboto_bold" />
 
                     <fr.ganfra.materialspinner.MaterialSpinner
                         android:id="@+id/blood_group_spinner"
@@ -120,7 +120,7 @@
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="@dimen/font_12"
                         android:visibility="gone"
-                        app:fontTypeface="museosans500"
+                        app:fontTypeface="roboto_light"
                         tools:text="Please select blood group" />
 
 
@@ -135,6 +135,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_10"
                             android:layout_weight="1"
+                            app:hintAnimationEnabled="true"
                             app:theme="@style/AppTheme.TextInputLayout">
 
                             <com.donate.savelife.component.text.EditText
@@ -145,7 +146,7 @@
                                 android:inputType="phone"
                                 android:maxLength="10"
                                 android:textSize="@dimen/font_16"
-                                app:fontTypeface="museosans500" />
+                                app:fontTypeface="roboto_regular" />
                         </android.support.design.widget.TextInputLayout>
 
                     </LinearLayout>
@@ -162,7 +163,7 @@
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="@dimen/font_12"
                         android:visibility="gone"
-                        app:fontTypeface="museosans500"
+                        app:fontTypeface="roboto_light"
                         tools:text="Please provide valid mobile num" />
 
 
@@ -171,6 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        app:hintAnimationEnabled="true"
                         app:theme="@style/AppTheme.TextInputLayout">
 
                         <com.donate.savelife.component.text.EditText
@@ -180,7 +182,7 @@
                             android:hint="@string/str_city"
                             android:inputType="textAutoComplete"
                             android:textSize="@dimen/font_16"
-                            app:fontTypeface="museosans500" />
+                            app:fontTypeface="roboto_regular" />
                     </android.support.design.widget.TextInputLayout>
 
                     <com.donate.savelife.component.text.TextView
@@ -195,7 +197,7 @@
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="@dimen/font_12"
                         android:visibility="gone"
-                        app:fontTypeface="museosans500"
+                        app:fontTypeface="roboto_light"
                         tools:text="Please provide city name" />
 
 
@@ -212,6 +214,7 @@
                         android:gravity="center"
                         android:minHeight="@dimen/dimen_48"
                         android:text="@string/str_complete_profile"
+                        app:fontTypeface="roboto_bold"
                         android:textColor="@color/material_white"
                         android:textSize="@dimen/font_16" />
 

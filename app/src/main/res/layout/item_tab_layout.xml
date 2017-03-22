@@ -7,5 +7,5 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:textSize="@dimen/font_16"
-    app:fontTypeface="museosans500" />
+    app:fontTypeface="roboto_bold" />
 

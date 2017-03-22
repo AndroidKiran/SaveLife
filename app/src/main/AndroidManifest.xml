@@ -93,7 +93,7 @@
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
         <activity
             android:name=".welcome.WelcomeActivity"
@@ -109,9 +109,11 @@
 
                 <data
                     android:host="savealife.com"
+                    android:pathPrefix="/"
                     android:scheme="https" />
                 <data
                     android:host="savealife.com"
+                    android:pathPrefix="/"
                     android:scheme="http" />
             </intent-filter>
         </activity>

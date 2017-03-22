@@ -11,7 +11,7 @@
         android:background="?attr/colorPrimary"
         android:text="@string/str_choose_city"
         android:textColor="@color/material_white"
-        app:fontTypeface="museosans500" />
+        app:fontTypeface="roboto_bold" />
 
     <include layout="@layout/multiview"/>
 

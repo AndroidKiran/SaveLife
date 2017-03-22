@@ -70,9 +70,13 @@ public class ChatActivity extends AppCompatActivity {
                 Dependencies.INSTANCE.getPreference(),
                 Dependencies.INSTANCE.getNotificationRegistrationService()
         );
+    }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         presenter.startPresenting();
-
     }
 
     @Override

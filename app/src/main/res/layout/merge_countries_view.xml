@@ -22,7 +22,7 @@
             android:layout_margin="@dimen/dimen_16"
             android:maxLines="1"
             android:textSize="@dimen/font_16"
-            app:fontTypeface="museosans500" />
+            app:fontTypeface="roboto_regular" />
 
         </android.support.design.widget.TextInputLayout>
 

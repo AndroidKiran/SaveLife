@@ -24,5 +24,4 @@ public interface NeedService {
 
     Observable<DatabaseResult<Needs>> observeLatestNeedsFor(User user);
 
-
 }

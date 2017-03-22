@@ -30,8 +30,6 @@ public interface ChatDisplayer {
 
     void showNeedDialog(Need need, User user);
 
-    void dismissNeedDialog();
-
     void displayLoading();
 
     void displayContent();

@@ -18,7 +18,7 @@
         android:gravity="center"
         android:textColor="@color/material_white"
         android:textSize="@dimen/font_30"
-        app:fontTypeface="museosans700"
+        app:fontTypeface="roboto_bold"
         tools:text="62" />
 
     <LinearLayout

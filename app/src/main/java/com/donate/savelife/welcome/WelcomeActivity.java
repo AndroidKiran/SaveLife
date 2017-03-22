@@ -29,12 +29,17 @@ public class WelcomeActivity extends AppCompatActivity {
             analytics.trackScreen(this, AppConstant.WELCOME_SCREEN, null);
 
         String sender = getIntent().getData().getQueryParameter(FirebaseDynamicLinkFactory.SENDER);
+        String senderName = getIntent().getData().getQueryParameter(FirebaseDynamicLinkFactory.SENDER_NAME);
+        String senderPhoto = getIntent().getData().getQueryParameter(FirebaseDynamicLinkFactory.SENDER_photo);
+
         welcomePresenter = new WelcomePresenter(
                 Dependencies.INSTANCE.getUserService(),
                 (WelcomeDisplayer) findViewById(R.id.welcome_view),
                 new AndroidNavigator(this),
                 analytics,
+                senderName,
                 sender,
+                senderPhoto,
                 Dependencies.INSTANCE.getErrorLogger()
         );
     }

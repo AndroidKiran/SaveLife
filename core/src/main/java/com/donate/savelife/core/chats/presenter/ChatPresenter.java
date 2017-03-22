@@ -141,25 +141,27 @@ public class ChatPresenter {
                                     );
 
                                     if (isMyPost()){
-
+                                        subscriptions.add(
+                                                chatService.observeHeroes(need)
+                                                        .subscribe(new Action1<DatabaseResult<Users>>() {
+                                                            @Override
+                                                            public void call(DatabaseResult<Users> usersDatabaseResult) {
+                                                                if (usersDatabaseResult.isSuccess()){
+                                                                    chatDisplayer.displayHeroes(usersDatabaseResult.getData().size() > 0 ? true : false);
+                                                                    if (sharedPreferenceService.isFirstTimeHeroesDialog()){
+                                                                        navigator.toHonor(needId);
+                                                                        sharedPreferenceService.setFirstTimeHeroesDialog(false);
+                                                                    }
+                                                                } else {
+                                                                    chatDisplayer.displayHeroes(false);
+                                                                }
+                                                            }
+                                                        })
+                                        );
+                                    } else {
+                                        chatDisplayer.displayHeroes(false);
                                     }
-                                    subscriptions.add(
-                                            chatService.observeHeroes(need)
-                                            .subscribe(new Action1<DatabaseResult<Users>>() {
-                                                @Override
-                                                public void call(DatabaseResult<Users> usersDatabaseResult) {
-                                                    if (usersDatabaseResult.isSuccess()){
-                                                        chatDisplayer.displayHeroes(usersDatabaseResult.getData().size() > 0 ? true : false);
-                                                        if (sharedPreferenceService.isFirstTimeHeroesDialog()){
-                                                            navigator.toHonor(needId);
-                                                            sharedPreferenceService.setFirstTimeHeroesDialog(false);
-                                                        }
-                                                    } else {
-                                                        chatDisplayer.displayHeroes(false);
-                                                    }
-                                                }
-                                            })
-                                    );
+
                                 } else {
                                     errorLogger.reportError(needDatabaseResult.getFailure(), "Failed the get need by id");
                                 }

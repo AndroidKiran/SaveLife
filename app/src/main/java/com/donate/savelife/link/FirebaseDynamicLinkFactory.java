@@ -10,6 +10,9 @@ import java.net.URI;
 public class FirebaseDynamicLinkFactory implements LinkFactory {
 
     public static final String SENDER = "sender";
+    public static final String SENDER_NAME = "sender_name";
+    public static final String SENDER_photo = "sender_photo_url";
+
     private final String dynamicLinkDomain;
     private final String deepLinkBaseUrl;
     private final String androidPackageName;
@@ -33,8 +36,9 @@ public class FirebaseDynamicLinkFactory implements LinkFactory {
     private Uri welcomeDeepLinkFromUser(User user) {
         return Uri.parse(deepLinkBaseUrl)
                 .buildUpon()
-                .appendPath("welcome")
                 .appendQueryParameter(SENDER, user.getId())
+                .appendQueryParameter(SENDER_NAME, user.getName())
+                .appendQueryParameter(SENDER_photo, user.getPhotoUrl())
                 .build();
     }
 

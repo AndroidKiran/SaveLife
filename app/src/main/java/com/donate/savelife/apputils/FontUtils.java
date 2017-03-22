@@ -25,10 +25,9 @@ public class FontUtils {
 	/*
 	 * Permissible values ​​for the "typeface" attribute.
 	 */
-	public final static int MUSEOSANS_500 = 0;
-	public final static int MUSEOSANS_700 = 1;
-	public final static int PT_SERIF_REGULAR = 2;
-	public final static int PT_SERIF_BOLD = 3;
+	public final static int ROBOTO_CONDENSED_BOLD = 0;
+	public final static int ROBOTO_CONDENSED_LIGHT = 1;
+	public final static int ROBOTO_CONDENSED_REGULAR = 2;
 
 	/**
 	 * List of created typefaces for later reused.
@@ -58,17 +57,14 @@ public class FontUtils {
 	public static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
 		Typeface typeface;
 		switch (typefaceValue) {
-			case FontUtils.MUSEOSANS_500:
-				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/museosans_small.otf");
+			case FontUtils.ROBOTO_CONDENSED_BOLD:
+				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_bold.ttf");
 				break;
-			case FontUtils.MUSEOSANS_700:
-				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/museosans_big.otf");
+			case FontUtils.ROBOTO_CONDENSED_LIGHT:
+				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
 				break;
-			case FontUtils.PT_SERIF_REGULAR:
-				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/pt_serif_regular.ttf");
-				break;
-			case FontUtils.PT_SERIF_BOLD:
-				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/pt_serif_bold.ttf");
+			case FontUtils.ROBOTO_CONDENSED_REGULAR:
+				typeface = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_regular.ttf");
 				break;
 		default:
 			throw new IllegalArgumentException("Unknown `typeface` attribute value " + typefaceValue);
@@ -81,10 +77,10 @@ public class FontUtils {
             return null;
         }
         SpannableString spannableString = new SpannableString(title);
-        Typeface typeface = getTypefaces().get(MUSEOSANS_500);
+        Typeface typeface = getTypefaces().get(ROBOTO_CONDENSED_BOLD);
         if (typeface == null) {
-            typeface = createTypeface(context, MUSEOSANS_500);
-            getTypefaces().put(MUSEOSANS_500, typeface);
+            typeface = createTypeface(context, ROBOTO_CONDENSED_BOLD);
+            getTypefaces().put(ROBOTO_CONDENSED_BOLD, typeface);
         }
         spannableString.setSpan(new CustomTypefaceSpan("", typeface),
                 0, spannableString.length(),
@@ -97,10 +93,10 @@ public class FontUtils {
 			return null;
 		}
 		SpannableString spannableString = new SpannableString(title);
-		Typeface typeface = getTypefaces().get(MUSEOSANS_700);
+		Typeface typeface = getTypefaces().get(ROBOTO_CONDENSED_LIGHT);
 		if (typeface == null) {
-			typeface = createTypeface(context, MUSEOSANS_700);
-			getTypefaces().put(MUSEOSANS_700, typeface);
+			typeface = createTypeface(context, ROBOTO_CONDENSED_LIGHT);
+			getTypefaces().put(ROBOTO_CONDENSED_LIGHT, typeface);
 		}
 		spannableString.setSpan(new CustomTypefaceSpan("", typeface),
 				0, spannableString.length(),

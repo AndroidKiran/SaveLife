@@ -31,7 +31,10 @@ public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder
     public void setData(Users users) {
         if (users.size() > 0) {
             this.users = users;
-            notifyItemRangeInserted(getItemCount(), users.size());
+            notifyDataSetChanged();
+            honorHeroesInteractionListener.onContentLoaded();
+        } else {
+            honorHeroesInteractionListener.onEmpty();
         }
     }
 
@@ -39,8 +42,9 @@ public class HeroesHonorAdapter extends RecyclerView.Adapter<HonorHeroViewHolder
         ListIterator<User> userListIterator = users.getUsers().listIterator();
         while (userListIterator.hasNext()) {
             User user1 = userListIterator.next();
-            if (user1.equals(user)) {
-                remove(user);
+            if (user1.getId().equals(user.getId())) {
+                userListIterator.remove();
+                this.notifyDataSetChanged();
                 break;
             }
         }

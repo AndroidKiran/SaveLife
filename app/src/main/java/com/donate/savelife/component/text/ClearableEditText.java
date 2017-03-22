@@ -16,9 +16,11 @@
 package com.donate.savelife.component.text;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatDrawableManager;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -119,9 +121,13 @@ public class ClearableEditText extends EditText implements OnTouchListener, OnFo
 	private void init() {
 		xD = getCompoundDrawables()[2];
 		if (xD == null) {
-			xD = AppCompatDrawableManager.get().getDrawable(getContext(), R.drawable.ic_clear_black_24dp);
+			try {
+				xD = VectorDrawableCompat.create(getContext().getResources(), R.drawable.ic_clear_black_24dp, null);
+			}catch (Resources.NotFoundException e){
+				xD =  ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_24dp);
+			}
 		}
-		Typeface typeface = FontUtils.createTypeface(getContext(), FontUtils.MUSEOSANS_500);
+		Typeface typeface = FontUtils.createTypeface(getContext(), FontUtils.ROBOTO_CONDENSED_REGULAR);
 		setTypeface(typeface);
 		xD.setBounds(0, 0, xD.getIntrinsicWidth(), xD.getIntrinsicHeight());
 		setClearIconVisible(!TextUtils.isEmpty(getText()));

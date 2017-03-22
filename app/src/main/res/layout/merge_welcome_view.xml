@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/welcome_sender_layout"
@@ -11,21 +12,23 @@
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/user_avatar"
             style="@style/Welcome.Sender.Image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_120"
             android:layout_marginTop="@dimen/dimen_60"
+            app:srcCompat="@drawable/ic_person_black_24dp"
             android:contentDescription="@string/app_name" />
 
-        <TextView
+        <com.donate.savelife.component.text.TextView
             android:id="@+id/welcome_message_view"
             style="@style/Welcome.Sender.Message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:fontTypeface="roboto_bold"
             android:layout_marginBottom="@dimen/dimen_86"
             android:layout_marginTop="@dimen/dimen_16" />
     </LinearLayout>
 
-    <TextView
+    <com.donate.savelife.component.text.TextView
         style="@style/Welcome.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,14 +36,24 @@
         android:layout_marginLeft="@dimen/dimen_16"
         android:layout_marginRight="@dimen/dimen_16"
         android:layout_marginTop="@dimen/dimen_48"
-        android:text="@string/str_request" />
+        app:fontTypeface="roboto_regular"
+        android:text="@string/str_title1" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/proceed_button"
-        style="@style/Welcome.ProceedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_16"
-        android:text="@string/str_save_life" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/dimen_16"
+        android:layout_marginLeft="@dimen/dimen_16"
+        android:layout_marginRight="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@drawable/selector_primary"
+        android:gravity="center"
+        android:minHeight="@dimen/dimen_48"
+        android:text="@string/str_proceed"
+        app:fontTypeface="roboto_bold"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/font_16" />
 
 </merge>

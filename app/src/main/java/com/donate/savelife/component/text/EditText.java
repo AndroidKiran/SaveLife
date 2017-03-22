@@ -30,7 +30,7 @@ public class EditText extends TextInputEditText {
         }
 
         TypedArray values = context.obtainStyledAttributes(attrs, R.styleable.TextView);
-        int typefaceValue = values.getInt(R.styleable.TextView_fontTypeface, FontUtils.MUSEOSANS_500);
+        int typefaceValue = values.getInt(R.styleable.TextView_fontTypeface, FontUtils.ROBOTO_CONDENSED_REGULAR);
         values.recycle();
 
         originalText = getText();

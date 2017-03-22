@@ -87,7 +87,7 @@ public class HonorHeroesPresenter {
                         @Override
                         public void call(DatabaseResult<User> userDatabaseResult) {
                             if (userDatabaseResult.isSuccess()){
-//                                honorHeroesDisplayer.onHeroHonoredSuccessfully(user);
+                                honorHeroesDisplayer.onHeroHonoredSuccessfully(user);
                             } else {
                                 errorLogger.reportError(userDatabaseResult.getFailure(), "Failed to honor");
                             }
@@ -99,6 +99,21 @@ public class HonorHeroesPresenter {
         @Override
         public void dismissHonorDialog() {
             navigator.getActivity().finish();
+        }
+
+        @Override
+        public void onContentLoaded() {
+            honorHeroesDisplayer.displayContent();
+        }
+
+        @Override
+        public void onError() {
+            honorHeroesDisplayer.displayError();
+        }
+
+        @Override
+        public void onEmpty() {
+            honorHeroesDisplayer.displayEmpty();
         }
     };
 

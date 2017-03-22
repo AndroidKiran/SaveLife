@@ -19,10 +19,24 @@ public interface HonorHeroesDisplayer {
 
     void onHeroHonoredSuccessfully(User user);
 
+    void displayLoading();
+
+    void displayContent();
+
+    void displayError();
+
+    void displayEmpty();
+
     interface HonorHeroesInteractionListener {
 
         void onHeroesHonored(User user, int value);
 
         void dismissHonorDialog();
+
+        void onContentLoaded();
+
+        void onError();
+
+        void onEmpty();
     }
 }

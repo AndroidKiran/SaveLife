@@ -18,30 +18,31 @@
             app:srcCompat="@drawable/ic_hands" />
 
 
-        <TextView
+        <com.donate.savelife.component.text.TextView
             android:id="@+id/title1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_below="@+id/icon1"
             android:layout_marginBottom="@dimen/dimen_10"
             android:layout_marginLeft="@dimen/dimen_16"
-            android:layout_below="@+id/icon1"
+            android:layout_marginTop="@dimen/dimen_20"
             android:text="@string/str_title1"
             android:textColor="@color/material_white"
-            android:textSize="26sp" />
+            android:textSize="@dimen/font_30"
+            app:fontTypeface="roboto_bold" />
 
 
-        <TextView
+        <com.donate.savelife.component.text.TextView
             android:id="@+id/description1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/title1"
             android:layout_marginLeft="@dimen/dimen_16"
             android:layout_marginRight="@dimen/dimen_16"
-            android:layout_below="@+id/title1"
-            android:maxEms="18"
             android:text="@string/str_description1"
             android:textColor="@color/material_white"
-            android:textSize="@dimen/font_18" />
+            android:textSize="@dimen/font_18"
+            app:fontTypeface="roboto_regular" />
 
     </RelativeLayout>
 

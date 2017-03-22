@@ -10,6 +10,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -95,6 +97,20 @@ public class FirebaseNeedDatabase implements NeedDatabase {
                     need.setId(dataSnapshot.getKey());
                 }
                 return need;
+            }
+        };
+    }
+
+    private Func1<DataSnapshot, List<String>> asNeedIDs(){
+        return new Func1<DataSnapshot, List<String>>() {
+            @Override
+            public List<String> call(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                List<String> needIDs = new UniqueList<String>();
+                for (DataSnapshot child : children){
+                    needIDs.add(child.getKey());
+                }
+                return needIDs;
             }
         };
     }

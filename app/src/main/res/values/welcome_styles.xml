@@ -22,7 +22,7 @@
   <style name="Welcome.Sender.Message">
     <item name="android:gravity">center</item>
     <item name="android:textColor">@color/accent</item>
-    <item name="android:textSize">@dimen/font_16</item>
+    <item name="android:textSize">@dimen/font_20</item>
   </style>
 
   <style name="Welcome.Message">

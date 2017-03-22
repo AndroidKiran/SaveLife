@@ -25,7 +25,7 @@
             android:gravity="center"
             android:textColor="@color/grey_cool"
             android:textSize="@dimen/font_16"
-            app:fontTypeface="museosans700"
+            app:fontTypeface="roboto_light"
             tools:text="Nothing av"/>
 
 

@@ -17,7 +17,7 @@
             android:maxLines="1"
             android:textColor="@color/grey_charcoal"
             android:textSize="@dimen/font_8"
-            app:fontTypeface="museosans500"
+            app:fontTypeface="roboto_light"
             tools:text="9 may 16" />
 
         <RelativeLayout
@@ -47,7 +47,7 @@
                 android:paddingTop="@dimen/dimen_2"
                 android:textColor="@color/material_white"
                 android:textSize="@dimen/font_14"
-                app:fontTypeface="museosans500"
+                app:fontTypeface="roboto_regular"
                 tools:text="23" />
 
             <LinearLayout
@@ -67,7 +67,7 @@
                     android:maxLines="1"
                     android:textColor="@color/grey_charcoal"
                     android:textSize="@dimen/font_16"
-                    app:fontTypeface="museosans500"
+                    app:fontTypeface="roboto_regular"
                     tools:text="Arnold Randy" />
 
                 <com.donate.savelife.component.text.TextView
@@ -80,7 +80,7 @@
                     android:maxLines="1"
                     android:textColor="@color/grey_charcoal"
                     android:textSize="@dimen/font_16"
-                    app:fontTypeface="museosans500"
+                    app:fontTypeface="roboto_bold"
                     tools:text="Arnold Randy" />
             </LinearLayout>
 
@@ -95,7 +95,7 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:textColor="@color/grey_cool"
             android:textSize="@dimen/font_14"
-            app:fontTypeface="museosans500"
+            app:fontTypeface="roboto_regular"
             tools:text="Shri Sai Paying Guest" />
 
     </LinearLayout>

@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:fontTypeface="museosans500" />
+            app:fontTypeface="roboto_bold" />
 
         <com.donate.savelife.component.text.TextView
             android:id="@+id/message_time"
             style="@style/Chat.Message.Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fontTypeface="museosans500" />
+            app:fontTypeface="roboto_light" />
 
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:layout_alignTop="@id/message_author_image"
             android:layout_marginRight="@dimen/dimen_8"
             android:layout_toLeftOf="@id/message_author_image"
-            app:fontTypeface="museosans500" />
+            app:fontTypeface="roboto_regular" />
 
     </RelativeLayout>
 
